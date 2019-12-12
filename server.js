@@ -10,6 +10,8 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+server.lastPlayderID = 0;
+
 server.listen(process.env.PORT || 8080, function () {
     console.log('Listening on ' + server.address().port);
 });

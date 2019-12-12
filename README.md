@@ -1,3 +1,3 @@
 # PhaseRPG
 
-RPG Game made with phaser.
+Juego phaseRPG!
