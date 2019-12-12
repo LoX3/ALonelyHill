@@ -1,0 +1,57 @@
+/**
+ * @type {import("typings/phaser.d.ts")}
+ */
+
+/**
+ * Variable que guarda todos los ajustes del las escenas de Phaser
+ * @type {JSON}
+ * @property {Phaser} type - Tipo de renderizado para el navegador
+ * @property {number} width - Anchura máxima de las esenas
+ * @property {number} height - Altura máxima de las escenas
+ * @property {Phaser.Display.Color} backgroundColor - Color de fondo
+ * @property {JSON} physics - Fisicas para controlar el juego
+ * @property {string} physics.default - Tipo de fisicas
+ * @property {JSON} physics.arcade - Ajustes de {@link config}.physics.default
+ * @property {bool} physics.arcade.debug - Con el debug activado se muestran los coliders i fuerzas
+ * @property {JSON} physics.arcade.gravity - Gravedad del juego para los objetos con fisicas
+ * @property {number} physics.arcade.gravity.y - Direccion de la gravedad Y
+ * @property {JSON} render - Opciones con el renderizado del juego
+ * @property {bool} render.pixelArt - Con pixelArt consigues que entre pixeles no haya espacios en blanco y se muevan mas suave
+ * @property {bool} render.pixelArt - No se puede reescalar las escenas de phaser
+ * @property {Phaser.Scene[]} scene - Declaramos todas las escenas que utlizamos
+ * @property {Phaser.Scene} scene.sceneStart - {@link sceneStart}
+ */
+var config = {
+    type: Phaser.AUTO,
+    width: 820,
+    height: 400,
+    backgroundColor: 0x000000,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+            gravity: { y: 1000 }
+        }
+    },
+    render: {
+        pixelArt: true,
+        autoResize: false
+    },
+    scene: [
+        sceneStart
+    ],
+};
+
+/**
+ * Al cargar la ventana, se ejecuta el juego
+ * @function windowonload
+ */
+window.onload = startGame();
+
+/**
+ * Inicializamos el juego de phaser
+ * Se ejecuta en {@link window.onload}
+ */
+function startGame() {
+    new Phaser.Game(config);
+}
