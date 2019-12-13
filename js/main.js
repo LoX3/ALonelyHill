@@ -1,8 +1,4 @@
 /**
- * @type {import("typings/phaser.d.ts")}
- */
-
-/**
  * Variable que guarda todos los ajustes del las escenas de Phaser
  * @type {JSON}
  * @property {Phaser} type - Tipo de renderizado para el navegador
@@ -19,9 +15,9 @@
  * @property {bool} render.pixelArt - Con pixelArt consigues que entre pixeles no haya espacios en blanco y se muevan mas suave
  * @property {bool} render.pixelArt - No se puede reescalar las escenas de phaser
  * @property {Phaser.Scene[]} scene - Declaramos todas las escenas que utlizamos
- * @property {Phaser.Scene} scene.sceneStart - {@link sceneStart}
+ * @property {Phaser.Scene} scene.SceneStart - {@link SceneStart}
  */
-var config = {
+const config = {
     type: Phaser.AUTO,
     width: 820,
     height: 400,
@@ -38,20 +34,11 @@ var config = {
         autoResize: false
     },
     scene: [
-        sceneStart
+        SceneStart
     ],
 };
 
 /**
- * Al cargar la ventana, se ejecuta el juego
- * @function windowonload
- */
-window.onload = startGame();
-
-/**
  * Inicializamos el juego de phaser
- * Se ejecuta en {@link window.onload}
  */
-function startGame() {
-    new Phaser.Game(config);
-}
+new Phaser.Game(config);

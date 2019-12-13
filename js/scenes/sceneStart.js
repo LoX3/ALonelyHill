@@ -5,7 +5,7 @@
 /**
  * @class Escena principal, donde puedes empezar partida
  */
-class SceneStart extends Phaser.Scenes {
+class SceneStart extends Phaser.Scene {
 
     /**
      * Escena principal del juego
@@ -14,6 +14,6 @@ class SceneStart extends Phaser.Scenes {
     constructor() {
         super({
             key: 'start'
-        })
+        });
     }
 }
