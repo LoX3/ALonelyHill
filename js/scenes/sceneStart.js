@@ -1,9 +1,5 @@
 /**
- * @type {import("typings/phaser.d.ts")}
- */
-
-/**
- * @class Escena principal, donde puedes empezar partida
+ * @class Escena principal del juego
  */
 class SceneStart extends Phaser.Scene {
 
