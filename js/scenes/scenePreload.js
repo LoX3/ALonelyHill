@@ -32,7 +32,9 @@ class ScenePreload extends Phaser.Scene {
      * que aún no serán disponible.
      */
     preload() {
-
+        this.load.image('part1', '../../assets/weapons_merge/Part1/12.png');
+        this.load.image('part2', '../../assets/weapons_merge/Part2/1.png');
+        this.load.image('part3', '../../assets/weapons_merge/Part3/1.png');
     }
 
     /**
@@ -41,7 +43,18 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
+        var image1 = this.physics.add
+            .image(200, 200, 'part1')
+            .setOrigin(0.5);
+        var image2 = this.physics.add
+            .image(200, 200, 'part2')
+            .setOrigin(0.5);
+        var image3 = this.physics.add
+            .image(200, 200, 'part3')
+            .setOrigin(0.5);
 
+        var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
+        this.cameras.main.setBackgroundColor(color);
     }
 
     /**

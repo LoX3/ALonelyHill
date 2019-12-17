@@ -15,7 +15,8 @@
  * @property {bool} render.pixelArt - Con pixelArt consigues que entre pixeles no haya espacios en blanco y se muevan mas suave
  * @property {bool} render.pixelArt - No se puede reescalar las escenas de phaser
  * @property {Phaser.Scene[]} scene - Declaramos todas las escenas que utlizamos
- * @property {Phaser.Scene} scene.SceneStart - {@link SceneStart}
+ * @property {Phaser.Scene} scene.ScenePreload - {@link ScenePreload} Escena para cargar todos los assets
+ * @property {Phaser.Scene} scene.SceneStart - {@link SceneStart} Escena para empezar el juego
  */
 const config = {
     type: Phaser.AUTO,
@@ -26,7 +27,8 @@ const config = {
         default: 'arcade',
         arcade: {
             debug: true,
-            gravity: { y: 1000 }
+            // gravity: { y: 1000 }
+            gravity: { y: 0 }
         }
     },
     render: {
@@ -34,7 +36,8 @@ const config = {
         autoResize: false
     },
     scene: [
-        SceneStart
+        ScenePreload,
+        SceneStart,
     ],
 };
 
