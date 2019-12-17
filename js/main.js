@@ -1,4 +1,5 @@
 /**
+ * @type {import("../def/phaser")}
  * Variable que guarda todos los ajustes del las escenas de Phaser
  * @type {JSON}
  * @property {Phaser} type - Tipo de renderizado para el navegador

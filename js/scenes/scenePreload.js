@@ -6,11 +6,9 @@ class ScenePreload extends Phaser.Scene {
      * @constructor Constructor de la escena
      */
     constructor() {
-        super(
-            {
-                key: 'ScenePreload',
-            }
-        )
+        super({
+            key: 'ScenePreload',
+        })
     }
 
     /**
@@ -32,9 +30,20 @@ class ScenePreload extends Phaser.Scene {
      * que aún no serán disponible.
      */
     preload() {
-        this.load.image('part1', '../../assets/weapons_merge/Part1/12.png');
-        this.load.image('part2', '../../assets/weapons_merge/Part2/1.png');
-        this.load.image('part3', '../../assets/weapons_merge/Part3/1.png');
+        this.load.image('butt', '../../assets/weapons_merge/Part1/2.png');
+        this.load.image('body', '../../assets/weapons_merge/Part2/2.png');
+        this.load.image('canon', '../../assets/weapons_merge/Part3/2.png');
+    }
+
+
+    /**
+     * @function rotateWeaponTowardsMouseAngle 
+     */
+    rotateWeaponTowardsMouseAngle(pointer) {
+        let cursor = pointer;
+        let angle = Phaser.Math.Angle.Between(this.weapon.x, this.weapon.y, cursor.x + this.cameras.main.scrollX, cursor.y + this.cameras.main.scrollY)
+        this.weapon.setScale(1 , cursor.x < config.width/2 ? -1 : 1);
+        this.weapon.setRotation(angle);
     }
 
     /**
@@ -43,15 +52,39 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        var image1 = this.physics.add
-            .image(200, 200, 'part1')
-            .setOrigin(0.5);
-        var image2 = this.physics.add
-            .image(200, 200, 'part2')
-            .setOrigin(0.5);
-        var image3 = this.physics.add
-            .image(200, 200, 'part3')
-            .setOrigin(0.5);
+
+        
+        this.weapon = this.add.container(config.width / 2, config.height / 2);
+        
+        
+        this.butt = this.physics.add
+        .image(0, 0, 'butt')
+        .setOrigin(1, 0.5);
+        this.body = this.physics.add
+        .image(0, 0, 'body')
+        .setOrigin(0.5);
+        this.canon = this.physics.add
+        .image(0, 0, 'canon')
+        .setOrigin(0, 0.5);
+        
+        
+        this.weapon.addAt(this.body, 0);
+        this.weapon.addAt(this.butt, 1);
+        this.weapon.addAt(this.canon, 2);
+        
+        this.butt.x -= this.body.width / 2;
+        this.canon.x += this.body.width / 2;
+        
+        
+        this.input.on('pointermove', this.rotateWeaponTowardsMouseAngle , this);
+        
+
+
+        // this.body.x = config.width / 2;
+        // this.body.y = config.height / 2;
+
+
+        // this.weapon.
 
         var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
         this.cameras.main.setBackgroundColor(color);
