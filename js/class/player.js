@@ -4,10 +4,6 @@
  * @param {Phaser.Scene} scene Escena donde se pone el jugador
  * @param {Number} x Posicion horizontal del contenedor
  * @param {Number} y Posicion vertical del contenedor
- * @param {Phaser.GameObjects.Image} butt Culata del arma
- * @param {Phaser.GameObjects.Image} body Parte central del arma
- * @param {Phaser.GameObjects.Image} canon Cañon del arma
- * @param {String} bulletType Bala que dispara el arma
  */
 class Player extends Phaser.GameObjects.Container {
     /**
@@ -15,20 +11,26 @@ class Player extends Phaser.GameObjects.Container {
      * @param {Phaser.Scene} scene
      * @param {Number} x
      * @param {Number} y
-     * @param {Phaser.GameObjects.Image} butt Culata del arma
-     * @param {Phaser.GameObjects.Image} body Parte central del arma
-     * @param {Phaser.GameObjects.Image} canon Cañon del arma
-     * @param {String} bulletType Bala que dispara el arma
      */
-    constructor(scene, x, y, butt, body, canon, bulletType) {
+    constructor(scene, x, y) {
         // Se crea el contenedor con la escena y la posición
         super(scene, x, y);
 
         // Creo las variables de la clase
         this.init();
 
+        var butt = scene.physics.add
+            .image(0, 0, 'butt_ONE')
+            .setOrigin(1, 0.5);
+        var body = scene.physics.add
+            .image(0, 0, 'body_ONE')
+            .setOrigin(0.5);
+        var canon = scene.physics.add
+            .image(0, 0, 'canon_ONE')
+            .setOrigin(0, 0.5);
+
         // Creo el arma y la guardo en una variable publica para poder declararla luego
-        this.weapon = new Weapon(scene, 0, 0, butt, body, canon, bulletType);
+        this.weapon = new Weapon(scene, 0, 0, butt, body, canon, 'bullet');
 
         // Añado el arma como hijo para que copie el movimiento del padre
         this.addAt(this.weapon, 0);

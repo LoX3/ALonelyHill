@@ -53,6 +53,9 @@ class Weapon extends Phaser.GameObjects.Container {
         this.shootPos = scene.add.image(shootPosX, 0);
         this.addAt(this.shootPos, 3);
 
+        // Offset para que la bala salga del cañon
+        this.canonOffset = 12;
+
         // Creo las variables para conseguir posiciones absolutas
         this.tempMatrix = new Phaser.GameObjects.Components.TransformMatrix();
         this.tempParentMatrix = new Phaser.GameObjects.Components.TransformMatrix();
@@ -82,26 +85,27 @@ class Weapon extends Phaser.GameObjects.Container {
         this.bulletGroup;
 
         /**
-         * Tipo de bala que se dispara
-         * @type {String}
+         * @type {String} Tipo de bala que se dispara
          */
         this.bulletType;
 
         /**
-         * Final del cañon del arma por donde sale la bala
-         * @type {Phaser.GameObjects.Image}
+         * @type {Phaser.GameObjects.Image} Final del cañon del arma por donde sale la bala
          */
         this.shootPos;
 
         /**
-         * Se utiliza para cojer la posición absoluta de @var this.shootPos
-         * @type {Phaser.GameObjects.Components.TransformMatrix}
+         * @type {Number} Offset para que concuerde del final del cañon verticalmente
          */
-        this.tempMatrix        
+        this.canonOffset;
 
         /**
-         * Se utiliza para cojer la posición absoluta de @var this.shootPos
-         * @type {Phaser.GameObjects.Components.TransformMatrix}
+         * @type {Phaser.GameObjects.Components.TransformMatrix} Se utiliza para cojer la posición absoluta de @var this.shootPos
+         */
+        this.tempMatrix
+
+        /**
+         * @type {Phaser.GameObjects.Components.TransformMatrix} Se utiliza para cojer la posición absoluta de @var this.shootPos
          */
         this.tempParentMatrix
     }
@@ -121,7 +125,7 @@ class Weapon extends Phaser.GameObjects.Container {
      */
     rotateWeaponTowardsMouseAngle(pointer) {
         let cursor = pointer;
-        let angle = Phaser.Math.Angle.Between(this.parentContainer.x, this.parentContainer.y, cursor.x + this.scene.cameras.main.scrollX, cursor.y + this.scene.cameras.main.scrollY)
+        let angle = Phaser.Math.Angle.Between(this.parentContainer.x, this.parentContainer.y - this.canonOffset, cursor.x + this.scene.cameras.main.scrollX, cursor.y + this.scene.cameras.main.scrollY)
         this.setScale(1, (cursor.x < this.parentContainer.x) ? -1 : 1);
         this.setRotation(angle);
     }
@@ -131,7 +135,7 @@ class Weapon extends Phaser.GameObjects.Container {
      * @param {Phaser.Input.Pointer} pointer Puntero del ratón
      */
     shoot(pointer) {
-        var bala = new Bullet(this.scene, this.absolutePos.translateX, this.absolutePos.translateY, this.bulletType, this.rotation);
+        var bala = new Bullet(this.scene, this.absolutePos.translateX, this.absolutePos.translateY - this.canonOffset, this.bulletType, this.rotation);
         this.bulletGroup.add(bala);
     }
 }
