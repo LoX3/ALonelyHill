@@ -1,7 +1,7 @@
 /**
  * @type {import("../def/phaser")}
- * Variable que guarda todos los ajustes del las escenas de Phaser
  * @type {JSON}
+ * @name config Variable que guarda todos los ajustes del las escenas de Phaser
  * @property {Phaser} type - Tipo de renderizado para el navegador
  * @property {number} width - Anchura máxima de las esenas
  * @property {number} height - Altura máxima de las escenas

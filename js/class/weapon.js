@@ -1,12 +1,61 @@
 /**
  * @class Weapon - Arma del jugador
+ *
+ * @param {Phaser.Scene} scene Escena donde se pone el arma
+ * @param {Number} x Posicion horizontal del contenedor
+ * @param {Number} y Posicion vertical del contenedor
+ * @param {Phaser.GameObjects.Image} butt Culata del arma
+ * @param {Phaser.GameObjects.Image} body Parte central del arma
+ * @param {Phaser.GameObjects.Image} canon Cañon del arma
+ * @param {Phaser.GameObjects.Sprite} bulletType Tipo de bala que dispara el arma
  */
 class Weapon extends Phaser.GameObjects.Container {
     /**
      * @constructor Constructor del arma del jugador
+     * @param {Phaser.Scene} scene
+     * @param {Number} x
+     * @param {Number} y
+     * @param {Phaser.GameObjects.Image} butt
+     * @param {Phaser.GameObjects.Image} body
+     * @param {Phaser.GameObjects.Image} canon
+     * @param {Phaser.GameObjects.Sprite} bulletType
      */
-    constructor(butt, body, canon) {
-        this.addAt
+    constructor(scene, x, y, butt, body, canon, bulletType) {
+        // Se crea el contenedor con la escena y la posición
+        super(scene, x, y);
+
+        // Pongo las armas en posición
+        butt.x -= body.width / 2;
+        canon.x += body.width / 2;
+
+        // Pongo las armas como hijos
+        this.addAt(butt, 0);
+        this.addAt(body, 1);
+        this.addAt(canon, 2);
+
+        // Creo las variables de la clase
+        this.init();
+
+        // Guardo la escena en la que estamos
+        this.scene = scene;
+
+        // Pongo valor al tipo de bala
+        this.bulletType = bulletType;
+
+        // Creo el grupo para guardar las balas
+        this.bulletGroup = scene.add.group({
+            classType: Bullet,
+            runChildUpdate: true
+        });
+
+        // Creo un objeto vacio para que la bala salga y lo pongo como hijo
+        var shootPosX = this.getAt(2).width + (this.getAt(1).width / 2);
+        this.shootPos = scene.add.image(shootPosX, 0);
+        this.addAt(this.shootPos, 3);
+
+        // Creo las variables para conseguir posiciones absolutas
+        this.tempMatrix = new Phaser.GameObjects.Components.TransformMatrix();
+        this.tempParentMatrix = new Phaser.GameObjects.Components.TransformMatrix();
     }
 
     /**
@@ -17,27 +66,44 @@ class Weapon extends Phaser.GameObjects.Container {
      * objetos antes de que comience la precarga.
      */
     init() {
+        /**
+         * Escena donde se ejecuta el juego
+         * @type {Phaser.Scene}
+         */
+        this.scene;
 
-    }
+        /**
+         * Grupo donde se guardan las balas
+         * @type {Phaser.GameObjects.Group}
+         * @property {JSON} config Opciones del grupo
+         * @property {Bullet} config.classType Define el tipo de clase en el grupo {@link Phaser.GameObjects.Group#classType}.
+         * @property {Boolean} config.runChildUpdate Hace que se ejecuten los updates de los elementos dentro del grupo {@link Phaser.GameObjects.Group#runChildUpdate}.
+         */
+        this.bulletGroup;
 
-    /**
-     * @function preload Preload se llama primero. Normalmente usaría
-     * esto para cargar sus activos de juego (o los necesarios para el
-     * Estado actual). No debe crear ningún objeto en este método que
-     * requiera activos que también esté cargando en este método, ya
-     * que aún no serán disponible.
-     */
-    preload() {
+        /**
+         * Tipo de bala que se dispara
+         * @type {String}
+         */
+        this.bulletType;
 
-    }
+        /**
+         * Final del cañon del arma por donde sale la bala
+         * @type {Phaser.GameObjects.Image}
+         */
+        this.shootPos;
 
-    /**
-     * @function create Create sellama una vez que se ha completado la
-     * precarga. Si no tiene un método de precarga, crear es el primer
-     * método llamado en su estado.
-     */
-    create() {
+        /**
+         * Se utiliza para cojer la posición absoluta de @var this.shootPos
+         * @type {Phaser.GameObjects.Components.TransformMatrix}
+         */
+        this.tempMatrix        
 
+        /**
+         * Se utiliza para cojer la posición absoluta de @var this.shootPos
+         * @type {Phaser.GameObjects.Components.TransformMatrix}
+         */
+        this.tempParentMatrix
     }
 
     /**
@@ -45,6 +111,27 @@ class Weapon extends Phaser.GameObjects.Container {
      * archivos para poder jugar
      */
     update() {
+        this.shootPos.getWorldTransformMatrix(this.tempMatrix, this.tempParentMatrix);
+        this.absolutePos = this.tempMatrix.decomposeMatrix();
+    }
 
+    /**
+     * @function rotateWeaponTowardsMouseAngle Rota el objeto arma hacia el puntero
+     * @param {Phaser.Input.Pointer} pointer Puntero del ratón
+     */
+    rotateWeaponTowardsMouseAngle(pointer) {
+        let cursor = pointer;
+        let angle = Phaser.Math.Angle.Between(this.parentContainer.x, this.parentContainer.y, cursor.x + this.scene.cameras.main.scrollX, cursor.y + this.scene.cameras.main.scrollY)
+        this.setScale(1, (cursor.x < this.parentContainer.x) ? -1 : 1);
+        this.setRotation(angle);
+    }
+
+    /**
+     * @function shoot Disparo del arma
+     * @param {Phaser.Input.Pointer} pointer Puntero del ratón
+     */
+    shoot(pointer) {
+        var bala = new Bullet(this.scene, this.absolutePos.translateX, this.absolutePos.translateY, this.bulletType, this.rotation);
+        this.bulletGroup.add(bala);
     }
 }

@@ -33,17 +33,8 @@ class ScenePreload extends Phaser.Scene {
         this.load.image('butt', '../../assets/weapons_merge/Part1/2.png');
         this.load.image('body', '../../assets/weapons_merge/Part2/2.png');
         this.load.image('canon', '../../assets/weapons_merge/Part3/2.png');
-    }
-
-
-    /**
-     * @function rotateWeaponTowardsMouseAngle 
-     */
-    rotateWeaponTowardsMouseAngle(pointer) {
-        let cursor = pointer;
-        let angle = Phaser.Math.Angle.Between(this.weapon.x, this.weapon.y, cursor.x + this.cameras.main.scrollX, cursor.y + this.cameras.main.scrollY)
-        this.weapon.setScale(1 , cursor.x < config.width/2 ? -1 : 1);
-        this.weapon.setRotation(angle);
+        this.load.image('bullet', '../../assets/player/weapon/bullet/1.png');
+        this.load.image('player', './../assets/player/sensei.png')
     }
 
     /**
@@ -52,42 +43,28 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
+        var butt = this.add
+            .image(0, 0, 'butt')
+            .setOrigin(1, 0.5);
+        var body = this.add
+            .image(0, 0, 'body')
+            .setOrigin(0.5);
+        var canon = this.add
+            .image(0, 0, 'canon')
+            .setOrigin(0, 0.5);
 
-        
-        this.weapon = this.add.container(config.width / 2, config.height / 2);
-        
-        
-        this.butt = this.physics.add
-        .image(0, 0, 'butt')
-        .setOrigin(1, 0.5);
-        this.body = this.physics.add
-        .image(0, 0, 'body')
-        .setOrigin(0.5);
-        this.canon = this.physics.add
-        .image(0, 0, 'canon')
-        .setOrigin(0, 0.5);
-        
-        
-        this.weapon.addAt(this.body, 0);
-        this.weapon.addAt(this.butt, 1);
-        this.weapon.addAt(this.canon, 2);
-        
-        this.butt.x -= this.body.width / 2;
-        this.canon.x += this.body.width / 2;
-        
-        
-        this.input.on('pointermove', this.rotateWeaponTowardsMouseAngle , this);
-        
+        this.add.image(100, 100, 'bullet');
 
+        this.player = new Player(this, 100, 100, butt, body, canon, 'bullet');
+        this.physics.world.enableBody(this.player);
 
-        // this.body.x = config.width / 2;
-        // this.body.y = config.height / 2;
-
-
-        // this.weapon.
+        this.input.on('pointermove', this.player.weapon.rotateWeaponTowardsMouseAngle, this.player.weapon);
+        this.input.on('pointerdown', this.player.weapon.shoot, this.player.weapon);
 
         var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
         this.cameras.main.setBackgroundColor(color);
+
+        this.cursors = this.input.keyboard.createCursorKeys();
     }
 
     /**
@@ -95,6 +72,16 @@ class ScenePreload extends Phaser.Scene {
      * archivos para poder jugar
      */
     update() {
+        this.player.update();
 
+        if (this.cursors.left.isDown) {
+            this.player.body.setVelocityX(-100);
+        }
+        else if (this.cursors.right.isDown) {
+            this.player.body.setVelocityX(100);
+        }
+        else {
+            this.player.body.setVelocityX(0);
+        }
     }
 }
