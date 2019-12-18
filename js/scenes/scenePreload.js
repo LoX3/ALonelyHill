@@ -41,13 +41,13 @@ class ScenePreload extends Phaser.Scene {
             // console.log(" LOADED: butt_" + bt + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png');
         }
 
-        //Load body parts
+        //Load handle parts
         i = 0;
-        for (let bd in weaponParts.BODY) {
-            var id = weaponParts.BODY[bd];
-            this.load.image("body_" + bd, '../../assets/weapons/BODY/' + id + '.png');
+        for (let bd in weaponParts.HANDLE) {
+            var id = weaponParts.HANDLE[bd];
+            this.load.image("handle_" + bd, '../../assets/weapons/HANDLE/' + id + '.png');
             i++;
-            // console.log(" LOADED: body_" + bd + " | with route : " + '../../assets/weapons/BODY/' + id + '.png');
+            // console.log(" LOADED: handle_" + bd + " | with route : " + '../../assets/weapons/HANDLE/' + id + '.png');
         }
 
         //Load canon parts

@@ -5,7 +5,7 @@
  * @param {Number} x Posicion horizontal del contenedor
  * @param {Number} y Posicion vertical del contenedor
  * @param {Phaser.GameObjects.Image} butt Culata del arma
- * @param {Phaser.GameObjects.Image} body Parte central del arma
+ * @param {Phaser.GameObjects.Image} handle Parte central del arma
  * @param {Phaser.GameObjects.Image} canon Cañon del arma
  * @param {Phaser.GameObjects.Sprite} bulletType Tipo de bala que dispara el arma
  */
@@ -16,21 +16,21 @@ class Weapon extends Phaser.GameObjects.Container {
      * @param {Number} x
      * @param {Number} y
      * @param {Phaser.GameObjects.Image} butt
-     * @param {Phaser.GameObjects.Image} body
+     * @param {Phaser.GameObjects.Image} handle
      * @param {Phaser.GameObjects.Image} canon
      * @param {Phaser.GameObjects.Sprite} bulletType
      */
-    constructor(scene, x, y, butt, body, canon, bulletType) {
+    constructor(scene, x, y, butt, handle, canon, bulletType) {
         // Se crea el contenedor con la escena y la posición
         super(scene, x, y);
 
         // Pongo las armas en posición
-        butt.x -= body.width / 2;
-        canon.x += body.width / 2;
+        butt.x -= handle.width / 2;
+        canon.x += handle.width / 2;
 
         // Pongo las armas como hijos
         this.addAt(butt, 0);
-        this.addAt(body, 1);
+        this.addAt(handle, 1);
         this.addAt(canon, 2);
 
         // Creo las variables de la clase

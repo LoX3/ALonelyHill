@@ -1,5 +1,14 @@
 /**
  * @class Parte cliente del videojuego
+ * @param {String} bulletType Bala que dispara el arma
+
+     * @param {String} bulletType Bala que dispara el arma
+ * @param {String} bulletType Bala que dispara el arma
+
+     * @param {String} bulletType Bala que dispara el arma
+ * @param {String} bulletType Bala que dispara el arma
+
+     * @param {String} bulletType Bala que dispara el arma
  */
 static class Cliente extends Phaser.Scene {
     /**

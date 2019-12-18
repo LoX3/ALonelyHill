@@ -22,15 +22,15 @@ class Player extends Phaser.GameObjects.Container {
         var butt = scene.physics.add
             .image(0, 0, 'butt_ONE')
             .setOrigin(1, 0.5);
-        var body = scene.physics.add
-            .image(0, 0, 'body_ONE')
+        var handle = scene.physics.add
+            .image(0, 0, 'handle_ONE')
             .setOrigin(0.5);
         var canon = scene.physics.add
             .image(0, 0, 'canon_ONE')
             .setOrigin(0, 0.5);
 
         // Creo el arma y la guardo en una variable publica para poder declararla luego
-        this.weapon = new Weapon(scene, 0, 0, butt, body, canon, 'bullet');
+        this.weapon = new Weapon(scene, 0, 0, butt, handle, canon, 'bullet');
 
         // Añado el arma como hijo para que copie el movimiento del padre
         this.addAt(this.weapon, 0);
