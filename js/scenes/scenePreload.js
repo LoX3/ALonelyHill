@@ -1,3 +1,4 @@
+// import {} from '../../assets/weapons/Part1/'
 /**
  * @class Se cargan los assets del juego
  */
@@ -23,6 +24,46 @@ class ScenePreload extends Phaser.Scene {
     }
 
     /**
+     * @function preloadWeaponParts Función encargada de cargar todas 
+     * las partes de weapon con sus respectivos id's a partir del enum
+     * que sirve para referirse a cada una de ellas de manera inequívoca (weaponParts).
+     */
+    preloadWeaponParts() {
+        //Variables
+        var i
+        
+        //Load butt parts
+        i = 0;
+        for (let bt in weaponParts.BUTT) {
+            var id = weaponParts.BUTT[bt];
+            this.load.image( "butt_" + bt, '../../assets/weapons/BUTT/' + id + '.png');
+            i++;
+            console.log(" LOADED: butt_" + bt + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png' );
+            
+        }
+        
+        //Load body parts
+        i = 0;
+        for (let bd in weaponParts.BODY) {
+            var id = weaponParts.BODY[bd];
+            this.load.image( "body_" + bd, '../../assets/weapons/BODY/' + id + '.png');
+            i++;
+            console.log(" LOADED: body_" + bd + " | with route : " + '../../assets/weapons/BODY/' + id + '.png' );
+            
+        }
+        
+        //Load canon parts
+        i = 0;
+        for (let c in weaponParts.CANON) {
+            var id = weaponParts.CANON[c];
+            this.load.image( "canon_" + c, '../../assets/weapons/CANON/' + id + '.png');
+            i++;
+            console.log(" LOADED: canon_" + c + " | with route : " + '../../assets/weapons/CANON/' + id + '.png' );
+
+        }
+    }
+
+    /**
      * @function preload Preload se llama primero. Normalmente usaría
      * esto para cargar sus activos de juego (o los necesarios para el
      * Estado actual). No debe crear ningún objeto en este método que
@@ -30,11 +71,20 @@ class ScenePreload extends Phaser.Scene {
      * que aún no serán disponible.
      */
     preload() {
-        this.load.image('butt', '../../assets/weapons_merge/Part1/2.png');
-        this.load.image('body', '../../assets/weapons_merge/Part2/2.png');
-        this.load.image('canon', '../../assets/weapons_merge/Part3/2.png');
-        this.load.image('bullet', '../../assets/player/weapon/bullet/1.png');
-        this.load.image('player', './../assets/player/sensei.png')
+        this.preloadWeaponParts();
+    }
+
+
+    /**
+     * @function rotateWeaponTowardsMouseAngle 
+     * Esta función se usa para rotar el arma en función de la posición del
+     * cursor en la pantalla.
+     */
+    rotateWeaponTowardsMouseAngle(pointer) {
+        let cursor = pointer;
+        let angle = Phaser.Math.Angle.Between(this.weapon.x, this.weapon.y, cursor.x + this.cameras.main.scrollX, cursor.y + this.cameras.main.scrollY)
+        this.weapon.setScale(1 , cursor.x < config.width/2 ? -1 : 1);
+        this.weapon.setRotation(angle);
     }
 
     /**
@@ -43,16 +93,16 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        var butt = this.add
-            .image(0, 0, 'butt')
+        var butt = this.physics.add
+            .image(0, 0, 'butt_ONE')
             .setOrigin(1, 0.5);
-        var body = this.add
-            .image(0, 0, 'body')
+        var body = this.physics.add
+            .image(0, 0, 'body_ONE')
             .setOrigin(0.5);
-        var canon = this.add
-            .image(0, 0, 'canon')
+        var canon = this.physics.add
+            .image(0, 0, 'canon_ONE')
             .setOrigin(0, 0.5);
-
+        
         this.add.image(100, 100, 'bullet');
 
         this.player = new Player(this, 100, 100, butt, body, canon, 'bullet');
