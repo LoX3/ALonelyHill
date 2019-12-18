@@ -59,18 +59,20 @@ class ScenePreload extends Phaser.Scene {
             // console.log(" LOADED: canon_" + c + " | with route : " + '../../assets/weapons/CANON/' + id + '.png');
         }
 
-        this.load.image('bullet', '../../assets/player/weapon/bullet/1.png')
+        this.load.image('bullet', '../../assets/player/weapon/bullet/1.png');
+        this.load.image('sensei', '../../assets/player/sensei.png');
+
 
         this.load.on('progress', function (value) {
-            console.log(value);
+            // console.log(value);
         });
 
         this.load.on('fileprogress', function (file) {
-            console.log(file.src);
+            // console.log(file.src);
         });
 
         this.load.on('complete', function () {
-            console.log('complete');
+            // console.log('complete');
         });
     }
 
@@ -103,8 +105,7 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        this.player = new Player(this, 100, 100);
-        this.physics.world.enableBody(this.player);
+        this.player = new Player(this, 100, 100, 'sensei');
 
         this.input.on('pointermove', this.player.weapon.rotateWeaponTowardsMouseAngle, this.player.weapon);
         this.input.on('pointerdown', this.player.weapon.shoot, this.player.weapon);

@@ -1,17 +1,16 @@
 /**
- * @class DESCRIPCION
+ * @class Jugador principal del juego
  */
-class NAME extends Phaser.Scene {
+class Character extends Phaser.GameObjects.Image {
     /**
      * @constructor Constructor de la escena NAME
      */
-    constructor() {
-        super(
-            {
-                key: 'NAME',
-            }
-        );
+    constructor(scene, x, y, image) {
+        super(scene, x, y, image);
+
+        this.setScale(4);
     }
+
     /**
      * @function init Init es la primera función que se llama cuando se
      * inicia su estado. Se llama antes de precargar, crear o cualquier

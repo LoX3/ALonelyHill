@@ -24,9 +24,13 @@ class Weapon extends Phaser.GameObjects.Container {
         // Se crea el contenedor con la escena y la posición
         super(scene, x, y);
 
+        // Al hacer scale de las partes del arma, no quedan bien, con esto se arregla
+        var handleWidth = handle.scale * handle.width;
+        var canonWidth = canon.scale * canon.width;
+
         // Pongo las armas en posición
-        butt.x -= handle.width / 2;
-        canon.x += handle.width / 2;
+        butt.x -= (handleWidth / 2);
+        canon.x += (handleWidth / 2);
 
         // Pongo las armas como hijos
         this.addAt(butt, 0);
@@ -49,7 +53,7 @@ class Weapon extends Phaser.GameObjects.Container {
         });
 
         // Creo un objeto vacio para que la bala salga y lo pongo como hijo
-        var shootPosX = this.getAt(2).width + (this.getAt(1).width / 2);
+        var shootPosX = canonWidth + (handleWidth / 2);
         this.shootPos = scene.add.image(shootPosX, 0);
         this.addAt(this.shootPos, 3);
 
@@ -125,8 +129,10 @@ class Weapon extends Phaser.GameObjects.Container {
      */
     rotateWeaponTowardsMouseAngle(pointer) {
         let cursor = pointer;
-        let angle = Phaser.Math.Angle.Between(this.parentContainer.x, this.parentContainer.y - this.canonOffset, cursor.x + this.scene.cameras.main.scrollX, cursor.y + this.scene.cameras.main.scrollY)
-        this.setScale(1, (cursor.x < this.parentContainer.x) ? -1 : 1);
+        var axisX = this.parentContainer.x + this.x;
+        var axisY = this.parentContainer.y + this.y - this.canonOffset;
+        let angle = Phaser.Math.Angle.Between(axisX, axisY, cursor.x + this.scene.cameras.main.scrollX, cursor.y + this.scene.cameras.main.scrollY)
+        this.setScale(1, (cursor.x < axisX) ? -1 : 1);
         this.setRotation(angle);
     }
 
