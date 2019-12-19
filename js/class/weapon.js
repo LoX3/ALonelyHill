@@ -49,7 +49,7 @@ class Weapon extends Phaser.GameObjects.Container {
         // Creo el grupo para guardar las balas
         this.bulletGroup = scene.add.group({
             classType: Bullet,
-            runChildUpdate: true
+            runChildUpdate: true,
         });
 
         // Creo un objeto vacio para que la bala salga y lo pongo como hijo
@@ -143,5 +143,9 @@ class Weapon extends Phaser.GameObjects.Container {
     shoot(pointer) {
         var bala = new Bullet(this.scene, this.absolutePos.translateX, this.absolutePos.translateY - this.canonOffset, this.bulletType, this.rotation);
         this.bulletGroup.add(bala);
+
+        if (this.scaleY < 0) {
+            bala.x -= bala.width;
+        }
     }
 }
