@@ -28,7 +28,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
         scene.physics.world.enableBody(this);
 
         // Roto la bala, como esta la pistola para que salga bien
-        this.setRotation(bulletRotation)
+        this.setRotation(bulletRotation);
 
         // Le doy velocidad hacia donde esta rotada, eso hace que siga hacia donde mira
         scene.physics.velocityFromRotation(this.rotation, 400, this.body.velocity);

@@ -61,10 +61,16 @@ class Player extends Phaser.GameObjects.Container {
     update() {
         // Hago el update del hijo
         this.weapon.update();
+
+        // Muevo al jugador
+        this.playerMovement();
+
+        // Muevo la camera entre el jugador y el puntero
+        this.moveCamera();
     }
 
     /**
-     * Creo la imagen del jugador
+     * @function crearCharacter Creo la imagen del jugador
      * @param {Phaser.Scene} scene Escena donde se crean las imagenes
      * @param {String} characterImage String con el id del asset para cargar
      */
@@ -76,25 +82,25 @@ class Player extends Phaser.GameObjects.Container {
     }
 
     /** 
-     * Creo el arma para el jugador
+     * @function crearWeapon Creo el arma para el jugador
      * @param {Phaser.Scene} scene Escena donde se crean las imágenes
      */
     crearWeapon(scene) {
         // Culata del arma
         var butt = scene.add
-            .image(0, 0, 'butt_ONE')
+            .image(0, 0, 'aONE')
             .setOrigin(1, 0.5)
             .setScale(0.7);
 
         // Cuerpo del arma
         var handle = scene.add
-            .image(0, 0, 'handle_ONE')
+            .image(0, 0, 'bONE')
             .setOrigin(0.5)
             .setScale(0.7);
 
         // Cañón del arma
         var canon = scene.add
-            .image(0, 0, 'canon_ONE')
+            .image(0, 0, 'cONE')
             .setOrigin(0, 0.5)
             .setScale(0.7);
 
@@ -114,7 +120,7 @@ class Player extends Phaser.GameObjects.Container {
     }
 
     /**
-     * Activo los datos en el objeto y le doy propiedades
+     * @function customData Activo los datos en el objeto y le doy propiedades
      */
     customData() {
         this.setDataEnabled(true);
@@ -125,5 +131,38 @@ class Player extends Phaser.GameObjects.Container {
             vida: 100,
             velocidad: 100,
         });
+    }
+
+    /**
+     * @function playerMovement Mueve el jugador segun las teclas pulsadas
+     */
+    playerMovement() {
+        if (this.scene.cursors.left.isDown) {
+            this.body.setVelocityX(-100);
+        }
+        else if (this.scene.cursors.right.isDown) {
+            this.body.setVelocityX(100);
+        }
+        else {
+            this.body.setVelocityX(0);
+        }
+
+        if (this.scene.cursors.up.isDown) {
+            this.body.setVelocityY(-100);
+        }
+        else if (this.scene.cursors.down.isDown) {
+            this.body.setVelocityY(100);
+        }
+        else {
+            this.body.setVelocityY(0);
+        }
+    }
+
+    /**
+     * @function moveCamera Mueve la camara entre el jugador y el puntero
+     */
+    moveCamera() {
+        // this.scene.cameras.main.x = this.x - this.weapon.puntero.x;
+        // this.scene.cameras.main.y = this.y - this.weapon.puntero.y;
     }
 }

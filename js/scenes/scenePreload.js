@@ -36,7 +36,7 @@ class ScenePreload extends Phaser.Scene {
         i = 0;
         for (let bt in weaponParts.BUTT) {
             var id = weaponParts.BUTT[bt];
-            this.load.image(bt, '../../assets/weapons/BUTT/' + id + '.png');
+            this.load.image('a' + bt, '../../assets/weapons/BUTT/' + id + '.png');
             i++;
             // console.log(" LOADED: butt_" + bt + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png');
         }
@@ -45,7 +45,7 @@ class ScenePreload extends Phaser.Scene {
         i = 0;
         for (let bd in weaponParts.HANDLE) {
             var id = weaponParts.HANDLE[bd];
-            this.load.image(bd, '../../assets/weapons/HANDLE/' + id + '.png');
+            this.load.image('b' + bd, '../../assets/weapons/HANDLE/' + id + '.png');
             i++;
             // console.log(" LOADED: handle_" + bd + " | with route : " + '../../assets/weapons/HANDLE/' + id + '.png');
         }
@@ -54,14 +54,14 @@ class ScenePreload extends Phaser.Scene {
         i = 0;
         for (let c in weaponParts.CANON) {
             var id = weaponParts.CANON[c];
-            this.load.image(c, '../../assets/weapons/CANON/' + id + '.png');
+            this.load.image('c' + c, '../../assets/weapons/CANON/' + id + '.png');
             i++;
             // console.log(" LOADED: canon_" + c + " | with route : " + '../../assets/weapons/CANON/' + id + '.png');
         }
 
         this.load.image('bullet', '../../assets/player/weapon/bullet/1.png');
         this.load.image('sensei', '../../assets/player/sensei.png');
-
+        this.load.image('scope', '../../assets/player/weapon/scope50.png');
 
         this.load.on('progress', function (value) {
             // console.log(value);
@@ -107,9 +107,6 @@ class ScenePreload extends Phaser.Scene {
     create() {
         this.player = new Player(this, 100, 100, 'sensei');
 
-        this.input.on('pointermove', this.player.weapon.rotateWeaponTowardsMouseAngle, this.player.weapon);
-        this.input.on('pointerdown', this.player.weapon.shoot, this.player.weapon);
-
         var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
         this.cameras.main.setBackgroundColor(color);
 
@@ -122,15 +119,5 @@ class ScenePreload extends Phaser.Scene {
      */
     update() {
         this.player.update();
-
-        if (this.cursors.left.isDown) {
-            this.player.body.setVelocityX(-100);
-        }
-        else if (this.cursors.right.isDown) {
-            this.player.body.setVelocityX(100);
-        }
-        else {
-            this.player.body.setVelocityX(0);
-        }
     }
 }
