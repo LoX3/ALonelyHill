@@ -19,6 +19,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, bulletType, bulletRotation) {
         // Se crea el sprite con la escena, la posición i la imagen
         super(scene, x, y, bulletType);
+        this.scene = scene;
 
         // Muevo un poco la bala para que salga mejor del cañón
         this.x += this.width / 2;
@@ -31,7 +32,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.setRotation(bulletRotation);
 
         // Le doy velocidad hacia donde esta rotada, eso hace que siga hacia donde mira
-        scene.physics.velocityFromRotation(this.rotation, 400, this.body.velocity);
+        scene.physics.velocityFromRotation(this.rotation, 800, this.body.velocity);
 
         // Añado la bala en al escena
         scene.add.existing(this);
@@ -44,10 +45,11 @@ class Bullet extends Phaser.GameObjects.Sprite {
     update() {
         // Si se sale de la pantalla, se destruye el objeto
         if (
-            this.x > (config.width + this.width) ||
-            this.x < 0 ||
-            this.y > (config.height + this.height) ||
-            this.y < 0) {
+            this.x > this.scene.cameras.main.scrollX + config.width + this.width ||
+            this.x < this.scene.cameras.main.scrollX - this.width ||
+            this.y > this.scene.cameras.main.scrollY + config.height + this.height ||
+            this.y < this.scene.cameras.main.scrollY - this.height
+        ) {
             this.destroy();
         }
     }

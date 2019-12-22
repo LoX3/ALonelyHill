@@ -110,6 +110,8 @@ class ScenePreload extends Phaser.Scene {
         var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
         this.cameras.main.setBackgroundColor(color);
 
+        this.text = this.add.text(0, 0, 'Move the mouse', { font: '16px Courier', fill: '#00ff00' });
+
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 
@@ -119,5 +121,12 @@ class ScenePreload extends Phaser.Scene {
      */
     update() {
         this.player.update();
+
+        this.text.setText([
+            'x: ' + this.cameras.main.x,
+            'y: ' + this.cameras.main.y,
+            'scrollX: ' + this.cameras.main.scrollX,
+            'scrollY: ' + this.cameras.main.scrollY,
+        ]);
     }
 }

@@ -29,10 +29,16 @@ class Player extends Phaser.GameObjects.Container {
         this.crearWeapon(scene);
 
         // Activo las variables internas
-        this.customData();
+        this.createCustomData();
 
         // Añado el container a la escena
         scene.add.existing(this);
+
+        // Hago que la cámara siga al jugador, y la centro un poco
+        // ESTO EN UN FUTURO: LA CAMARA APUNTA ENTRE EL JUGADOR Y EL PUNTERO
+        scene.cameras.main
+            .startFollow(this)
+            .setFollowOffset(-(this.character.scale * this.character.width), -(this.character.scale * this.character.height));
     }
 
     /**
@@ -64,9 +70,6 @@ class Player extends Phaser.GameObjects.Container {
 
         // Muevo al jugador
         this.playerMovement();
-
-        // Muevo la camera entre el jugador y el puntero
-        this.moveCamera();
     }
 
     /**
@@ -122,7 +125,7 @@ class Player extends Phaser.GameObjects.Container {
     /**
      * @function customData Activo los datos en el objeto y le doy propiedades
      */
-    customData() {
+    createCustomData() {
         this.setDataEnabled(true);
 
         this.setData({
@@ -156,13 +159,5 @@ class Player extends Phaser.GameObjects.Container {
         else {
             this.body.setVelocityY(0);
         }
-    }
-
-    /**
-     * @function moveCamera Mueve la camara entre el jugador y el puntero
-     */
-    moveCamera() {
-        // this.scene.cameras.main.x = this.x - this.weapon.puntero.x;
-        // this.scene.cameras.main.y = this.y - this.weapon.puntero.y;
     }
 }

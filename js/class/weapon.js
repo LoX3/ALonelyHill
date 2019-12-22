@@ -58,6 +58,8 @@ class Weapon extends Phaser.GameObjects.Container {
 
         // Imagen del puntero
         this.puntero = scene.add.image(0, 0, 'scope');
+        // Scroll factor sirve para que no se mueva al cambiar la cámara de posicion
+        this.puntero.setScrollFactor(0);
 
         // Al mover el ratón por le juego, roto el arma para que apunte
         scene.input.on('pointermove', this.rotateWeaponTowardsMouseAngle, this);
@@ -110,12 +112,17 @@ class Weapon extends Phaser.GameObjects.Container {
         /**
          * @type {Phaser.GameObjects.Components.TransformMatrix} Se utiliza para cojer la posición absoluta de @var this.shootPos
          */
-        this.tempMatrix
+        this.tempMatrix;
 
         /**
          * @type {Phaser.GameObjects.Components.TransformMatrix} Se utiliza para cojer la posición absoluta de @var this.shootPos
          */
-        this.tempParentMatrix
+        this.tempParentMatrix;
+
+        /**
+         * @type {Number} Obtiene los valores absolutos del punto de salida de la bala
+         */
+        this.absoluteShootPos = new Phaser.Math.Vector2();
     }
 
     /**
@@ -135,11 +142,14 @@ class Weapon extends Phaser.GameObjects.Container {
      */
     rotateWeaponTowardsMouseAngle(pointer) {
         let cursor = pointer;
+
         var axisX = this.parentContainer.x + this.x;
         var axisY = this.parentContainer.y + this.y - this.canonOffset;
 
         let angle = this.getRotationToPointer(axisX, axisY, cursor);
-        this.setScale(1, (cursor.x < axisX) ? -1 : 1);
+
+        // Si la rotacion es mas de 1.5 significa que ha de cambiar
+        this.setScale(1, (Math.abs(angle) > 1.5) ? -1 : 1);
         this.setRotation(angle);
 
         this.puntero.x = cursor.x;
