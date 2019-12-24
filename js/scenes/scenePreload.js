@@ -20,7 +20,9 @@ class ScenePreload extends Phaser.Scene {
      * objetos antes de que comience la precarga.
      */
     init() {
-        this.playerMap = [];
+        this.player;
+        this.enemies;
+        this.state;
     }
 
     /**
@@ -105,8 +107,7 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        this.playerMap = [];
-
+        this.state = gameStates.LOADING;
         var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
         this.cameras.main.setBackgroundColor(color);
 
@@ -114,9 +115,11 @@ class ScenePreload extends Phaser.Scene {
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
+        this.enemies = [];
+
         cliente.askNewPlayer();
 
-        console.log(this.playerMap);
+        this.state = gameStates.PLAYING;
     }
 
     /**
@@ -124,22 +127,27 @@ class ScenePreload extends Phaser.Scene {
      * archivos para poder jugar
      */
     update() {
-        for (let index = 0; index < this.playerMap.length; index++) {
-            const element = this.playerMap[index];
-            if (element) {
-                element.update();
+        if (this.state = gameStates.PLAYING) {
+            if (this.player) {
+                this.player.update();
             }
-        }
 
-        this.text.setText([
-            'x: ' + this.cameras.main.x,
-            'y: ' + this.cameras.main.y,
-            'scrollX: ' + this.cameras.main.scrollX,
-            'scrollY: ' + this.cameras.main.scrollY,
-        ]);
+            this.text.setText([
+                'x: ' + this.cameras.main.x,
+                'y: ' + this.cameras.main.y,
+                'scrollX: ' + this.cameras.main.scrollX,
+                'scrollY: ' + this.cameras.main.scrollY,
+            ]);
+        }
     }
 
     addNewPlayer(id, x, y) {
-        this.playerMap[id] = new Player(this, x, y, 'sensei');
+        console.log('hi!');
+
+        this.player = new Player(this, x, y, 'sensei');
+    }
+
+    addNewEnemy(id, x, y) {
+        this.enemies[id] = new Enemy(this, x, y, 'sensei');
     }
 }

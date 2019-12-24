@@ -58,13 +58,15 @@ io.on('connection', function (socket) {
     socket.on('newServerPlayer', function () {
         socket.player = {
             id: server.lastPlayderID++,
-            x: 5,
-            y: 5
+            x: randomInt(0, 5),
+            y: randomInt(0, 5),
         };
 
-        socket.emit('getAllPlayers', getAllPlayers());
+        socket.emit('createPlayer', socket.player);
 
-        socket.broadcast.emit('newPlayer', socket.player);
+        socket.emit('getAllEnemies', getAllEnemies(socket.player.id));
+
+        socket.broadcast.emit('newEnemy', socket.player);
 
         socket.on('movePlayer', function (data) {
             socket.player.x = data.x;
@@ -81,16 +83,16 @@ io.on('connection', function (socket) {
             io.emit('remove', socket.player.id);
         });
 
-        socket.emit('giveMainCamera', socket.player.id);
+        socket.emit('giveMainCamera');
     });
 });
 
-function getAllPlayers() {
+function getAllEnemies(id) {
     var players = [];
 
     Object.keys(io.sockets.connected).forEach(function (socketID) {
         var player = io.sockets.connected[socketID].player;
-        if (player) {
+        if (player && player.id != id) {
             players.push(player);
         };
     });

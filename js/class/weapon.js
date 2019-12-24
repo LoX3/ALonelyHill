@@ -61,8 +61,6 @@ class Weapon extends Phaser.GameObjects.Container {
         // Scroll factor sirve para que no se mueva al cambiar la cámara de posicion
         this.puntero.setScrollFactor(0);
 
-        // Al mover el ratón por le juego, roto el arma para que apunte
-        scene.input.on('pointermove', this.rotateWeaponTowardsMouseAngle, this);
         // Al hacer click con el ratón, disparo 
         scene.input.on('pointerdown', this.shoot, this);
 

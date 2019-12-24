@@ -44,31 +44,35 @@ class Cliente {
     }
 
     playerInfo() {
-        this.socket.on('newPlayer', function (data) {
+        this.socket.on('createPlayer', function (data) {
             game.scene.getScene('ScenePreload').addNewPlayer(data.id, data.x, data.y);
         });
+
+        this.socket.on('newEnemy', function (data) {
+            game.scene.getScene('ScenePreload').addNewEnemy(data.id, data.x, data.y);
+        })
     }
 
     allPlayersInfo() {
-        this.socket.on('getAllPlayers', function (data) {
+        this.socket.on('getAllEnemies', function (data) {
             for (var i = 0; i < data.length; i++) {
-                game.scene.getScene('ScenePreload').addNewPlayer(data[i].id, data[i].x, data[i].y);
+                game.scene.getScene('ScenePreload').addNewEnemy(data[i].id, data[i].x, data[i].y);
             }
 
             cliente.socket.on('movePlayerWithForce', function (data) {
-                game.scene.getScene('ScenePreload').playerMap[data.id].movePlayerWithForce(data.forceX, data.forceY);
+                if (game.scene.getScene('ScenePreload').enemies[data.id]) {
+                    game.scene.getScene('ScenePreload').enemies[data.id].movePlayerWithForce(data.forceX, data.forceY);
+                }
             });
 
             cliente.socket.on('remove', function (id) {
-                game.scene.getScene('ScenePreload').playerMap[id].removePlayer();
+                if (game.scene.getScene('ScenePreload').enemies[data.id]) {
+                    game.scene.getScene('ScenePreload').enemies[id].removePlayer();
+                }
             });
 
-            cliente.socket.on('shootPlayer', function (data) {
-                game.scene.getScene('ScenePreload').playerMap[data.id].weapon.shoot();
-            });
-
-            cliente.socket.on('giveMainCamera', function (id) {
-                game.scene.getScene('ScenePreload').playerMap[id].giveCamera();
+            cliente.socket.on('giveMainCamera', function () {
+                game.scene.getScene('ScenePreload').player.giveCamera();
             });
         });
     }
