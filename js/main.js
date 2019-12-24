@@ -45,4 +45,4 @@ const config = {
 /**
  * Inicializamos el juego de phaser
  */
-new Phaser.Game(config);
+var game = new Phaser.Game(config);

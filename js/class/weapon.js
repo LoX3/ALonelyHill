@@ -23,6 +23,15 @@ class Weapon extends Phaser.GameObjects.Container {
     constructor(scene, x, y, butt, handle, canon, bulletType) {
         // Se crea el contenedor con la escena y la posición
         super(scene, x, y);
+        // Creo las variables de la clase
+        this.init();
+        // Guardo la escena en la que estamos
+        this.scene = scene;
+        // Pongo valor al tipo de bala
+        this.bulletType = bulletType;
+        // Offset para que la bala salga del cañon
+        this.canonOffset = 12;
+
         // Al hacer scale de las partes del arma, no quedan bien, con esto se arregla
         var handleWidth = handle.scale * handle.width;
         var canonWidth = canon.scale * canon.width;
@@ -34,15 +43,6 @@ class Weapon extends Phaser.GameObjects.Container {
         this.addAt(butt, 0);
         this.addAt(handle, 1);
         this.addAt(canon, 2);
-
-        // Creo las variables de la clase
-        this.init();
-        // Guardo la escena en la que estamos
-        this.scene = scene;
-        // Pongo valor al tipo de bala
-        this.bulletType = bulletType;
-        // Offset para que la bala salga del cañon
-        this.canonOffset = 12;
 
         // Creo el grupo para guardar las balas
         this.bulletGroup = scene.add.group({
@@ -122,7 +122,7 @@ class Weapon extends Phaser.GameObjects.Container {
         /**
          * @type {Number} Obtiene los valores absolutos del punto de salida de la bala
          */
-        this.absoluteShootPos = new Phaser.Math.Vector2();
+        this.absoluteShootPos;
     }
 
     /**
@@ -146,29 +146,27 @@ class Weapon extends Phaser.GameObjects.Container {
         var axisX = this.parentContainer.x + this.x;
         var axisY = this.parentContainer.y + this.y - this.canonOffset;
 
-        let angle = this.getRotationToPointer(axisX, axisY, cursor);
+        this.puntero.x = cursor.x;
+        this.puntero.y = cursor.y;
+
+        let angle = this.getRotationToPointer(axisX, axisY);
 
         // Si la rotacion es mas de 1.5 significa que ha de cambiar
         this.setScale(1, (Math.abs(angle) > 1.5) ? -1 : 1);
         this.setRotation(angle);
-
-        this.puntero.x = cursor.x;
-        this.puntero.y = cursor.y;
     }
 
-    getRotationToPointer(originX, originY, pointer) {
-        let cursor = pointer;
-        let angle = Phaser.Math.Angle.Between(originX, originY, cursor.x + this.scene.cameras.main.scrollX, cursor.y + this.scene.cameras.main.scrollY);
+    getRotationToPointer(originX, originY) {
+        let angle = Phaser.Math.Angle.Between(originX, originY, this.puntero.x + this.scene.cameras.main.scrollX, this.puntero.y + this.scene.cameras.main.scrollY);
 
         return angle;
     }
 
     /**
-     * @function shoot Disparo del arma
-     * @param {Phaser.Input.Pointer} pointer Puntero del ratón
+     * @function shoot Disparo del arma hacia el puntero
      */
-    shoot(pointer) {
-        var shootRotation = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, pointer);
+    shoot() {
+        var shootRotation = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
 
         var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletType, shootRotation);
         this.bulletGroup.add(bala);

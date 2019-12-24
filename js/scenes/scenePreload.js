@@ -20,7 +20,7 @@ class ScenePreload extends Phaser.Scene {
      * objetos antes de que comience la precarga.
      */
     init() {
-
+        this.playerMap = [];
     }
 
     /**
@@ -105,7 +105,7 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        this.player = new Player(this, 100, 100, 'sensei');
+        this.playerMap = [];
 
         var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
         this.cameras.main.setBackgroundColor(color);
@@ -113,6 +113,11 @@ class ScenePreload extends Phaser.Scene {
         this.text = this.add.text(0, 0, 'Move the mouse', { font: '16px Courier', fill: '#00ff00' });
 
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        cliente.askNewPlayer();
+
+        console.log(this.playerMap);
+
     }
 
     /**
@@ -120,7 +125,12 @@ class ScenePreload extends Phaser.Scene {
      * archivos para poder jugar
      */
     update() {
-        this.player.update();
+        for (let index = 0; index < this.playerMap.length; index++) {
+            const element = this.playerMap[index];
+            if (element) {
+                element.update();
+            }
+        }
 
         this.text.setText([
             'x: ' + this.cameras.main.x,
@@ -128,5 +138,9 @@ class ScenePreload extends Phaser.Scene {
             'scrollX: ' + this.cameras.main.scrollX,
             'scrollY: ' + this.cameras.main.scrollY,
         ]);
+    }
+
+    addNewPlayer(x, y) {
+        this.playerMap[id] = new Player(this, x, y, 'sensei');
     }
 }

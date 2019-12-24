@@ -8,7 +8,8 @@ class Cliente {
     constructor() {
         this.init();
         this.serverInfo();
-        this.clientInfo();
+        this.playerInfo();
+        this.allPlayersInfo();
     }
 
     /**
@@ -36,10 +37,50 @@ class Cliente {
         });
     }
 
-    clientInfo() {
+    askNewPlayer() {
+        console.log('Client: Creating player...');
 
+        this.socket.emit('newServerPlayer');
+    }
+
+    playerInfo() {
+        this.socket.on('newPlayer', function (data) {
+            game.scene.getScene('ScenePreload').addNewPlayer(data.x, data.y);
+        });
+    }
+
+    allPlayersInfo() {
+        this.socket.on('getAllPlayers', function (data) {
+            for (var i = 0; i < data.length; i++) {
+                game.scene.getScene('ScenePreload').addNewPlayer(data[i].x, data[i].y);
+            }
+
+            cliente.socket.on('movePlayerWithForce', function (data) {
+                game.scene.getScene('ScenePreload').playerMap[data.id].movePlayerWithForce(data.forceX, data.forceY);
+            });
+
+            cliente.socket.on('remove', function (id) {
+                game.scene.getScene('ScenePreload').playerMap[id].removePlayer();
+            });
+
+            cliente.socket.on('shootPlayer', function (data) {
+                game.scene.getScene('ScenePreload').playerMap[data.id].weapon.shoot();
+            })
+        });
+
+        this.socket.on('giveMainCamera', function (id) {
+            game.scene.getScene('ScenePreload').playerMap[id].giveCamera();
+        });
+    }
+
+    movePlayer(x, y, forceX, forceY) {
+        this.socket.emit('movePlayer', {
+            x: x,
+            y: y,
+            forceX: forceX,
+            forceY: forceY
+        });
     }
 }
 
 const cliente = new Cliente();
-cliente.sendTest();
