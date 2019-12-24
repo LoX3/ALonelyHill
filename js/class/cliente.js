@@ -45,14 +45,14 @@ class Cliente {
 
     playerInfo() {
         this.socket.on('newPlayer', function (data) {
-            game.scene.getScene('ScenePreload').addNewPlayer(data.x, data.y);
+            game.scene.getScene('ScenePreload').addNewPlayer(data.id, data.x, data.y);
         });
     }
 
     allPlayersInfo() {
         this.socket.on('getAllPlayers', function (data) {
             for (var i = 0; i < data.length; i++) {
-                game.scene.getScene('ScenePreload').addNewPlayer(data[i].x, data[i].y);
+                game.scene.getScene('ScenePreload').addNewPlayer(data[i].id, data[i].x, data[i].y);
             }
 
             cliente.socket.on('movePlayerWithForce', function (data) {
@@ -65,11 +65,11 @@ class Cliente {
 
             cliente.socket.on('shootPlayer', function (data) {
                 game.scene.getScene('ScenePreload').playerMap[data.id].weapon.shoot();
-            })
-        });
+            });
 
-        this.socket.on('giveMainCamera', function (id) {
-            game.scene.getScene('ScenePreload').playerMap[id].giveCamera();
+            cliente.socket.on('giveMainCamera', function (id) {
+                game.scene.getScene('ScenePreload').playerMap[id].giveCamera();
+            });
         });
     }
 

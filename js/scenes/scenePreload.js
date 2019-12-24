@@ -117,7 +117,6 @@ class ScenePreload extends Phaser.Scene {
         cliente.askNewPlayer();
 
         console.log(this.playerMap);
-
     }
 
     /**
@@ -140,7 +139,7 @@ class ScenePreload extends Phaser.Scene {
         ]);
     }
 
-    addNewPlayer(x, y) {
+    addNewPlayer(id, x, y) {
         this.playerMap[id] = new Player(this, x, y, 'sensei');
     }
 }
