@@ -9,7 +9,7 @@ class Cliente {
         this.init();
         this.serverInfo();
         this.playerInfo();
-        this.allPlayersInfo();
+        this.allEnemiesInfo();
     }
 
     /**
@@ -27,7 +27,6 @@ class Cliente {
     }
 
     sendTest() {
-        console.log('Client sending...');
         this.socket.emit('test');
     }
 
@@ -37,42 +36,32 @@ class Cliente {
         });
     }
 
-    askNewPlayer() {
-        console.log('Client: Creating player...');
-
+    registerPlayer() {
         this.socket.emit('newServerPlayer');
     }
 
     playerInfo() {
-        this.socket.on('createPlayer', function (data) {
-            game.scene.getScene('ScenePreload').addNewPlayer(data.id, data.x, data.y);
-        });
-
         this.socket.on('newEnemy', function (data) {
             game.scene.getScene('ScenePreload').addNewEnemy(data.id, data.x, data.y);
         })
     }
 
-    allPlayersInfo() {
+    allEnemiesInfo() {
         this.socket.on('getAllEnemies', function (data) {
             for (var i = 0; i < data.length; i++) {
                 game.scene.getScene('ScenePreload').addNewEnemy(data[i].id, data[i].x, data[i].y);
             }
 
-            cliente.socket.on('movePlayerWithForce', function (data) {
+            cliente.socket.on('moveEnemyWithForce', function (data) {
                 if (game.scene.getScene('ScenePreload').enemies[data.id]) {
                     game.scene.getScene('ScenePreload').enemies[data.id].movePlayerWithForce(data.forceX, data.forceY);
                 }
             });
 
-            cliente.socket.on('remove', function (id) {
+            cliente.socket.on('removeEnemy', function (id) {
                 if (game.scene.getScene('ScenePreload').enemies[data.id]) {
                     game.scene.getScene('ScenePreload').enemies[id].removePlayer();
                 }
-            });
-
-            cliente.socket.on('giveMainCamera', function () {
-                game.scene.getScene('ScenePreload').player.giveCamera();
             });
         });
     }

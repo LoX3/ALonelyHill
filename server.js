@@ -51,48 +51,70 @@ server.listen(process.env.PORT || 8080, function () {
 server.lastPlayderID = 0;
 
 io.on('connection', function (socket) {
+
+    /**
+     * @event test Prueba la conexión con el servidor
+     */
     socket.on('test', function () {
         io.emit('testOk', 'Test Ok');
     });
 
+    /**
+     * @event newServerPlayer Crea y administra al jugador en el servidor
+     */
     socket.on('newServerPlayer', function () {
+        /**
+         * @event getAllEnemies Busca y crea todos los enemigos que hay conectados
+         */
+        socket.emit('getAllEnemies', getAllEnemies());
+
+        // Crea un jugador que guarda el servidor
         socket.player = {
             id: server.lastPlayderID++,
-            x: randomInt(0, 5),
-            y: randomInt(0, 5),
+            x: 0,
+            y: 0,
         };
 
-        socket.emit('createPlayer', socket.player);
-
-        socket.emit('getAllEnemies', getAllEnemies(socket.player.id));
-
+        /**
+         * @event newEnemy Añado al jugador como enemigo
+         */
         socket.broadcast.emit('newEnemy', socket.player);
 
+        /**
+         * @event movePlayer Al mover el jugador, actualizo su posición en el servidor
+         */
         socket.on('movePlayer', function (data) {
             socket.player.x = data.x;
             socket.player.y = data.y;
 
-            io.emit('movePlayerWithForce', {
+            /**
+             * @event moveEnemyWithForce Muevo al jugador aplicado fuerza
+             */
+            io.emit('moveEnemyWithForce', {
                 id: socket.player.id,
                 forceX: data.forceX,
                 forceY: data.forceY
             });
         });
 
+        /**
+         * @event disconnect Al desconectarse el jugador...
+         */
         socket.on('disconnect', function () {
-            io.emit('remove', socket.player.id);
+            /**
+             * @event removeEnemy Borro al jugador de la partida
+             */
+            io.emit('removeEnemy', socket.player.id);
         });
-
-        socket.emit('giveMainCamera');
     });
 });
 
-function getAllEnemies(id) {
+function getAllEnemies() {
     var players = [];
 
     Object.keys(io.sockets.connected).forEach(function (socketID) {
         var player = io.sockets.connected[socketID].player;
-        if (player && player.id != id) {
+        if (player) {
             players.push(player);
         };
     });

@@ -117,7 +117,9 @@ class ScenePreload extends Phaser.Scene {
 
         this.enemies = [];
 
-        cliente.askNewPlayer();
+        this.player = new Player(this, 0, 0, 'sensei');
+
+        cliente.registerPlayer();
 
         this.state = gameStates.PLAYING;
     }
@@ -128,9 +130,7 @@ class ScenePreload extends Phaser.Scene {
      */
     update() {
         if (this.state = gameStates.PLAYING) {
-            if (this.player) {
-                this.player.update();
-            }
+            this.player.update();
 
             this.text.setText([
                 'x: ' + this.cameras.main.x,
@@ -139,12 +139,6 @@ class ScenePreload extends Phaser.Scene {
                 'scrollY: ' + this.cameras.main.scrollY,
             ]);
         }
-    }
-
-    addNewPlayer(id, x, y) {
-        console.log('hi!');
-
-        this.player = new Player(this, x, y, 'sensei');
     }
 
     addNewEnemy(id, x, y) {

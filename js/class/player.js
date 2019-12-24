@@ -37,6 +37,9 @@ class Player extends Phaser.GameObjects.Container {
 
         // Hago que la cámara siga al jugador, y la centro un poco
         // ESTO EN UN FUTURO: LA CAMARA APUNTA ENTRE EL JUGADOR Y EL PUNTERO
+        scene.cameras.main
+            .startFollow(this)
+            .setFollowOffset(-(this.character.scale * this.character.width), -(this.character.scale * this.character.height));
     }
 
     /**
@@ -159,20 +162,5 @@ class Player extends Phaser.GameObjects.Container {
         }
 
         cliente.movePlayer(this.x, this.y, this.body.velocity.x, this.body.velocity.y);
-    }
-
-    movePlayerWithForce(forceX, forceY) {
-        this.body.setVelocityX(forceX);
-        this.body.setVelocityY(forceY);
-    }
-
-    removePlayer() {
-        this.destroy();
-    }
-
-    giveCamera() {
-        this.scene.cameras.main
-            .startFollow(this)
-            .setFollowOffset(-(this.character.scale * this.character.width), -(this.character.scale * this.character.height));
     }
 }
