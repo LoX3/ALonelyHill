@@ -1,3 +1,10 @@
+/**
+ * @type {JSON}
+ * @name weaponParts Nombre de las imágenes de las armas
+ * @property {JSON} BUTT Imágenes de la culata del arma
+ * @property {JSON} HANDLE Imágenes de la cuerpo del arma
+ * @property {JSON} CANON Imágenes de la cañon del arma
+ */
 const weaponParts = {
     BUTT: {
         ONE: "butt_1",

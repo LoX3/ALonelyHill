@@ -141,6 +141,12 @@ class ScenePreload extends Phaser.Scene {
         }
     }
 
+    /**
+     * Crea un enemigo en la escena
+     * @param {number} id Id del enemigo
+     * @param {Number} x Posición horizontal del enemigo
+     * @param {Number} y Posición vertical del enemigo
+     */
     addNewEnemy(id, x, y) {
         this.enemies[id] = new Enemy(this, x, y, 'sensei');
     }

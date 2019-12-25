@@ -109,6 +109,9 @@ io.on('connection', function (socket) {
     });
 });
 
+/**
+ * Obtiene todos los jugadores enemigos del servidor
+ */
 function getAllEnemies() {
     var players = [];
 
@@ -122,6 +125,11 @@ function getAllEnemies() {
     return players;
 }
 
+/**
+ * Devuelve un numbero aleatorio en un rango
+ * @param {Number} low Minimo numero aleatorio
+ * @param {Number} high Máximo numero aleatorio
+ */
 function randomInt(low, high) {
     return Math.floor(Math.random() * (high - low) + low);
 }

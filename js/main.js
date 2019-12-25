@@ -44,5 +44,7 @@ const config = {
 
 /**
  * Inicializamos el juego de phaser
+ * @type {Phaser.Game}
+ * @name game Variable del juego para podere acceder desde el cliente a todas las escenas
  */
 var game = new Phaser.Game(config);
