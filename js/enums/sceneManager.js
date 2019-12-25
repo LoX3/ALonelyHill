@@ -1,5 +1,5 @@
 /**
- * @type {JSON}
+ * @enum {String}
  * @name sceneNames Nombre de las imágenes de las armas
  * @property {String} MENU Escena del menú
  * @property {String} PRELOAD Escena del preload
