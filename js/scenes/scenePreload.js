@@ -36,16 +36,16 @@ class ScenePreload extends Phaser.Scene {
         i = 0;
         for (let bt in weaponParts.BUTT) {
             var id = weaponParts.BUTT[bt];
-            this.load.image(bt, '../../assets/weapons/BUTT/' + id + '.png');
+            this.load.image(id, '../../assets/weapons/BUTT/' + id + '.png');
             i++;
-            // console.log(" LOADED: butt_" + bt + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png');
+            console.log(" LOADED:" + id + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png');
         }
 
         //Load handle parts
         i = 0;
         for (let bd in weaponParts.HANDLE) {
             var id = weaponParts.HANDLE[bd];
-            this.load.image(bd, '../../assets/weapons/HANDLE/' + id + '.png');
+            this.load.image(id, '../../assets/weapons/HANDLE/' + id + '.png');
             i++;
             // console.log(" LOADED: handle_" + bd + " | with route : " + '../../assets/weapons/HANDLE/' + id + '.png');
         }
@@ -54,7 +54,7 @@ class ScenePreload extends Phaser.Scene {
         i = 0;
         for (let c in weaponParts.CANON) {
             var id = weaponParts.CANON[c];
-            this.load.image(c, '../../assets/weapons/CANON/' + id + '.png');
+            this.load.image(id, '../../assets/weapons/CANON/' + id + '.png');
             i++;
             // console.log(" LOADED: canon_" + c + " | with route : " + '../../assets/weapons/CANON/' + id + '.png');
         }
@@ -68,7 +68,7 @@ class ScenePreload extends Phaser.Scene {
         });
 
         this.load.on('fileprogress', function (file) {
-            // console.log(file.src);
+            console.log(file.src);
         });
 
         this.load.on('complete', function () {
