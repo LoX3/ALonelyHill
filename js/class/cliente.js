@@ -1,22 +1,16 @@
 /**
  * @class Parte cliente del videojuego
- * @param {String} bulletType Bala que dispara el arma
-
-     * @param {String} bulletType Bala que dispara el arma
- * @param {String} bulletType Bala que dispara el arma
-
-     * @param {String} bulletType Bala que dispara el arma
- * @param {String} bulletType Bala que dispara el arma
-
-     * @param {String} bulletType Bala que dispara el arma
  */
-static class Cliente extends Phaser.Scene {
+class Cliente {
     /**
      * @constructor Constructor de la clase Cliente
      */
     constructor() {
-        super();
+        this.init();
+        this.serverInfo();
+        this.clientInfo();
     }
+
     /**
      * @function init Init es la primera función que se llama cuando se
      * inicia su estado. Se llama antes de precargar, crear o cualquier
@@ -25,34 +19,27 @@ static class Cliente extends Phaser.Scene {
      * objetos antes de que comience la precarga.
      */
     init() {
-
+        /**
+         * @type {Object} Guarda una coneción con el servidor
+         */
+        this.socket = io.connect();
     }
 
-    /**
-     * @function preload Preload se llama primero. Normalmente usaría
-     * esto para cargar sus activos de juego (o los necesarios para el
-     * Estado actual). No debe crear ningún objeto en este método que
-     * requiera activos que también esté cargando en este método, ya
-     * que aún no serán disponible.
-     */
-    preload() {
-
+    sendTest() {
+        console.log('Client sending...');
+        this.socket.emit('test');
     }
 
-    /**
-     * @function create Create sellama una vez que se ha completado la
-     * precarga. Si no tiene un método de precarga, crear es el primer
-     * método llamado en su estado.
-     */
-    create() {
-
+    serverInfo() {
+        this.socket.on('testOk', function (data) {
+            console.log(data);
+        });
     }
 
-    /**
-     * @function update Update se llama una vez finalizado la carga de los 
-     * archivos para poder jugar
-     */
-    update() {
+    clientInfo() {
 
     }
 }
+
+const cliente = new Cliente();
+cliente.sendTest();

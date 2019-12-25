@@ -8,7 +8,7 @@ class Character extends Phaser.GameObjects.Image {
     constructor(scene, x, y, image) {
         super(scene, x, y, image);
 
-        this.setScale(4);
+        this.setScale(2);
     }
 
     /**

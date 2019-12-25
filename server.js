@@ -38,5 +38,15 @@ app.get('/', function (req, res) {
  * Get up the server on port 8080
  */
 server.listen(process.env.PORT || 8080, function () {
+    console.log();
+    console.log('CADA VEZ QUE EDITES ESTE FICHERO, HAS DE VOLVER A HACER: NPM START!!!!');
+    console.log();
+
     console.log('Listening on ' + server.address().port);
 });
+
+io.on('connection', function (socket) {
+    socket.on('test', function () {
+        io.emit('testOk', 'Test Ok');
+    });
+})

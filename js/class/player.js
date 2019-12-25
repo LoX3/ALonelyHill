@@ -29,10 +29,16 @@ class Player extends Phaser.GameObjects.Container {
         this.crearWeapon(scene);
 
         // Activo las variables internas
-        this.customData();
+        this.createCustomData();
 
         // Añado el container a la escena
         scene.add.existing(this);
+
+        // Hago que la cámara siga al jugador, y la centro un poco
+        // ESTO EN UN FUTURO: LA CAMARA APUNTA ENTRE EL JUGADOR Y EL PUNTERO
+        scene.cameras.main
+            .startFollow(this)
+            .setFollowOffset(-(this.character.scale * this.character.width), -(this.character.scale * this.character.height));
     }
 
     /**
@@ -61,10 +67,13 @@ class Player extends Phaser.GameObjects.Container {
     update() {
         // Hago el update del hijo
         this.weapon.update();
+
+        // Muevo al jugador
+        this.playerMovement();
     }
 
     /**
-     * Creo la imagen del jugador
+     * @function crearCharacter Creo la imagen del jugador
      * @param {Phaser.Scene} scene Escena donde se crean las imagenes
      * @param {String} characterImage String con el id del asset para cargar
      */
@@ -76,7 +85,7 @@ class Player extends Phaser.GameObjects.Container {
     }
 
     /** 
-     * Creo el arma para el jugador
+     * @function crearWeapon Creo el arma para el jugador
      * @param {Phaser.Scene} scene Escena donde se crean las imágenes
      */
     crearWeapon(scene) {
@@ -114,9 +123,9 @@ class Player extends Phaser.GameObjects.Container {
     }
 
     /**
-     * Activo los datos en el objeto y le doy propiedades
+     * @function customData Activo los datos en el objeto y le doy propiedades
      */
-    customData() {
+    createCustomData() {
         this.setDataEnabled(true);
 
         this.setData({
@@ -125,5 +134,30 @@ class Player extends Phaser.GameObjects.Container {
             vida: 100,
             velocidad: 100,
         });
+    }
+
+    /**
+     * @function playerMovement Mueve el jugador segun las teclas pulsadas
+     */
+    playerMovement() {
+        if (this.scene.cursors.left.isDown) {
+            this.body.setVelocityX(-100);
+        }
+        else if (this.scene.cursors.right.isDown) {
+            this.body.setVelocityX(100);
+        }
+        else {
+            this.body.setVelocityX(0);
+        }
+
+        if (this.scene.cursors.up.isDown) {
+            this.body.setVelocityY(-100);
+        }
+        else if (this.scene.cursors.down.isDown) {
+            this.body.setVelocityY(100);
+        }
+        else {
+            this.body.setVelocityY(0);
+        }
     }
 }
