@@ -20,7 +20,9 @@ class ScenePreload extends Phaser.Scene {
      * objetos antes de que comience la precarga.
      */
     init() {
-
+        this.player;
+        this.enemies;
+        this.state;
     }
 
     /**
@@ -117,14 +119,21 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        this.player = new Player(this, 100, 100, 'sensei');
-
+        this.state = gameStates.LOADING;
         var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
         this.cameras.main.setBackgroundColor(color);
 
         this.text = this.add.text(0, 0, 'Move the mouse', { font: '16px Courier', fill: '#00ff00' });
 
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.enemies = [];
+
+        this.player = new Player(this, 0, 0, 'sensei');
+
+        cliente.registerPlayer();
+
+        this.state = gameStates.PLAYING;
     }
 
     /**
@@ -132,13 +141,25 @@ class ScenePreload extends Phaser.Scene {
      * archivos para poder jugar
      */
     update() {
-        this.player.update();
+        if (this.state = gameStates.PLAYING) {
+            this.player.update();
 
-        this.text.setText([
-            'x: ' + this.cameras.main.x,
-            'y: ' + this.cameras.main.y,
-            'scrollX: ' + this.cameras.main.scrollX,
-            'scrollY: ' + this.cameras.main.scrollY,
-        ]);
+            this.text.setText([
+                'x: ' + this.cameras.main.x,
+                'y: ' + this.cameras.main.y,
+                'scrollX: ' + this.cameras.main.scrollX,
+                'scrollY: ' + this.cameras.main.scrollY,
+            ]);
+        }
+    }
+
+    /**
+     * Crea un enemigo en la escena
+     * @param {number} id Id del enemigo
+     * @param {Number} x Posición horizontal del enemigo
+     * @param {Number} y Posición vertical del enemigo
+     */
+    addNewEnemy(id, x, y) {
+        this.enemies[id] = new Enemy(this, x, y, 'sensei');
     }
 }

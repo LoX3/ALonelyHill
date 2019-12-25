@@ -15,7 +15,8 @@ class Player extends Phaser.GameObjects.Container {
     constructor(scene, x, y, characterImage) {
         // Se crea el contenedor con la escena y la posición
         super(scene, x, y);
-
+        this.scene = scene;
+        this.name = name;
         // Creo las variables de la clase
         this.init();
 
@@ -159,5 +160,7 @@ class Player extends Phaser.GameObjects.Container {
         else {
             this.body.setVelocityY(0);
         }
+
+        cliente.movePlayer(this.x, this.y, this.body.velocity.x, this.body.velocity.y);
     }
 }
