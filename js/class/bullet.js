@@ -22,8 +22,9 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.scene = scene;
 
         // Muevo un poco la bala para que salga mejor del cañón
-        this.x += this.width / 2;
-        this.y += this.height / 2;
+
+        // this.x += this.width / 2;
+        // this.y += this.height / 2;
 
         // Añado fisicas para que pueda chocar contra otros elementos
         scene.physics.world.enableBody(this);
@@ -32,6 +33,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.setRotation(bulletRotation);
 
         // Le doy velocidad hacia donde esta rotada, eso hace que siga hacia donde mira
+        // scene.physics.velocityFromRotation(this.rotation, 1, this.body.velocity);
         scene.physics.velocityFromRotation(this.rotation, 800, this.body.velocity);
 
         // Añado la bala en al escena
