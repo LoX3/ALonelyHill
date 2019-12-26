@@ -92,27 +92,27 @@ class Player extends Phaser.GameObjects.Container {
     crearWeapon(scene) {
         // Culata del arma
         var butt = scene.add
-            .image(0, 0, 'aONE')
+            .image(0, 0, weaponParts.BUTT.ONE)
             .setOrigin(1, 0.5)
             .setScale(0.7);
 
         // Cuerpo del arma
         var handle = scene.add
-            .image(0, 0, 'bONE')
+            .image(0, 0, weaponParts.HANDLE.ONE)
             .setOrigin(0.5)
             .setScale(0.7);
 
         // Cañón del arma
         var canon = scene.add
-            .image(0, 0, 'cONE')
+            .image(0, 0, weaponParts.CANON.ONE)
             .setOrigin(0, 0.5)
             .setScale(0.7);
 
         // Creo el arma y la guardo en una variable publica para poder declararla luego
         this.weapon = new Weapon(
             scene,
-            this.body.width / 2,
-            this.body.height / 2 + this.character.height / 2,
+            this.body.width/2,
+            this.body.height/2,
             butt,
             handle,
             canon,

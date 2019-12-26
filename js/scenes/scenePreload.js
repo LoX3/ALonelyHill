@@ -32,22 +32,22 @@ class ScenePreload extends Phaser.Scene {
      */
     preloadWeaponParts() {
         //Variables
-        var i
+        var i;
 
         //Load butt parts
         i = 0;
         for (let bt in weaponParts.BUTT) {
             var id = weaponParts.BUTT[bt];
-            this.load.image('a' + bt, '../../assets/weapons/BUTT/' + id + '.png');
+            this.load.image(id, '../../assets/weapons/BUTT/' + id + '.png');
             i++;
-            // console.log(" LOADED: butt_" + bt + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png');
+            // console.log(" LOADED: " + bt + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png');
         }
 
         //Load handle parts
         i = 0;
         for (let bd in weaponParts.HANDLE) {
             var id = weaponParts.HANDLE[bd];
-            this.load.image('b' + bd, '../../assets/weapons/HANDLE/' + id + '.png');
+            this.load.image(id, '../../assets/weapons/HANDLE/' + id + '.png');
             i++;
             // console.log(" LOADED: handle_" + bd + " | with route : " + '../../assets/weapons/HANDLE/' + id + '.png');
         }
@@ -56,7 +56,7 @@ class ScenePreload extends Phaser.Scene {
         i = 0;
         for (let c in weaponParts.CANON) {
             var id = weaponParts.CANON[c];
-            this.load.image('c' + c, '../../assets/weapons/CANON/' + id + '.png');
+            this.load.image(id, '../../assets/weapons/CANON/' + id + '.png');
             i++;
             // console.log(" LOADED: canon_" + c + " | with route : " + '../../assets/weapons/CANON/' + id + '.png');
         }
@@ -108,7 +108,7 @@ class ScenePreload extends Phaser.Scene {
      */
     create() {
         this.state = gameStates.LOADING;
-        var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
+        var color = Phaser.Display.Color.GetColor32(50, 100, 100, 110);
         this.cameras.main.setBackgroundColor(color);
 
         this.text = this.add.text(0, 0, 'Move the mouse', { font: '16px Courier', fill: '#00ff00' });
@@ -132,12 +132,12 @@ class ScenePreload extends Phaser.Scene {
         if (this.state = gameStates.PLAYING) {
             this.player.update();
 
-            this.text.setText([
-                'x: ' + this.cameras.main.x,
-                'y: ' + this.cameras.main.y,
-                'scrollX: ' + this.cameras.main.scrollX,
-                'scrollY: ' + this.cameras.main.scrollY,
-            ]);
+            // this.text.setText([
+            //     'x: ' + this.cameras.main.x,
+            //     'y: ' + this.cameras.main.y,
+            //     'scrollX: ' + this.cameras.main.scrollX,
+            //     'scrollY: ' + this.cameras.main.scrollY,
+            // ]);
         }
     }
 
