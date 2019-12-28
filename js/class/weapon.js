@@ -64,7 +64,7 @@ class Weapon extends Phaser.GameObjects.Container {
 
         // Imagen del puntero
         this.puntero = scene.add.image(0, 0, 'scope');
-        this.puntero.setScale(0.5);
+        this.puntero.setScale(0.7);
         this.puntero.setDepth(10);
         // Scroll factor sirve para que no se mueva al cambiar la cámara de posicion
         this.puntero.setScrollFactor(0);
@@ -163,20 +163,20 @@ class Weapon extends Phaser.GameObjects.Container {
 
         let angle = this.getRotationToPointer(axisX, axisY);
         // console.log(angle);
-        
+
         // Si la rotacion es mas de 1.5 significa que ha de cambiar
         console.log(this.x);
         if (Math.abs(angle) > 1.5) {
             this.setScale(1, -1);
             // this.x = 26;
-        }else {
+        } else {
             this.setScale(1, 1);
             // this.x = 40;
-            
+
         }
 
         this.setRotation(angle);
-        
+
     }
 
     /**

@@ -116,3 +116,19 @@ io.on('connection', function (socket) {
         });
     });
 });
+
+/**
+ * Obtiene todos los jugadores enemigos del servidor
+ */
+function getAllEnemies() {
+    var players = [];
+
+    Object.keys(io.sockets.connected).forEach(function (socketID) {
+        var player = io.sockets.connected[socketID].player;
+        if (player) {
+            players.push(player);
+        };
+    });
+
+    return players;
+}
