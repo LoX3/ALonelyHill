@@ -19,7 +19,7 @@ class ScenePreload extends Phaser.Scene {
      */
     preloadWeaponParts() {
         //Variables
-        var i
+        var i;
 
         //Load butt parts
         i = 0;
@@ -27,7 +27,7 @@ class ScenePreload extends Phaser.Scene {
             var id = weaponParts.BUTT[bt];
             this.load.image(id, '../../assets/weapons/BUTT/' + id + '.png');
             i++;
-            // console.log(" LOADED:" + id + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png');
+            // console.log(" LOADED: " + bt + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png');
         }
 
         //Load handle parts

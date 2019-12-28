@@ -31,7 +31,7 @@ class Weapon extends Phaser.GameObjects.Container {
         // Pongo valor al tipo de bala
         this.bulletType = bulletType;
         // Offset para que la bala salga del cañon
-        this.canonOffset = 12;
+        this.canonOffset = 100;
 
         // Al hacer scale de las partes del arma, no quedan bien, con esto se arregla
         var handleWidth = handle.scale * handle.width;
@@ -39,6 +39,11 @@ class Weapon extends Phaser.GameObjects.Container {
         // Pongo las armas en posición
         butt.x -= (handleWidth / 2);
         canon.x += (handleWidth / 2);
+
+        butt.y += 8;
+        handle.y += 8;
+        canon.y += 8;
+
 
         // Pongo las armas como hijos
         this.addAt(butt, 0);
@@ -53,12 +58,14 @@ class Weapon extends Phaser.GameObjects.Container {
 
         // Creo un objeto vacio para que la bala salga y lo pongo como hijo
         var shootPosX = canonWidth + (handleWidth / 2);
-        this.shootPos = scene.physics.add.image(shootPosX, -this.canonOffset);
+        this.shootPos = scene.physics.add.image(0, 0);
         this.shootPos.setSize(1, 1);
         this.addAt(this.shootPos, 3);
 
         // Imagen del puntero
         this.puntero = scene.add.image(0, 0, 'scope');
+        this.puntero.setScale(0.5);
+        this.puntero.setDepth(10);
         // Scroll factor sirve para que no se mueva al cambiar la cámara de posicion
         this.puntero.setScrollFactor(0);
 
@@ -149,16 +156,27 @@ class Weapon extends Phaser.GameObjects.Container {
         let cursor = pointer;
 
         var axisX = this.parentContainer.x + this.x;
-        var axisY = this.parentContainer.y + this.y - this.canonOffset;
+        var axisY = this.parentContainer.y + this.y;
 
         this.puntero.x = cursor.x;
         this.puntero.y = cursor.y;
 
         let angle = this.getRotationToPointer(axisX, axisY);
-
+        // console.log(angle);
+        
         // Si la rotacion es mas de 1.5 significa que ha de cambiar
-        this.setScale(1, (Math.abs(angle) > 1.5) ? -1 : 1);
+        console.log(this.x);
+        if (Math.abs(angle) > 1.5) {
+            this.setScale(1, -1);
+            // this.x = 26;
+        }else {
+            this.setScale(1, 1);
+            // this.x = 40;
+            
+        }
+
         this.setRotation(angle);
+        
     }
 
     /**
@@ -182,9 +200,6 @@ class Weapon extends Phaser.GameObjects.Container {
             var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletType, shootRotation);
             this.bulletGroup.add(bala);
             bala.body.setSize(7, 7);
-
-            bala.x = this.absoluteShootPos.translateX;
-            bala.y = this.absoluteShootPos.translateY;
         }
     }
 }

@@ -125,8 +125,8 @@ class Player extends Phaser.GameObjects.Container {
         // Creo el arma y la guardo en una variable publica para poder declararla luego
         this.weapon = new Weapon(
             scene,
-            this.body.width / 2,
-            this.body.height / 2 + this.character.height / 2,
+            this.body.width/2,
+            this.body.height/2,
             butt,
             handle,
             canon,
