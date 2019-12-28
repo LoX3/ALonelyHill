@@ -10,7 +10,7 @@ class SceneChooseWeapon extends Phaser.Scene {
     constructor() {
         super(
             {
-                key: sceneNames.CHOOSEWEAPON,
+                key: sceneNames.SETUP,
             }
         );
     }
@@ -25,29 +25,25 @@ class SceneChooseWeapon extends Phaser.Scene {
      * @property {String} data.handle Cuerpo del arma
      * @property {String} data.canon Cañon del arma
      */
-    init(data) {
+    init() {
         this.salir = true;
         this.arrows;
-
-        this.butt = (data.butt == null) ? weaponParts.BUTT.TEN : data.butt;
-        this.handle = (data.handle == null) ? weaponParts.HANDLE.ONE : data.handle;
-        this.canon = (data.canon == null) ? weaponParts.CANON.SIX : data.canon;
+        
+        this.butt = weaponParts.BUTT.ONE;
+        this.handle = weaponParts.HANDLE.ONE;
+        this.canon = weaponParts.CANON.ONE;
     }
-
+    
     /**
      * Create sellama una vez que se ha completado la
      * precarga. Si no tiene un método de precarga, crear es el primer
      * método llamado en su estado.
      */
     create() {
-        // Cambio al escena estado
-        gameState = gameStates.CHOOSEWEAPON;
-
-        // Escondo el raton
-        showCursor();
-
-        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
+        //Asignamos el estado del juego
+        gameState = gameStates.PRELOAD;
+        
+        //Set background color (temporal)
         var color = Phaser.Display.Color.GetColor32(0, 0, 0, 120);
         this.cameras.main.setBackgroundColor(color);
 
@@ -91,7 +87,7 @@ class SceneChooseWeapon extends Phaser.Scene {
             child.on('pointerover', function () {
                 this.setScale(0.7);
             });
-
+            
             child.on('pointerout', function () {
                 this.setScale(0.5);
             });
@@ -103,19 +99,9 @@ class SceneChooseWeapon extends Phaser.Scene {
      * archivos para poder jugar
      */
     update() {
-        if (this.salir && this.spaceKey.isDown) {
-            this.salir = false;
-
-            this.scene.get(sceneNames.START).player.getAt(1).getAt(0).setTexture(this.butt);
-            this.scene.get(sceneNames.START).player.getAt(1).getAt(1).setTexture(this.handle);
-            this.scene.get(sceneNames.START).player.getAt(1).getAt(2).setTexture(this.canon);
-
-            hideCursor();
-
-            gameState = gameStates.PLAYING;
-
-            this.scene.stop();
-        }
+        this.scene.get(sceneNames.SETUP).buttPart.setTexture(this.butt);
+        // this.scene.get(sceneNames.SETUP).player.getAt(1).getAt(1).setTexture(this.handle);
+        // this.scene.get(sceneNames.SETUP).player.getAt(1).getAt(2).setTexture(this.canon);
     }
 
     /**
@@ -127,13 +113,15 @@ class SceneChooseWeapon extends Phaser.Scene {
     createNextArrows() {
         var nextButt = this.add
             .image(this.buttPart.x - this.handlePart.width / 2, this.buttPart.y + this.buttPart.height * 1.2, 'next_arrow')
-            .setOrigin(0.5, 1)
+            .setOrigin(0.5, 0)
             .setScale(0.5)
             .setFlipY(true)
             .setInteractive();
-        nextButt.on('pointerdown', function () {
+        nextButt.on('pointerdown', function () {            
             var buttId;
             var value = this.scene.getNextValue(this.scene.buttPart.texture.key);
+            console.log(value);
+            
             Object.keys(weaponParts.BUTT).find(function (key) {
                 if (weaponParts.BUTT[key] == value) {
                     buttId = key;
@@ -145,8 +133,8 @@ class SceneChooseWeapon extends Phaser.Scene {
             this.scene.resizeWeapon();
         });
         var nextHandle = this.add
-            .image(this.handlePart.x, this.handlePart.y + this.handlePart.height * 1.2, 'next_arrow')
-            .setOrigin(0.5, 1)
+            .image(this.handlePart.x, this.handlePart.y + this.handlePart.height * 1.4, 'next_arrow')
+            .setOrigin(0.5, 0)
             .setScale(0.5)
             .setFlipY(true)
             .setInteractive();
@@ -165,7 +153,7 @@ class SceneChooseWeapon extends Phaser.Scene {
         });
         var nextCanon = this.add
             .image(this.canonPart.x + this.handlePart.width / 2, this.canonPart.y + this.canonPart.height * 1.2, 'next_arrow')
-            .setOrigin(0.5, 1)
+            .setOrigin(0.5, 0)
             .setScale(0.5)
             .setFlipY(true)
             .setInteractive();

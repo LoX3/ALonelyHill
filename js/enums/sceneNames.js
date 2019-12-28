@@ -8,8 +8,7 @@
  * @property {String} START Escena del juego principal
  */
 const sceneNames = {
-    MENU: "scenePreload",
     PRELOAD: "scenePreload",
-    CHOOSEWEAPON: 'sceneChooseWeapon',
-    START: "sceneStart"
+    SETUP: 'sceneSetUp',
+    GAME: "sceneStart"
 }
