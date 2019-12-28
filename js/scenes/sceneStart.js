@@ -106,6 +106,12 @@ class SceneStart extends Phaser.Scene {
      * @param {Number} y Posición vertical del enemigo
      */
     addNewEnemy(id, x, y) {
-        this.enemies[id] = new Enemy(this, x, y, 'sensei');
+        var weaponComponents = {
+            butt: weaponParts.BUTT.ONE,
+            handle: weaponParts.HANDLE.ONE,
+            canon: weaponParts.CANON.ONE,
+        }
+
+        this.enemies[id] = new Enemy(this, x, y, 'sensei', weaponComponents);
     }
 }

@@ -44,7 +44,6 @@ class Weapon extends Phaser.GameObjects.Container {
         handle.y += 8;
         canon.y += 8;
 
-
         // Pongo las armas como hijos
         this.addAt(butt, 0);
         this.addAt(handle, 1);
@@ -162,21 +161,15 @@ class Weapon extends Phaser.GameObjects.Container {
         this.puntero.y = cursor.y;
 
         let angle = this.getRotationToPointer(axisX, axisY);
-        // console.log(angle);
 
         // Si la rotacion es mas de 1.5 significa que ha de cambiar
-        console.log(this.x);
         if (Math.abs(angle) > 1.5) {
             this.setScale(1, -1);
-            // this.x = 26;
         } else {
             this.setScale(1, 1);
-            // this.x = 40;
-
         }
 
         this.setRotation(angle);
-
     }
 
     /**
@@ -194,7 +187,7 @@ class Weapon extends Phaser.GameObjects.Container {
      * Disparo del arma hacia el puntero
      */
     shoot() {
-        if (gameState != gameStates.CHOOSEWEPAPON) {
+        if (gameState != gameStates.CHOOSEWEAPON) {
             var shootRotation = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
 
             var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletType, shootRotation);

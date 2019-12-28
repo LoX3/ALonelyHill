@@ -64,7 +64,7 @@ io.on('connection', function (socket) {
      * Crea y administra al jugador en el servidor
      * @event newServerPlayer 
      */
-    socket.on('newServerPlayer', function () {
+    socket.on('newServerPlayer', function (data) {
         /**
          * Busca y crea todos los enemigos que hay conectados
          * @event getAllEnemies 
@@ -74,8 +74,11 @@ io.on('connection', function (socket) {
         // Crea un jugador que guarda el servidor
         socket.player = {
             id: server.lastPlayderID++,
-            x: 0,
-            y: 0,
+            x: data.x,
+            y: data.y,
+            butt: data.butt,
+            handle: data.handle,
+            canon: data.canon,
         };
 
         /**
@@ -94,9 +97,9 @@ io.on('connection', function (socket) {
 
             /**
              * Muevo al jugador segun su posición
-             * @event moveEnemyWithForce 
+             * @event movePlayerToPosition 
              */
-            io.emit('moveEnemyWithForce', {
+            io.emit('movePlayerToPosition', {
                 id: socket.player.id,
                 x: data.x,
                 y: data.y

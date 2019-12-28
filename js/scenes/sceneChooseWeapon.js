@@ -1,5 +1,6 @@
 /**
- * @class Escena para escoer el arma del usuario
+ * Escena para escoer el arma del usuario
+ * @class 
  */
 class SceneChooseWeapon extends Phaser.Scene {
     /**
@@ -40,7 +41,7 @@ class SceneChooseWeapon extends Phaser.Scene {
      */
     create() {
         // Cambio al escena estado
-        gameState = gameStates.CHOOSEWEPAPON;
+        gameState = gameStates.CHOOSEWEAPON;
 
         // Escondo el raton
         showCursor();
@@ -95,6 +96,26 @@ class SceneChooseWeapon extends Phaser.Scene {
                 this.setScale(0.5);
             });
         })
+    }
+
+    /**
+     * Update se llama una vez finalizado la carga de los 
+     * archivos para poder jugar
+     */
+    update() {
+        if (this.salir && this.escKey.isDown) {
+            this.salir = false;
+
+            this.scene.start(sceneNames.START, {
+                butt: this.butt,
+                handle: this.handle,
+                canon: this.canon
+            });
+
+            hideCursor();
+
+            this.scene.stop();
+        }
     }
 
     /**
@@ -229,26 +250,6 @@ class SceneChooseWeapon extends Phaser.Scene {
         });
 
         return { prevButt, prevHandle, prevCanon };
-    }
-
-    /**
-     * Update se llama una vez finalizado la carga de los 
-     * archivos para poder jugar
-     */
-    update() {
-        if (this.salir && this.escKey.isDown) {
-            this.salir = false;
-
-            this.scene.run(sceneNames.START, {
-                butt: this.butt,
-                handle: this.handle,
-                canon: this.canon
-            });
-
-            hideCursor();
-
-            this.scene.stop();
-        }
     }
 
     /**

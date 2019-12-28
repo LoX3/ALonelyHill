@@ -26,11 +26,12 @@ class Player extends Phaser.GameObjects.Container {
     constructor(scene, x, y, characterImage, weaponComponents) {
         // Se crea el contenedor con la escena y la posición
         super(scene, x, y);
+        // Creo las variables de la clase
+        this.init();
+
         this.scene = scene;
         this.name = name;
         this.weaponComponents = weaponComponents;
-        // Creo las variables de la clase
-        this.init();
 
         // Le doy fisicas al container para que entre tenga colliders i se mueva
         scene.physics.world.enableBody(this);
@@ -63,10 +64,26 @@ class Player extends Phaser.GameObjects.Container {
      */
     init() {
         /**
+         * Escena donde se ejecuta el juego
+         * @type {Phaser.Scene}
+         */
+        this.scene;
+
+        /**
          * Imagen del jugador en el juego
          * @type {Character} 
          */
         this.character;
+
+        /**
+        * Partes del arma
+        * @enum {String} 
+        * @name weaponComponents 
+        * @property {String} butt Culata del arma
+        * @property {String} handle Cuerpo del arma
+        * @property {String} canon Cañon del arma
+        */
+        this.weaponComponents;
 
         /**
          * Arma del jugador
@@ -125,8 +142,8 @@ class Player extends Phaser.GameObjects.Container {
         // Creo el arma y la guardo en una variable publica para poder declararla luego
         this.weapon = new Weapon(
             scene,
-            this.body.width/2,
-            this.body.height/2,
+            this.body.width / 2,
+            this.body.height / 2,
             butt,
             handle,
             canon,
