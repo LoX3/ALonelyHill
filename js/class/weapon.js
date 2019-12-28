@@ -1,24 +1,25 @@
 /**
  * @class Weapon - Arma del jugador
  *
- * @param {Phaser.Scene} scene Escena donde se pone el arma
- * @param {Number} x Posicion horizontal del contenedor
- * @param {Number} y Posicion vertical del contenedor
- * @param {Phaser.GameObjects.Image} butt Culata del arma
- * @param {Phaser.GameObjects.Image} handle Parte central del arma
- * @param {Phaser.GameObjects.Image} canon Cañon del arma
- * @param {Phaser.GameObjects.Sprite} bulletType Tipo de bala que dispara el arma
+ * @param {Phaser.Scene} scene 
+ * @param {Number} x 
+ * @param {Number} y 
+ * @param {Phaser.GameObjects.Image} butt 
+ * @param {Phaser.GameObjects.Image} handle 
+ * @param {Phaser.GameObjects.Image} canon 
+ * @param {Phaser.GameObjects.Sprite} bulletType 
  */
 class Weapon extends Phaser.GameObjects.Container {
     /**
-     * @constructor Constructor del arma del jugador
-     * @param {Phaser.Scene} scene
-     * @param {Number} x
-     * @param {Number} y
-     * @param {Phaser.GameObjects.Image} butt
-     * @param {Phaser.GameObjects.Image} handle
-     * @param {Phaser.GameObjects.Image} canon
-     * @param {Phaser.GameObjects.Sprite} bulletType
+     * Constructor del arma del jugador
+     * @constructor 
+     * @param {Phaser.Scene} scene Escena donde se pone el arma
+     * @param {Number} x Posicion horizontal del contenedor
+     * @param {Number} y Posicion vertical del contenedor
+     * @param {Phaser.GameObjects.Image} butt Culata del arma
+     * @param {Phaser.GameObjects.Image} handle Parte central del arma
+     * @param {Phaser.GameObjects.Image} canon Cañon del arma
+     * @param {Phaser.GameObjects.Sprite} bulletType Tipo de bala que dispara el arma
      */
     constructor(scene, x, y, butt, handle, canon, bulletType) {
         // Se crea el contenedor con la escena y la posición
@@ -70,7 +71,7 @@ class Weapon extends Phaser.GameObjects.Container {
     }
 
     /**
-     * @function init Init es la primera función que se llama cuando se
+     * Init es la primera función que se llama cuando se
      * inicia su estado. Se llama antes de precargar, crear o cualquier
      * otra cosa. Si necesita enrutar el juego a otro estado, puede
      * hacerlo aquí, o si necesita preparar un conjunto de variables u
@@ -86,45 +87,51 @@ class Weapon extends Phaser.GameObjects.Container {
         /**
          * Grupo donde se guardan las balas
          * @type {Phaser.GameObjects.Group}
-         * @property {JSON} config Opciones del grupo
-         * @property {Bullet} config.classType Define el tipo de clase en el grupo {@link Phaser.GameObjects.Group#classType}.
-         * @property {Boolean} config.runChildUpdate Hace que se ejecuten los updates de los elementos dentro del grupo {@link Phaser.GameObjects.Group#runChildUpdate}.
+         * @property {JSON} groupConfig Opciones del grupo
+         * @property {Bullet} groupConfig.classType Define el tipo de clase en el grupo {@link Phaser.GameObjects.Group#classType}.
+         * @property {Boolean} groupConfig.runChildUpdate Hace que se ejecuten los updates de los elementos dentro del grupo {@link Phaser.GameObjects.Group#runChildUpdate}.
          */
         this.bulletGroup;
 
         /**
-         * @type {String} Tipo de bala que se dispara
+         * Tipo de bala que se dispara
+         * @type {String} 
          */
         this.bulletType;
 
         /**
-         * @type {Phaser.GameObjects.Image} Final del cañon del arma por donde sale la bala
+         * Final del cañon del arma por donde sale la bala
+         * @type {Phaser.GameObjects.Image}
          */
         this.shootPos;
 
         /**
-         * @type {Number} Offset para que concuerde del final del cañon verticalmente
+         * Offset para que concuerde del final del cañon verticalmente
+         * @type {Number} 
          */
         this.canonOffset;
 
         /**
-         * @type {Phaser.GameObjects.Components.TransformMatrix} Se utiliza para cojer la posición absoluta de @var this.shootPos
+         * Se utiliza para cojer la posición absoluta de @var this.shootPos
+         * @type {Phaser.GameObjects.Components.TransformMatrix} 
          */
         this.tempMatrix;
 
         /**
-         * @type {Phaser.GameObjects.Components.TransformMatrix} Se utiliza para cojer la posición absoluta de @var this.shootPos
+         * Se utiliza para cojer la posición absoluta de @var this.shootPos
+         * @type {Phaser.GameObjects.Components.TransformMatrix} 
          */
         this.tempParentMatrix;
 
         /**
-         * @type {Number} Obtiene los valores absolutos del punto de salida de la bala
+         * Obtiene los valores absolutos del punto de salida de la bala
+         * @type {Number} 
          */
         this.absoluteShootPos;
     }
 
     /**
-     * @function update Update se llama una vez finalizado la carga de los 
+     * Update se llama una vez finalizado la carga de los 
      * archivos para poder jugar
      */
     update() {
@@ -135,7 +142,7 @@ class Weapon extends Phaser.GameObjects.Container {
     }
 
     /**
-     * @function rotateWeaponTowardsMouseAngle Rota el objeto arma hacia el puntero
+     * Rota el objeto arma hacia el puntero
      * @param {Phaser.Input.Pointer} pointer Puntero del ratón
      */
     rotateWeaponTowardsMouseAngle(pointer) {
@@ -154,6 +161,11 @@ class Weapon extends Phaser.GameObjects.Container {
         this.setRotation(angle);
     }
 
+    /**
+     * Obtengo la rotacion de una posición a la imagen del puntero
+     * @param {Number} originX Origen del calculo de la rotacion en el eje horizonatal
+     * @param {Number} originY Origen del calculo de la rotacion en el eje vertical
+     */
     getRotationToPointer(originX, originY) {
         let angle = Phaser.Math.Angle.Between(originX, originY, this.puntero.x + this.scene.cameras.main.scrollX, this.puntero.y + this.scene.cameras.main.scrollY);
 
@@ -161,16 +173,18 @@ class Weapon extends Phaser.GameObjects.Container {
     }
 
     /**
-     * @function shoot Disparo del arma hacia el puntero
+     * Disparo del arma hacia el puntero
      */
     shoot() {
-        var shootRotation = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
+        if (gameState != gameStates.CHOOSEWEPAPON) {
+            var shootRotation = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
 
-        var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletType, shootRotation);
-        this.bulletGroup.add(bala);
-        bala.body.setSize(7, 7);
+            var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletType, shootRotation);
+            this.bulletGroup.add(bala);
+            bala.body.setSize(7, 7);
 
-        bala.x = this.absoluteShootPos.translateX;
-        bala.y = this.absoluteShootPos.translateY;
+            bala.x = this.absoluteShootPos.translateX;
+            bala.y = this.absoluteShootPos.translateY;
+        }
     }
 }

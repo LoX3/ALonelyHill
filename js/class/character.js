@@ -1,52 +1,22 @@
 /**
- * @class Jugador principal del juego
+ * @class Imagen del jugador
+ * @param {Phaser.Scene} scene Escena donde se pone la imagen
+ * @param {Number} x Posicion horizontal de la imagen
+ * @param {Number} y Posicion vertical de la imagen
+ * @param {String} image Imagen del personaje
  */
 class Character extends Phaser.GameObjects.Image {
     /**
-     * @constructor Constructor de la escena NAME
+     * Constructor de la imagen del personaje
+     * @constructor 
+     * @param {Phaser.Scene} scene Escena donde se pone la imagen
+     * @param {Number} x Posicion horizontal de la imagen
+     * @param {Number} y Posicion vertical de la imagen
+     * @param {String} image Imagen del personaje
      */
     constructor(scene, x, y, image) {
         super(scene, x, y, image);
 
         this.setScale(2);
-    }
-
-    /**
-     * @function init Init es la primera función que se llama cuando se
-     * inicia su estado. Se llama antes de precargar, crear o cualquier
-     * otra cosa. Si necesita enrutar el juego a otro estado, puede
-     * hacerlo aquí, o si necesita preparar un conjunto de variables u
-     * objetos antes de que comience la precarga.
-     */
-    init() {
-
-    }
-
-    /**
-     * @function preload Preload se llama primero. Normalmente usaría
-     * esto para cargar sus activos de juego (o los necesarios para el
-     * Estado actual). No debe crear ningún objeto en este método que
-     * requiera activos que también esté cargando en este método, ya
-     * que aún no serán disponible.
-     */
-    preload() {
-
-    }
-
-    /**
-     * @function create Create sellama una vez que se ha completado la
-     * precarga. Si no tiene un método de precarga, crear es el primer
-     * método llamado en su estado.
-     */
-    create() {
-
-    }
-
-    /**
-     * @function update Update se llama una vez finalizado la carga de los 
-     * archivos para poder jugar
-     */
-    update() {
-
     }
 }

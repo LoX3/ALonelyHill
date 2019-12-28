@@ -1,12 +1,19 @@
 /**
+ * Nombre de las imágenes de las armas
  * @enum {Number}
- * @name gameStates Nombre de las imágenes de las armas
- * @property {Number} LOADING Escena del menú
- * @property {Number} PLAYING Escena del preload
- * @property {Number} PAUSE Escena del juego principal
+ * @name gameStates 
+ * @property {Number} PRELOAD Cargando los assets del juego
+ * @property {Number} LOADING Esperando la carga de alguna cosa
+ * @property {Number} MENU Estando en el menu del juego
+ * @property {Number} PAUSE Estando con el juego pausado
+ * @property {Number} PLAYING Escena del juego principal
+ * @property {Number} CHOOSEWEPAPON Escena para escojer arma del jugador
  */
 const gameStates = {
-    LOADING: 0,
-    PLAYING: 1,
-    PAUSE: 2,
+    PRELOAD: 0,
+    LOADING: 1,
+    MENU: 2,
+    PAUSE: 3,
+    PLAYING: 4,
+    CHOOSEWEPAPON: 5,
 }

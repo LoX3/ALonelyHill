@@ -1,9 +1,10 @@
 /**
- * @class Parte cliente del videojuego
+ * @class Parte cliente del videojuego, tiene la función de comunicarse con el servidor
  */
 class Cliente {
     /**
-     * @constructor Constructor de la clase Cliente
+     * Constructor de la clase Cliente
+     * @constructor
      */
     constructor() {
         this.init();
@@ -13,7 +14,7 @@ class Cliente {
     }
 
     /**
-     * @function init Init es la primera función que se llama cuando se
+     * Init es la primera función que se llama cuando se
      * inicia su estado. Se llama antes de precargar, crear o cualquier
      * otra cosa. Si necesita enrutar el juego a otro estado, puede
      * hacerlo aquí, o si necesita preparar un conjunto de variables u
@@ -21,20 +22,21 @@ class Cliente {
      */
     init() {
         /**
-         * @type {Object} Guarda una coneción con el servidor
+         * Guarda una coneción con el servidor
+         * @type {Object}
          */
         this.socket = io.connect();
     }
 
     /**
-     * @function sendTest Pide una prueba de funcionamiento al servidor
+     * Pide una prueba de funcionamiento al servidor
      */
     sendTest() {
         this.socket.emit('test');
     }
 
     /**
-     * @function serverInfo Pide una prueba de funcionamiento al servidor
+     * Pide una prueba de funcionamiento al servidor
      */
     serverInfo() {
         this.socket.on('testOk', function (data) {
@@ -43,48 +45,51 @@ class Cliente {
     }
 
     /**
-     * @function registerPlayer Registra al jugador en el servidor
+     * Registra al jugador en el servidor
      */
     registerPlayer() {
         this.socket.emit('newServerPlayer');
     }
 
     /**
-     * @function enemyInfo Registra al enemigo en el cliente
+     * Registra al enemigo en el cliente
      */
     enemyInfo() {
         this.socket.on('newEnemy', function (data) {
-            game.scene.getScene('ScenePreload').addNewEnemy(data.id, data.x, data.y);
+            game.scene.getScene(sceneNames.START).addNewEnemy(data.id, data.x, data.y);
         })
     }
 
     /**
-     * @function allEnemiesInfo Recibe los cambios de los enemigos
+     * Recibe los cambios de los enemigos
      */
     allEnemiesInfo() {
         /**
-         * @event getAllEnemies Al cargar todos los enemigos creo los enemigos y las llamadas a los cambios enemigos
+         * Al cargar todos los enemigos creo los enemigos y las llamadas a los cambios enemigos
+         * @event getAllEnemies 
          */
         this.socket.on('getAllEnemies', function (data) {
             for (var i = 0; i < data.length; i++) {
-                game.scene.getScene('ScenePreload').addNewEnemy(data[i].id, data[i].x, data[i].y);
+                game.scene.getScene(sceneNames.START).addNewEnemy(data[i].id, data[i].x, data[i].y);
             }
 
             /**
-             * @event moveEnemyWithForce Muevo el enemigos en el cliente
+             * Muevo el enemigos en el cliente
+             * @event moveEnemyWithForce 
              */
             cliente.socket.on('moveEnemyWithForce', function (data) {
-                if (game.scene.getScene('ScenePreload').enemies[data.id]) {
-                    game.scene.getScene('ScenePreload').enemies[data.id].movePlayerWithForce(data.forceX, data.forceY);
+                if (game.scene.getScene(sceneNames.START).enemies[data.id]) {
+                    game.scene.getScene(sceneNames.START).enemies[data.id].movePlayerWithForce(data.x, data.y);
                 }
             });
 
             /**
-             * @event removeEnemy Al desconectarse el jugador lo elimino del cliente...
+             * Al desconectarse el jugador lo elimino del cliente...
+             * @event removeEnemy 
              */
             cliente.socket.on('removeEnemy', function (id) {
-                if (game.scene.getScene('ScenePreload').enemies[data.id]) {
-                    game.scene.getScene('ScenePreload').enemies[id].removePlayer();
+                if (game.scene.getScene(sceneNames.START).enemies[data.id]) {
+                    game.scene.getScene(sceneNames.START).enemies[id].removePlayer();
                 }
             });
         });
@@ -108,6 +113,7 @@ class Cliente {
 }
 
 /**
- * @name cliente Variable que define el cliente del juego
+ * Variable que define el cliente del juego
+ * @name cliente 
  */
 const cliente = new Cliente();

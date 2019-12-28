@@ -1,7 +1,11 @@
-/**
- * @type {import("../def/phaser")}
+// /**
+//  * @type {import("../def/phaser")}
+//  */
+
+/** 
+ * Variable que guarda todos los ajustes del las escenas de Phaser
  * @type {JSON}
- * @name config Variable que guarda todos los ajustes del las escenas de Phaser
+ * @name config 
  * @property {Phaser} type - Tipo de renderizado para el navegador
  * @property {number} width - Anchura máxima de las esenas
  * @property {number} height - Altura máxima de las escenas
@@ -18,6 +22,7 @@
  * @property {Phaser.Scene[]} scene - Declaramos todas las escenas que utlizamos
  * @property {Phaser.Scene} scene.ScenePreload - {@link ScenePreload} Escena para cargar todos los assets
  * @property {Phaser.Scene} scene.SceneStart - {@link SceneStart} Escena para empezar el juego
+ * @property {Phaser.Scene} scene.SceneChooseWeapon - {@link SceneChooseWeapon} Escena para cambiar el arma del jugador
  */
 const config = {
     type: Phaser.AUTO,
@@ -39,12 +44,66 @@ const config = {
     scene: [
         ScenePreload,
         SceneStart,
+        SceneChooseWeapon,
     ],
 };
 
 /**
- * Inicializamos el juego de phaser
+ * Variable del juego para podere acceder desde el cliente a todas las escenas
  * @type {Phaser.Game}
- * @name game Variable del juego para podere acceder desde el cliente a todas las escenas
+ * @name game 
  */
 var game = new Phaser.Game(config);
+var gameState;
+
+/**
+ * Obtiene todos los jugadores enemigos del servidor
+ */
+function getAllEnemies() {
+    var players = [];
+
+    Object.keys(io.sockets.connected).forEach(function (socketID) {
+        var player = io.sockets.connected[socketID].player;
+        if (player) {
+            players.push(player);
+        };
+    });
+
+    return players;
+}
+
+/**
+ * Devuelve un numbero aleatorio en un rango
+ * @param {Number} low Minimo numero aleatorio
+ * @param {Number} high Máximo numero aleatorio
+ */
+function randomInt(low, high) {
+    return Math.floor(Math.random() * (high - low) + low);
+}
+
+var canvas;
+
+window.onload = function () {
+    canvas = document.getElementsByTagName('canvas')[0];
+
+}
+
+/**
+ * Esconde el cursor en el juego
+ * @function hideCursor 
+ */
+function hideCursor() {
+    if (canvas.style.cursor != 'none') {
+        canvas.style.cursor = 'none';
+    }
+}
+
+/**
+ * Muestra el cursor en el juego
+ * @function showCursor 
+ */
+function showCursor() {
+    if (canvas.style.cursor != 'auto') {
+        canvas.style.cursor = 'auto';
+    }
+}

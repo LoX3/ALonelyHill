@@ -1,24 +1,28 @@
 /**
  * @class Bullet - Bala para disparar
  *
- * @param {Phaser.Scene} scene Escena donde se pone la bala
- * @param {Number} x Posicion horizontal del sprite
- * @param {Number} y Posicion vertical del sprite
- * @param {String} bulletType Tipo de bala que se dispara
- * @param {Number} bulletRotation Rotación de  la bala
+ * @param {Phaser.Scene} scene 
+ * @param {Number} x 
+ * @param {Number} y 
+ * @param {String} bulletType 
+ * @param {Number} bulletRotation 
  */
 class Bullet extends Phaser.GameObjects.Sprite {
     /**
-     * @constructor Constructor de la bala
-     * @param {Phaser.Scene} scene
-     * @param {Number} x
-     * @param {Number} y
-     * @param {String} bulletType
-     * @param {Number} bulletRotation
+     * Constructor de la bala
+     * @constructor
+     * @param {Phaser.Scene} scene Escena donde se pone la bala
+     * @param {Number} x Posicion horizontal del sprite
+     * @param {Number} y Posicion vertical del sprite
+     * @param {String} bulletType Tipo de bala que se dispara
+     * @param {Number} bulletRotation Rotación de  la bala
      */
     constructor(scene, x, y, bulletType, bulletRotation) {
         // Se crea el sprite con la escena, la posición i la imagen
         super(scene, x, y, bulletType);
+        this.init();
+
+        // Guardo la escena
         this.scene = scene;
 
         // Muevo un poco la bala para que salga mejor del cañón
@@ -39,8 +43,22 @@ class Bullet extends Phaser.GameObjects.Sprite {
     }
 
     /**
-     * @function update Update se llama una vez finalizado la carga de los 
-     * archivos para poder jugar
+     * Init es la primera función que se llama cuando se
+     * inicia su estado. Se llama antes de precargar, crear o cualquier
+     * otra cosa. Si necesita enrutar el juego a otro estado, puede
+     * hacerlo aquí, o si necesita preparar un conjunto de variables u
+     * objetos antes de que comience la precarga.
+     */
+    init() {
+        /**
+         * Escena donde se ejecuta el juego
+         * @type {Phaser.Scene}
+         */
+        this.scene;
+    }
+
+    /**
+     * Update se llama una vez finalizado la carga de los archivos para poder jugar
      */
     update() {
         // Si se sale de la pantalla, se destruye el objeto

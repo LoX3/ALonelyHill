@@ -53,18 +53,21 @@ server.lastPlayderID = 0;
 io.on('connection', function (socket) {
 
     /**
-     * @event test Prueba la conexión con el servidor
+     * Prueba la conexión con el servidor
+     * @event test
      */
     socket.on('test', function () {
         io.emit('testOk', 'Test Ok');
     });
 
     /**
-     * @event newServerPlayer Crea y administra al jugador en el servidor
+     * Crea y administra al jugador en el servidor
+     * @event newServerPlayer 
      */
     socket.on('newServerPlayer', function () {
         /**
-         * @event getAllEnemies Busca y crea todos los enemigos que hay conectados
+         * Busca y crea todos los enemigos que hay conectados
+         * @event getAllEnemies 
          */
         socket.emit('getAllEnemies', getAllEnemies());
 
@@ -76,60 +79,40 @@ io.on('connection', function (socket) {
         };
 
         /**
-         * @event newEnemy Añado al jugador como enemigo
+         * Añado al jugador como enemigo
+         * @event newEnemy 
          */
         socket.broadcast.emit('newEnemy', socket.player);
 
         /**
-         * @event movePlayer Al mover el jugador, actualizo su posición en el servidor
+         * Al mover el jugador, actualizo su posición en el servidor
+         * @event movePlayer 
          */
         socket.on('movePlayer', function (data) {
             socket.player.x = data.x;
             socket.player.y = data.y;
 
             /**
-             * @event moveEnemyWithForce Muevo al jugador aplicado fuerza
+             * Muevo al jugador segun su posición
+             * @event moveEnemyWithForce 
              */
             io.emit('moveEnemyWithForce', {
                 id: socket.player.id,
-                forceX: data.forceX,
-                forceY: data.forceY
+                x: data.x,
+                y: data.y
             });
         });
 
         /**
-         * @event disconnect Al desconectarse el jugador...
+         * Al desconectarse el jugador...
+         * @event disconnect 
          */
         socket.on('disconnect', function () {
             /**
-             * @event removeEnemy Borro al jugador de la partida
+             * Borro al jugador de la partida
+             * @event removeEnemy 
              */
             io.emit('removeEnemy', socket.player.id);
         });
     });
 });
-
-/**
- * Obtiene todos los jugadores enemigos del servidor
- */
-function getAllEnemies() {
-    var players = [];
-
-    Object.keys(io.sockets.connected).forEach(function (socketID) {
-        var player = io.sockets.connected[socketID].player;
-        if (player) {
-            players.push(player);
-        };
-    });
-
-    return players;
-}
-
-/**
- * Devuelve un numbero aleatorio en un rango
- * @param {Number} low Minimo numero aleatorio
- * @param {Number} high Máximo numero aleatorio
- */
-function randomInt(low, high) {
-    return Math.floor(Math.random() * (high - low) + low);
-}
