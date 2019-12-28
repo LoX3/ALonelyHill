@@ -63,7 +63,13 @@ class SceneStart extends Phaser.Scene {
 
 
         if (gameState != gameStates.CHOOSEWEPAPON) {
-            cliente.registerPlayer();
+            cliente.registerPlayer({
+                x: this.player.x,
+                y: this.player.y,
+                butt: this.butt,
+                handle: this.handle,
+                canon: this.canon,
+            });
         }
 
         gameState = gameStates.PLAYING;
