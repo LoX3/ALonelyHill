@@ -46,7 +46,7 @@ class SceneChooseWeapon extends Phaser.Scene {
         // Escondo el raton
         showCursor();
 
-        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         var color = Phaser.Display.Color.GetColor32(0, 0, 0, 120);
         this.cameras.main.setBackgroundColor(color);
@@ -103,16 +103,16 @@ class SceneChooseWeapon extends Phaser.Scene {
      * archivos para poder jugar
      */
     update() {
-        if (this.salir && this.escKey.isDown) {
+        if (this.salir && this.spaceKey.isDown) {
             this.salir = false;
 
-            this.scene.start(sceneNames.START, {
-                butt: this.butt,
-                handle: this.handle,
-                canon: this.canon
-            });
+            this.scene.get(sceneNames.START).player.getAt(1).getAt(0).setTexture(this.butt);
+            this.scene.get(sceneNames.START).player.getAt(1).getAt(1).setTexture(this.handle);
+            this.scene.get(sceneNames.START).player.getAt(1).getAt(2).setTexture(this.canon);
 
             hideCursor();
+
+            gameState = gameStates.PLAYING;
 
             this.scene.stop();
         }

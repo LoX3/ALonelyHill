@@ -91,7 +91,7 @@ class SceneStart extends Phaser.Scene {
         // Si podemos jugar...
         if (gameState == gameStates.PLAYING) {
             // Al pulsar la tecla ESC...
-            if (this.escKey.isDown) {
+            if (!this.chooseWeapon && this.escKey.isDown) {
                 // Abro la escena para cambiar el arma
                 this.scene.launch(sceneNames.CHOOSEWEAPON, {
                     butt: this.butt,
