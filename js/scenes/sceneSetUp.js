@@ -8,11 +8,9 @@ class SceneChooseWeapon extends Phaser.Scene {
      * @constructor 
      */
     constructor() {
-        super(
-            {
-                key: sceneNames.SETUP,
-            }
-        );
+        super({
+            key: sceneNames.SETUP,
+        });
     }
     /**
      * Init es la primera función que se llama cuando se
@@ -33,16 +31,16 @@ class SceneChooseWeapon extends Phaser.Scene {
         this.prevCanon;
         this.nextButt;
         this.nextHandle;
-        this.nextCanon; 
-        
+        this.nextCanon;
+
         this.butt = weaponParts.BUTT.ONE;
         this.handle = weaponParts.HANDLE.ONE;
         this.canon = weaponParts.CANON.ONE;
-        
+
         this.verticalMargin = 50;
         this.horizontalMargin = 35;
     }
-    
+
     /**
      * Vuelvo a cambiar la posición del arma, para que no se formen errores
      */
@@ -72,42 +70,79 @@ class SceneChooseWeapon extends Phaser.Scene {
     create() {
         showCursor();
 
-        
+
         //Asignamos el estado del juego
         gameState = gameStates.PRELOAD;
-        
+
         //Set background color (temporal)
         var color = Phaser.Display.Color.GetColor32(109, 247, 177, 0);
         this.cameras.main.setBackgroundColor(color);
-        
+
         // Cuerpo del arma
         this.handlePart = this.add
-        .image((config.width / 4) * 3, (config.height / 4) +20, this.handle)
-        .setOrigin(0.5)
-        .setScale(1.5);
+            .image((config.width / 4) * 3, (config.height / 4) + 20, this.handle)
+            .setOrigin(0.5)
+            .setScale(1.5);
         var handleWidth = this.handlePart.scale * this.handlePart.width;
-        
+
         // Culata del arma
         this.buttPart = this.add
-        .image(this.handlePart.x - (handleWidth / 2) - 40, this.handlePart.y, this.butt)
-        .setOrigin(1, 0.5)
-        .setScale(1.5);
-        
+            .image(this.handlePart.x - (handleWidth / 2) - 40, this.handlePart.y, this.butt)
+            .setOrigin(1, 0.5)
+            .setScale(1.5);
+
         // Cañón del arma
         this.canonPart = this.add
-        .image(this.handlePart.x + (handleWidth / 2) + 40, this.handlePart.y, this.canon)
-        .setOrigin(0, 0.5)
-        .setScale(1.5);
-            
+            .image(this.handlePart.x + (handleWidth / 2) + 40, this.handlePart.y, this.canon)
+            .setOrigin(0, 0.5)
+            .setScale(1.5);
 
-        var graphics = this.add.graphics({ lineStyle: { width: 5, color: 0x000000 }, fillStyle: { color: 0xff0000 }});
+
+        var graphics = this.add.graphics({
+            lineStyle: {
+                width: 5,
+                color: 0x000000
+            },
+            fillStyle: {
+                color: 0xff0000
+            }
+        });
         // var rect = new Phaser.Geom.Rectangle(((config.width / 4) * 2) + this.margin, ((config.width / 4) * 4) - this.margin, 100, 100);
-        var rect = new Phaser.Geom.Rectangle((config.width / 4) * 2 + this.horizontalMargin, this.verticalMargin  +20, (config.width / 2) - 80 ,100);
+        var rect = new Phaser.Geom.Rectangle((config.width / 4) * 2 + this.horizontalMargin, this.verticalMargin + 20, (config.width / 2) - 80, 100);
         graphics.strokeRectShape(rect);
-            
+
         // Creo las flechas Y las añado aun grupo
-        this.arrows = this.createArrows();
+        this.arrows = this.add.group();
+
+        var { prevButt,
+        prevHandle,
+        prevCanon,
+        nextButt,
+        nextHandle,
+        nextCanon } = this.createArrows();
         
+        this.arrows.addMultiple(
+            prevButt,
+            prevHandle,
+            prevCanon,
+            nextButt,
+            nextHandle,
+            nextCanon
+        );
+
+        // Recorro el grupo para añadir el mismo evento
+            console.log(this.arrows.children);
+            
+        
+        // .forEach({
+        //     child.on('pointerover', function () {
+        //         this.setScale(0.7);
+        //     });
+
+        //     child.on('pointerout', function () {
+        //         this.setScale(0.7);
+        //     });
+        // })
     }
 
     /**
@@ -134,7 +169,7 @@ class SceneChooseWeapon extends Phaser.Scene {
         // for (let i = 0; i < 6; i++) {
         //     var arrow;
         //     // console.log(arrow);
-            
+
         //     if (i>= 0 && i<=2){
         //         console.log('hi');
         //         var value = this.getNextValue(this.buttPart.texture.key);
@@ -146,11 +181,11 @@ class SceneChooseWeapon extends Phaser.Scene {
         //         .setInteractive()       
         //         .on('pointerdown', function (id = 'hola') {  
         //             console.log(id);
-                              
+
         //             var buttId;
         //             var value = this.scene.getNextValue(this.scene.buttPart.texture.key);
         //             console.log(value);
-                    
+
         //             Object.keys(weaponParts.BUTT).find(function (key) {
         //                 if (weaponParts.BUTT[key] == value) {
         //                     buttId = key;
@@ -170,36 +205,36 @@ class SceneChooseWeapon extends Phaser.Scene {
         //     else if (i>= 3 && i<=5) {
 
         //     }
-            
+
         // }
-        
+
 
         var nextButt = this.add
-        .image(this.buttPart.x - this.handlePart.width / 2, this.buttPart.y + this.buttPart.height * 1.4, 'arrow')
-        .setOrigin(0.5, 0)
-        .setScale(0.5)
-        .setFlipY(true)
-        .setInteractive();
-        
+            .image(this.buttPart.x - this.handlePart.width / 2, this.buttPart.y + this.buttPart.height * 1.4, 'arrow')
+            .setOrigin(0.5, 0)
+            .setScale(0.5)
+            .setFlipY(true)
+            .setInteractive();
+
         var nextHandle = this.add
             .image(this.handlePart.x, this.handlePart.y + this.handlePart.height * 1.4, 'arrow')
             .setOrigin(0.5, 0)
             .setScale(0.5)
             .setFlipY(true)
             .setInteractive();
-            
+
         var nextCanon = this.add
             .image(this.canonPart.x + this.handlePart.width / 2, this.canonPart.y + this.canonPart.height * 1.4, 'arrow')
             .setOrigin(0.5, 0)
             .setScale(0.5)
             .setFlipY(true)
             .setInteractive();
-        
-        nextButt.on('pointerdown', function () {            
+
+        nextButt.on('pointerdown', function () {
             var buttId;
             var value = this.scene.getNextValue(this.scene.buttPart.texture.key);
             console.log(value);
-            
+
             Object.keys(weaponParts.BUTT).find(function (key) {
                 if (weaponParts.BUTT[key] == value) {
                     buttId = key;
@@ -208,7 +243,7 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
             this.scene.butt = weaponParts.BUTT[buttId];
             this.scene.buttPart.setTexture(this.scene.butt);
-            
+
         });
         nextHandle.on('pointerdown', function () {
             var handleId;
@@ -221,7 +256,7 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
             this.scene.handle = weaponParts.HANDLE[handleId];
             this.scene.handlePart.setTexture(this.scene.handle);
-            
+
         });
         nextCanon.on('pointerdown', function () {
             var canonId;
@@ -234,9 +269,9 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
             this.scene.canon = weaponParts.CANON[canonId];
             this.scene.canonPart.setTexture(this.scene.canon);
-            
+
         });
-        
+
         var prevButt = this.add
             .image(this.buttPart.x - this.handlePart.width / 2, this.buttPart.y - this.buttPart.height / 1.3, 'arrow')
             .setOrigin(0.5, 1)
@@ -253,7 +288,7 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
             this.scene.butt = weaponParts.BUTT[buttId];
             this.scene.buttPart.setTexture(this.scene.butt);
-            
+
         });
 
         var prevHandle = this.add
@@ -272,7 +307,7 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
             this.scene.handle = weaponParts.HANDLE[handleId];
             this.scene.handlePart.setTexture(this.scene.handle);
-            
+
         });
 
         var prevCanon = this.add
@@ -291,21 +326,17 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
             this.scene.canon = weaponParts.CANON[canonId];
             this.scene.canonPart.setTexture(this.scene.canon);
-            
+
         });
 
-        this.arrowGroup = this.add.group();
-        
-        this.arrowGroup.addMultiple(
-            this.prevButt,
-            this.prevHandle,
-            this.prevCanon,
-            this.nextButt,
-            this.nextHandle,
-            this.nextCanon,
-        );
-        
-        return this.arrowGroup;
+        return {
+            prevButt,
+            prevHandle,
+            prevCanon,
+            nextButt,
+            nextHandle,
+            nextCanon
+        };
     }
 
 
@@ -339,5 +370,5 @@ class SceneChooseWeapon extends Phaser.Scene {
         return value[0] + '_' + strValue;
     }
 
-    
+
 }
