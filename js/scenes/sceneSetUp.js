@@ -111,38 +111,32 @@ class SceneChooseWeapon extends Phaser.Scene {
         var rect = new Phaser.Geom.Rectangle((config.width / 4) * 2 + this.horizontalMargin, this.verticalMargin + 20, (config.width / 2) - 80, 100);
         graphics.strokeRectShape(rect);
 
-        // Creo las flechas Y las añado aun grupo
         this.arrows = this.add.group();
 
-        var { prevButt,
-        prevHandle,
-        prevCanon,
-        nextButt,
-        nextHandle,
-        nextCanon } = this.createArrows();
-        
-        this.arrows.addMultiple(
+        // Creo las flechas Y las añado aun grupo
+        var { prevButt, prevHandle, prevCanon } = this.createPrevArrows();
+
+        var { nextButt, nextHandle, nextCanon } = this.createNextArrows();
+
+        this.arrows.addMultiple([
             prevButt,
             prevHandle,
             prevCanon,
             nextButt,
             nextHandle,
-            nextCanon
-        );
+            nextCanon,
+        ]);
 
         // Recorro el grupo para añadir el mismo evento
-            console.log(this.arrows.children);
-            
-        
-        // .forEach({
-        //     child.on('pointerover', function () {
-        //         this.setScale(0.7);
-        //     });
+        this.arrows.children.each(function (child) {
+            child.on('pointerover', function () {
+                this.setScale(0.7);
+            });
 
-        //     child.on('pointerout', function () {
-        //         this.setScale(0.7);
-        //     });
-        // })
+            child.on('pointerout', function () {
+                this.setScale(0.5);
+            });
+        })
     }
 
     /**
