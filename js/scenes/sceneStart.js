@@ -9,7 +9,7 @@ class SceneStart extends Phaser.Scene {
      */
     constructor() {
         super({
-            key: sceneNames.START
+            key: sceneNames.GAME
         });
     }
 
@@ -68,9 +68,6 @@ class SceneStart extends Phaser.Scene {
             handle: this.handle,
             canon: this.canon,
         });
-
-        // if (gameState != gameStates.CHOOSEWEPAPON) {
-        // }
 
         gameState = gameStates.PLAYING;
     }

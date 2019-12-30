@@ -72,7 +72,7 @@ class SceneChooseWeapon extends Phaser.Scene {
             }
         });
         // var rect = new Phaser.Geom.Rectangle(((config.width / 4) * 2) + this.margin, ((config.width / 4) * 4) - this.margin, 100, 100);
-        var rect = new Phaser.Geom.Rectangle((config.width / 4) * 2 + this.horizontalMargin, (config.height/8)*3, (config.width / 2) - 80, 100);
+        var rect = new Phaser.Geom.Rectangle((config.width / 4) * 2 + this.horizontalMargin, (config.height / 8) * 3, (config.width / 2) - 80, 100);
         graphics.strokeRectShape(rect);
 
     }
@@ -116,7 +116,7 @@ class SceneChooseWeapon extends Phaser.Scene {
     setUpWeaponConstructor() {
         // Cuerpo del arma
         this.handlePart = this.add
-            .image((config.width / 4) * 3, (config.height / 2) , this.handle)
+            .image((config.width / 4) * 3, (config.height / 2), this.handle)
             .setOrigin(0.5)
             .setScale(1.3);
         var handleWidth = this.handlePart.scale * this.handlePart.width;
@@ -142,17 +142,17 @@ class SceneChooseWeapon extends Phaser.Scene {
         this.anims.create({
             key: 'idle_selector',
             frames: [{
-                    key: 'idle_0'
-                },
-                {
-                    key: 'idle_1'
-                },
-                {
-                    key: 'idle_2'
-                },
-                {
-                    key: 'idle_3'
-                }
+                key: 'idle_0'
+            },
+            {
+                key: 'idle_1'
+            },
+            {
+                key: 'idle_2'
+            },
+            {
+                key: 'idle_3'
+            }
             ],
             frameRate: 2,
             repeat: -1
@@ -161,17 +161,17 @@ class SceneChooseWeapon extends Phaser.Scene {
         this.anims.create({
             key: 'run_selector',
             frames: [{
-                    key: 'run_F_0'
-                },
-                {
-                    key: 'run_F_1'
-                },
-                {
-                    key: 'run_F_2'
-                },
-                {
-                    key: 'run_F_3'
-                }
+                key: 'run_F_0'
+            },
+            {
+                key: 'run_F_1'
+            },
+            {
+                key: 'run_F_2'
+            },
+            {
+                key: 'run_F_3'
+            }
             ],
             frameRate: 6,
             repeat: -1
@@ -183,8 +183,7 @@ class SceneChooseWeapon extends Phaser.Scene {
 
         this.createAnimations();
 
-        this.characterSprite = this.physics.add.sprite(config.width / 4, (config.height / 2) *1, 'character_selector')
-
+        this.characterSprite = this.physics.add.sprite(config.width / 4, (config.height / 2) * 1, 'character_selector')
             .setSize(16, 32)
             .setScale(3)
             .setInteractive()
@@ -210,35 +209,43 @@ class SceneChooseWeapon extends Phaser.Scene {
     create() {
         //Asignamos el estado del juego
         gameState = gameStates.PRELOAD;
-        
+
         showCursor();
 
-        this.txtMenuTitle = this.add.text((config.width/4)*1, -10, 'player', {
+        this.add.text((config.width / 4) * 1, -10, 'player', {
             align: "center",
             fontFamily: '"iPixelU"',
             fontSize: (76),
             color: "#000"
-        }).setOrigin(0.5,0)
-        // .setRotation(-0.07)
-        ;
-        this.txtMenuTitle = this.add.text((config.width/4)*3, -10, 'gear', {
+        }).setOrigin(0.5, 0)
+            // .setRotation(-0.07)
+            ;
+        this.add.text((config.width / 4) * 3, -10, 'gear', {
             align: "center",
             fontFamily: '"iPixelU"',
             fontSize: (76),
             color: "#000"
-        }).setOrigin(0.5,0)
-        // .setRotation(-0.07)
-        ;
-        
-        this.txtMenuTitle = this.add.text(config.width /2, config.height , 'GO!', {
-            align: "center",
-            fontFamily: '"iPixelU"',
-            fontSize: (76),
-            color: "#000"
-        }).setInteractive().on('pointerdown', function () {
-            console.log('PLAY!')
-        }).setOrigin(0.5,1);
+        }).setOrigin(0.5, 0)
+            // .setRotation(-0.07)
+            ;
 
+        var txtMenuTitle = this.add.text(config.width / 2, config.height, 'GO!', {
+            align: "center",
+            fontFamily: '"iPixelU"',
+            fontSize: (76),
+            color: "#000"
+        })
+            .setInteractive()
+            .setOrigin(0.5, 1);
+
+        txtMenuTitle.on('pointerdown', function () {
+            console.log('PLAY!');
+            this.scene.scene.start(sceneNames.GAME, {
+                butt: this.butt,
+                handle: this.handle,
+                canon: this.canon,
+            });
+        });
 
         //Set background color (temporal)
         var color = Phaser.Display.Color.GetColor32(109, 247, 177, 0);
@@ -247,7 +254,6 @@ class SceneChooseWeapon extends Phaser.Scene {
         this.setUpWeaponConstructor();
 
         this.setUpCharacterSelector();
-
     }
 
     /**
