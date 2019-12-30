@@ -56,7 +56,7 @@ class Cliente {
      */
     enemyInfo() {
         this.socket.on('newEnemy', function (data) {
-            game.scene.getScene(sceneNames.START).addNewEnemy(data.id, data.x, data.y);
+            game.scene.getScene(sceneNames.GAME).addNewEnemy(data.id, data.x, data.y);
         })
     }
 
@@ -70,7 +70,7 @@ class Cliente {
          */
         this.socket.on('getAllEnemies', function (data) {
             for (var i = 0; i < data.length; i++) {
-                game.scene.getScene(sceneNames.START).addNewEnemy(data[i].id, data[i].x, data[i].y);
+                game.scene.getScene(sceneNames.GAME).addNewEnemy(data[i].id, data[i].x, data[i].y);
             }
 
             /**
@@ -78,8 +78,8 @@ class Cliente {
              * @event moveEnemyWithForce 
              */
             cliente.socket.on('movePlayerToPosition', function (data) {
-                if (game.scene.getScene(sceneNames.START).enemies[data.id]) {
-                    game.scene.getScene(sceneNames.START).enemies[data.id].movePlayerToPosition(data.x, data.y);
+                if (game.scene.getScene(sceneNames.GAME).enemies[data.id]) {
+                    game.scene.getScene(sceneNames.GAME).enemies[data.id].movePlayerToPosition(data.x, data.y);
                 }
             });
 
@@ -88,8 +88,8 @@ class Cliente {
              * @event removeEnemy 
              */
             cliente.socket.on('removeEnemy', function (id) {
-                if (game.scene.getScene(sceneNames.START).enemies[id]) {
-                    game.scene.getScene(sceneNames.START).enemies[id].removePlayer();
+                if (game.scene.getScene(sceneNames.GAME).enemies[id]) {
+                    game.scene.getScene(sceneNames.GAME).enemies[id].removePlayer();
                 }
             });
         });
