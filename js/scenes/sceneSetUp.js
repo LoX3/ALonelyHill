@@ -42,6 +42,60 @@ class SceneChooseWeapon extends Phaser.Scene {
     }
 
     /**
+     * Create sellama una vez que se ha completado la
+     * precarga. Si no tiene un método de precarga, crear es el primer
+     * método llamado en su estado.
+     */
+    create() {
+        //Asignamos el estado del juego
+        gameState = gameStates.PRELOAD;
+
+        showCursor();
+
+        this.add.text((config.width / 4) * 1, -10, 'player', {
+            align: "center",
+            fontFamily: '"iPixelU"',
+            fontSize: (76),
+            color: "#000"
+        }).setOrigin(0.5, 0)
+            // .setRotation(-0.07)
+            ;
+        this.add.text((config.width / 4) * 3, -10, 'gear', {
+            align: "center",
+            fontFamily: '"iPixelU"',
+            fontSize: (76),
+            color: "#000"
+        }).setOrigin(0.5, 0)
+            // .setRotation(-0.07)
+            ;
+
+        var txtMenuTitle = this.add.text(config.width / 2, config.height, 'GO!', {
+            align: "center",
+            fontFamily: '"iPixelU"',
+            fontSize: (76),
+            color: "#000"
+        })
+            .setInteractive()
+            .setOrigin(0.5, 1);
+
+        txtMenuTitle.on('pointerdown', function () {
+            this.scene.scene.start(sceneNames.GAME, {
+                butt: this.scene.butt,
+                handle: this.scene.handle,
+                canon: this.scene.canon,
+            });
+        });
+
+        //Set background color (temporal)
+        var color = Phaser.Display.Color.GetColor32(109, 247, 177, 0);
+        this.cameras.main.setBackgroundColor(color);
+
+        this.setUpWeaponConstructor();
+
+        this.setUpCharacterSelector();
+    }
+
+    /**
      * Vuelvo a cambiar la posición del arma, para que no se formen errores
      */
     displayWeapon() {
@@ -61,6 +115,7 @@ class SceneChooseWeapon extends Phaser.Scene {
         this.canonPart.y = this.handlePart.y;
         this.canonPart.setOrigin(0, 0.5);
     }
+
     setUpWeaponContainer() {
         var graphics = this.add.graphics({
             lineStyle: {
@@ -76,6 +131,7 @@ class SceneChooseWeapon extends Phaser.Scene {
         graphics.strokeRectShape(rect);
 
     }
+
     setUpPartChangerArrows() {
 
         // Creo las flechas Y las añado aun grupo
@@ -113,6 +169,7 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
         })
     }
+
     setUpWeaponConstructor() {
         // Cuerpo del arma
         this.handlePart = this.add
@@ -199,68 +256,6 @@ class SceneChooseWeapon extends Phaser.Scene {
 
 
         // console.log(this.characterSprite);
-    }
-
-    /**
-     * Create sellama una vez que se ha completado la
-     * precarga. Si no tiene un método de precarga, crear es el primer
-     * método llamado en su estado.
-     */
-    create() {
-        //Asignamos el estado del juego
-        gameState = gameStates.PRELOAD;
-
-        showCursor();
-
-        this.add.text((config.width / 4) * 1, -10, 'player', {
-            align: "center",
-            fontFamily: '"iPixelU"',
-            fontSize: (76),
-            color: "#000"
-        }).setOrigin(0.5, 0)
-            // .setRotation(-0.07)
-            ;
-        this.add.text((config.width / 4) * 3, -10, 'gear', {
-            align: "center",
-            fontFamily: '"iPixelU"',
-            fontSize: (76),
-            color: "#000"
-        }).setOrigin(0.5, 0)
-            // .setRotation(-0.07)
-            ;
-
-        var txtMenuTitle = this.add.text(config.width / 2, config.height, 'GO!', {
-            align: "center",
-            fontFamily: '"iPixelU"',
-            fontSize: (76),
-            color: "#000"
-        })
-            .setInteractive()
-            .setOrigin(0.5, 1);
-
-        txtMenuTitle.on('pointerdown', function () {
-            this.scene.scene.start(sceneNames.GAME, {
-                butt: this.scene.butt,
-                handle: this.scene.handle,
-                canon: this.scene.canon,
-            });
-        });
-
-        //Set background color (temporal)
-        var color = Phaser.Display.Color.GetColor32(109, 247, 177, 0);
-        this.cameras.main.setBackgroundColor(color);
-
-        this.setUpWeaponConstructor();
-
-        this.setUpCharacterSelector();
-    }
-
-    /**
-     * Update se llama una vez finalizado la carga de los 
-     * archivos para poder jugar
-     */
-    update() {
-
     }
 
     /**
@@ -435,6 +430,4 @@ class SceneChooseWeapon extends Phaser.Scene {
         strValue = (parseInt(value[1]) + 1).toString();
         return value[0] + '_' + strValue;
     }
-
-
 }
