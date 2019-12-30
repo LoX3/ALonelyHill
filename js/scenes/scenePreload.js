@@ -64,7 +64,7 @@ class ScenePreload extends Phaser.Scene {
         this.load.image('bullet', '../../assets/player/weapon/bullet/1.png');
         this.load.image('sensei', '../../assets/player/sensei.png');
         this.load.image('scope', '../../assets/player/weapon/scope50.png');
-        this.load.image('next_arrow', '../../assets/custom/arrow.png');
+        this.load.image('arrow', '../../assets/custom/arrow.png');
 
         this.load.on('progress', function (value) {
             // console.log(value);
