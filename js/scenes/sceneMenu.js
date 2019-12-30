@@ -47,16 +47,20 @@ class SceneMenu extends Phaser.Scene {
             fontSize: (76),
             color: "#000"
         })
-            .setInteractive()
             .setOrigin(0.5, 0);
+        
+        this.txtStart = this.add.text(config.width / 2, (config.height/5) * 4.5, 'START!', {
+            align: "center",
+            fontFamily: '"iPixelU"',
+            fontSize: (36),
+            color: "#000"
+        })
+            .setInteractive()
+            .setOrigin(0.5, 1);
 
-        this.txtMenuTitle.on('pointerdown', function () {
+        this.txtStart.on('pointerdown', function () {
             console.log('PLAY!');
-            this.scene.scene.start(sceneNames.GAME, {
-                butt: this.butt,
-                handle: this.handle,
-                canon: this.canon,
-            });
+            this.scene.scene.start(sceneNames.SETUP);
         });
 
         //Set background color (temporal)
@@ -88,7 +92,6 @@ class SceneMenu extends Phaser.Scene {
             this.delta += Phaser.Math.Linear(0.1,2,1) / 100000;
         }
         else {
-            console.log('Delta is :' + this.delta);
             
         }
 
