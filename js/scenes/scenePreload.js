@@ -25,7 +25,7 @@ class ScenePreload extends Phaser.Scene {
         i = 0;
         for (let bt in weaponParts.BUTT) {
             var id = weaponParts.BUTT[bt];
-            this.load.image(id, '../../assets/weapons/BUTT/' + id + '.png');
+            this.load.image(id, 'weapons/BUTT/' + id + '.png');
             i++;
             // console.log(" LOADED: " + bt + " | with route : " + '../../assets/weapons/BUTT/' + id + '.png');
         }
@@ -34,7 +34,7 @@ class ScenePreload extends Phaser.Scene {
         i = 0;
         for (let bd in weaponParts.HANDLE) {
             var id = weaponParts.HANDLE[bd];
-            this.load.image(id, '../../assets/weapons/HANDLE/' + id + '.png');
+            this.load.image(id, 'weapons/HANDLE/' + id + '.png');
             i++;
             // console.log(" LOADED: handle_" + bd + " | with route : " + '../../assets/weapons/HANDLE/' + id + '.png');
         }
@@ -43,12 +43,27 @@ class ScenePreload extends Phaser.Scene {
         i = 0;
         for (let c in weaponParts.CANON) {
             var id = weaponParts.CANON[c];
-            this.load.image(id, '../../assets/weapons/CANON/' + id + '.png');
+            this.load.image(id, 'weapons/CANON/' + id + '.png');
             i++;
             // console.log(" LOADED: canon_" + c + " | with route : " + '../../assets/weapons/CANON/' + id + '.png');
         }
     }
 
+
+    preloadCharacterAnimations() {
+        //Idle
+        this.load.image('idle_0', 'player/character/idle_0.png');
+        this.load.image('idle_1', 'player/character/idle_1.png');
+        this.load.image('idle_2', 'player/character/idle_2.png');
+        this.load.image('idle_3', 'player/character/idle_3.png');
+        //Running
+        this.load.image('run_F_0', 'player/character/run_F_0.png');
+        this.load.image('run_F_1', 'player/character/run_F_1.png');
+        this.load.image('run_F_2', 'player/character/run_F_2.png');
+        this.load.image('run_F_3', 'player/character/run_F_3.png');
+        
+    }
+    
     /**
      * Preload se llama primero. Normalmente usaría
      * esto para cargar sus activos de juego (o los necesarios para el
@@ -59,12 +74,16 @@ class ScenePreload extends Phaser.Scene {
     preload() {
         gameState = gameStates.PRELOAD;
 
+        this.load.path = '../../assets/';
+        
         this.preloadWeaponParts();
 
-        this.load.image('bullet', '../../assets/player/weapon/bullet/1.png');
-        this.load.image('sensei', '../../assets/player/sensei.png');
-        this.load.image('scope', '../../assets/player/weapon/scope50.png');
-        this.load.image('next_arrow', '../../assets/custom/arrow.png');
+        this.preloadCharacterAnimations();
+
+        this.load.image('bullet', 'player/weapon/bullet/1.png');
+        this.load.image('sensei', 'player/sensei.png');
+        this.load.image('scope', 'player/weapon/scope50.png');
+        this.load.image('arrow', 'custom/arrow.png');
 
         this.load.on('progress', function (value) {
             // console.log(value);
@@ -85,8 +104,8 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        gameState = gameStates.MENU;
+        gameState = gameStates.PRELOAD;
 
-        this.scene.launch(sceneNames.START);
+        this.scene.launch(sceneNames.SETUP);
     }
 }
