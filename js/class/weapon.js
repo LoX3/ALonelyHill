@@ -32,6 +32,8 @@ class Weapon extends Phaser.GameObjects.Container {
         this.bulletType = bulletType;
         // Offset para que la bala salga del cañon
         this.canonOffset = 100;
+        // Hago que se pueda disparar
+        this.canShoot = true;
 
         // Al hacer scale de las partes del arma, no quedan bien, con esto se arregla
         var handleWidth = handle.scale * handle.width;
@@ -135,6 +137,12 @@ class Weapon extends Phaser.GameObjects.Container {
          * @type {Number} 
          */
         this.absoluteShootPos;
+
+        /**
+         * Controla que se pueda disparar
+         * @type {Boolean} 
+         */
+        this.canShoot;
     }
 
     /**
@@ -163,20 +171,20 @@ class Weapon extends Phaser.GameObjects.Container {
 
         let angle = this.getRotationToPointer(axisX, axisY);
         // console.log(angle);
-        
+
         // Si la rotacion es mas de 1.5 significa que ha de cambiar
         console.log(this.x);
         if (Math.abs(angle) > 1.5) {
             this.setScale(1, -1);
             // this.x = 26;
-        }else {
+        } else {
             this.setScale(1, 1);
             // this.x = 40;
-            
+
         }
 
         this.setRotation(angle);
-        
+
     }
 
     /**
@@ -194,12 +202,15 @@ class Weapon extends Phaser.GameObjects.Container {
      * Disparo del arma hacia el puntero
      */
     shoot() {
-        if (gameState != gameStates.CHOOSEWEPAPON) {
+        if (this.canShoot && gameState != gameStates.CHOOSEWEPAPON) {
+            this.canShoot = false;
             var shootRotation = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
 
             var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletType, shootRotation);
             this.bulletGroup.add(bala);
             bala.body.setSize(7, 7);
+
+            this.scene.time.delayedCall(600, () => this.canShoot = true);
         }
     }
 }
