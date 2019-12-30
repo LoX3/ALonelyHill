@@ -14,6 +14,5 @@ const gameStates = {
     LOADING: 1,
     MENU: 2,
     PAUSE: 3,
-    PLAYING: 4,
-    CHOOSEWEAPON: 5,
+    PLAYING: 4
 }
