@@ -47,8 +47,8 @@ class Cliente {
     /**
      * Registra al jugador en el servidor
      */
-    registerPlayer() {
-        this.socket.emit('newServerPlayer');
+    registerPlayer(player) {
+        this.socket.emit('newServerPlayer', player);
     }
 
     /**
@@ -77,9 +77,9 @@ class Cliente {
              * Muevo el enemigos en el cliente
              * @event moveEnemyWithForce 
              */
-            cliente.socket.on('moveEnemyWithForce', function (data) {
+            cliente.socket.on('movePlayerToPosition', function (data) {
                 if (game.scene.getScene(sceneNames.START).enemies[data.id]) {
-                    game.scene.getScene(sceneNames.START).enemies[data.id].movePlayerWithForce(data.x, data.y);
+                    game.scene.getScene(sceneNames.START).enemies[data.id].movePlayerToPosition(data.x, data.y);
                 }
             });
 
@@ -88,7 +88,7 @@ class Cliente {
              * @event removeEnemy 
              */
             cliente.socket.on('removeEnemy', function (id) {
-                if (game.scene.getScene(sceneNames.START).enemies[data.id]) {
+                if (game.scene.getScene(sceneNames.START).enemies[id]) {
                     game.scene.getScene(sceneNames.START).enemies[id].removePlayer();
                 }
             });
@@ -109,6 +109,10 @@ class Cliente {
             forceX: forceX,
             forceY: forceY
         });
+    }
+
+    changeWeapon(weaponComponents) {
+        this.socket.emit('changeWeapon', weaponComponents);
     }
 }
 

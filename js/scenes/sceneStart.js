@@ -63,7 +63,13 @@ class SceneStart extends Phaser.Scene {
 
 
         if (gameState != gameStates.CHOOSEWEPAPON) {
-            cliente.registerPlayer();
+            cliente.registerPlayer({
+                x: this.player.x,
+                y: this.player.y,
+                butt: this.butt,
+                handle: this.handle,
+                canon: this.canon,
+            });
         }
 
         gameState = gameStates.PLAYING;
@@ -85,7 +91,7 @@ class SceneStart extends Phaser.Scene {
         // Si podemos jugar...
         if (gameState == gameStates.PLAYING) {
             // Al pulsar la tecla ESC...
-            if (this.escKey.isDown) {
+            if (!this.chooseWeapon && this.escKey.isDown) {
                 // Abro la escena para cambiar el arma
                 this.scene.launch(sceneNames.CHOOSEWEAPON, {
                     butt: this.butt,
@@ -106,6 +112,12 @@ class SceneStart extends Phaser.Scene {
      * @param {Number} y Posición vertical del enemigo
      */
     addNewEnemy(id, x, y) {
-        this.enemies[id] = new Enemy(this, x, y, 'sensei');
+        var weaponComponents = {
+            butt: weaponParts.BUTT.ONE,
+            handle: weaponParts.HANDLE.ONE,
+            canon: weaponParts.CANON.ONE,
+        }
+
+        this.enemies[id] = new Enemy(this, x, y, 'sensei', weaponComponents);
     }
 }

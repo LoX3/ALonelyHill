@@ -87,10 +87,6 @@ class ScenePreload extends Phaser.Scene {
     create() {
         gameState = gameStates.MENU;
 
-        this.scene.launch(sceneNames.START, {
-            butt: weaponParts.BUTT.TEN,
-            handle: weaponParts.HANDLE.EIGHT,
-            canon: weaponParts.CANON.SIX,
-        });
+        this.scene.launch(sceneNames.START);
     }
 }

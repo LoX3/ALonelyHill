@@ -57,22 +57,6 @@ var game = new Phaser.Game(config);
 var gameState;
 
 /**
- * Obtiene todos los jugadores enemigos del servidor
- */
-function getAllEnemies() {
-    var players = [];
-
-    Object.keys(io.sockets.connected).forEach(function (socketID) {
-        var player = io.sockets.connected[socketID].player;
-        if (player) {
-            players.push(player);
-        };
-    });
-
-    return players;
-}
-
-/**
  * Devuelve un numbero aleatorio en un rango
  * @param {Number} low Minimo numero aleatorio
  * @param {Number} high Máximo numero aleatorio
@@ -86,6 +70,7 @@ var canvas;
 window.onload = function () {
     canvas = document.getElementsByTagName('canvas')[0];
 
+    this.hideCursor();
 }
 
 /**

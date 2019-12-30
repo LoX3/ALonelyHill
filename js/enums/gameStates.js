@@ -7,7 +7,7 @@
  * @property {Number} MENU Estando en el menu del juego
  * @property {Number} PAUSE Estando con el juego pausado
  * @property {Number} PLAYING Escena del juego principal
- * @property {Number} CHOOSEWEPAPON Escena para escojer arma del jugador
+ * @property {Number} CHOOSEWEAPON Escena para escojer arma del jugador
  */
 const gameStates = {
     PRELOAD: 0,
@@ -15,5 +15,5 @@ const gameStates = {
     MENU: 2,
     PAUSE: 3,
     PLAYING: 4,
-    CHOOSEWEPAPON: 5,
+    CHOOSEWEAPON: 5,
 }

@@ -1,5 +1,6 @@
 /**
- * @class Escena para escoer el arma del usuario
+ * Escena para escoer el arma del usuario
+ * @class 
  */
 class SceneChooseWeapon extends Phaser.Scene {
     /**
@@ -40,12 +41,12 @@ class SceneChooseWeapon extends Phaser.Scene {
      */
     create() {
         // Cambio al escena estado
-        gameState = gameStates.CHOOSEWEPAPON;
+        gameState = gameStates.CHOOSEWEAPON;
 
         // Escondo el raton
         showCursor();
 
-        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         var color = Phaser.Display.Color.GetColor32(0, 0, 0, 120);
         this.cameras.main.setBackgroundColor(color);
@@ -95,6 +96,26 @@ class SceneChooseWeapon extends Phaser.Scene {
                 this.setScale(0.5);
             });
         })
+    }
+
+    /**
+     * Update se llama una vez finalizado la carga de los 
+     * archivos para poder jugar
+     */
+    update() {
+        if (this.salir && this.spaceKey.isDown) {
+            this.salir = false;
+
+            this.scene.get(sceneNames.START).player.getAt(1).getAt(0).setTexture(this.butt);
+            this.scene.get(sceneNames.START).player.getAt(1).getAt(1).setTexture(this.handle);
+            this.scene.get(sceneNames.START).player.getAt(1).getAt(2).setTexture(this.canon);
+
+            hideCursor();
+
+            gameState = gameStates.PLAYING;
+
+            this.scene.stop();
+        }
     }
 
     /**
@@ -229,26 +250,6 @@ class SceneChooseWeapon extends Phaser.Scene {
         });
 
         return { prevButt, prevHandle, prevCanon };
-    }
-
-    /**
-     * Update se llama una vez finalizado la carga de los 
-     * archivos para poder jugar
-     */
-    update() {
-        if (this.salir && this.escKey.isDown) {
-            this.salir = false;
-
-            this.scene.run(sceneNames.START, {
-                butt: this.butt,
-                handle: this.handle,
-                canon: this.canon
-            });
-
-            hideCursor();
-
-            this.scene.stop();
-        }
     }
 
     /**
