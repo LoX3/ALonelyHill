@@ -25,11 +25,6 @@ class Bullet extends Phaser.GameObjects.Sprite {
         // Guardo la escena
         this.scene = scene;
 
-        // Muevo un poco la bala para que salga mejor del cañón
-
-        // this.x += this.width / 2;
-        // this.y += this.height / 2;
-
         // Añado fisicas para que pueda chocar contra otros elementos
         scene.physics.world.enableBody(this);
 

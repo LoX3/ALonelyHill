@@ -204,11 +204,13 @@ class Weapon extends Phaser.GameObjects.Container {
             bala.body.setSize(7, 7);
 
             this.scene.time.delayedCall(350, () => this.canShoot = true);
-            this.playRecoilAnim();
+            // this.playRecoilAnim();
         }
     }
 
-    playRecoilAnim() {
-        this.setRotation(this.rotation + 10);
-    }
+    // playRecoilAnim() {
+    //     var oldX = this.x;
+    //     this.setX(this.getAt(1).x - 5);
+    //     this.scene.time.delayedCall(150, () => this.setX(oldX));
+    // }
 }

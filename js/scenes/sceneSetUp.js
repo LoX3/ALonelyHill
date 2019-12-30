@@ -239,11 +239,10 @@ class SceneChooseWeapon extends Phaser.Scene {
             .setOrigin(0.5, 1);
 
         txtMenuTitle.on('pointerdown', function () {
-            console.log('PLAY!');
             this.scene.scene.start(sceneNames.GAME, {
-                butt: this.butt,
-                handle: this.handle,
-                canon: this.canon,
+                butt: this.scene.butt,
+                handle: this.scene.handle,
+                canon: this.scene.canon,
             });
         });
 
@@ -291,7 +290,6 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
             this.scene.butt = weaponParts.BUTT[buttId];
             this.scene.buttPart.setTexture(this.scene.butt);
-
         });
         var nextHandle = this.add
             .image(this.handlePart.x, this.handlePart.y + this.handlePart.height, 'arrow')
@@ -310,7 +308,6 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
             this.scene.handle = weaponParts.HANDLE[handleId];
             this.scene.handlePart.setTexture(this.scene.handle);
-
         });
         var nextCanon = this.add
             .image(this.canonPart.x + this.handlePart.width / 2, this.canonPart.y + this.canonPart.height, 'arrow')
@@ -329,7 +326,6 @@ class SceneChooseWeapon extends Phaser.Scene {
             });
             this.scene.canon = weaponParts.CANON[canonId];
             this.scene.canonPart.setTexture(this.scene.canon);
-
         });
         return {
             nextButt,
