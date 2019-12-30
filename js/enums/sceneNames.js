@@ -8,6 +8,7 @@
  */
 const sceneNames = {
     PRELOAD: "scenePreload",
+    MENU: "sceneMenu",
     SETUP: 'sceneSetUp',
     GAME: "sceneStart"
 }

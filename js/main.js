@@ -43,8 +43,9 @@ const config = {
     },
     scene: [
         ScenePreload,
-        SceneStart,
-        SceneChooseWeapon,
+        SceneMenu,
+        SceneSetUp,
+        SceneGame,
     ],
 };
 

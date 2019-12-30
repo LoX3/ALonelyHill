@@ -1,7 +1,7 @@
 /**
  * @class Escena principal del juego
  */
-class SceneStart extends Phaser.Scene {
+class SceneGame extends Phaser.Scene {
 
     /**
      * Escena principal del juego
