@@ -203,7 +203,7 @@ class Weapon extends Phaser.GameObjects.Container {
             this.bulletGroup.add(bala);
             bala.body.setSize(7, 7);
 
-            this.scene.time.delayedCall(600, () => this.canShoot = true);
+            this.scene.time.delayedCall(350, () => this.canShoot = true);
         }
     }
 }
