@@ -6,10 +6,9 @@
  * @property {String} SETUP Escena donde se escoje personaje, arma y nombre
  * @property {String} GAME Escena donde se ejecuta el juego
  */
-const sceneNames = {
-    PRELOAD: "scenePreload",
-    MENU: "sceneMenu",
-    SETUP: 'sceneSetUp',
-    GAME: "sceneStart",
-    GAMEUI: 'sceneGameUI',
+const tileNames = {
+    GRASS: 0,
+    GRASS: 1,
+    GRASS: 2,
+    GRASS: 3
 }

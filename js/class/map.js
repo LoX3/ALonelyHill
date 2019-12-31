@@ -2,25 +2,25 @@
  * @author Jose Luis Tresserras
  * @class Clase para establecer los parametros de los mapas
  * @param {Number} index 
- * @param {String} nombre
+ * @param {String} name
  * @param {Number[]} mapas
  */
-class Mapa {
+class Map {
     /**
      * Mapas para jugar al juego
      * @constructor
      * @param {Number} index Indice del mapa
-     * @param {String} nombre Nombre del mapa
+     * @param {String} name Nombre del mapa
      * @param {Number[]} mapa CSV del mapa 
      */
-    constructor(index, nombre, mapa) {
+    constructor(index, name, map) {
         // Creo las variables de la clase
         this.init();
 
         // Inicializo las variables
         this.index = index;
-        this.nombre = nombre;
-        this.mapa = mapa;
+        this.name = name;
+        this.map = map;
     }
 
     init() {
@@ -34,13 +34,13 @@ class Mapa {
          * Nombre del mapa
          * @type {String}
          */
-        this.nombre;
+        this.name;
 
         /**
          * CSV del mapa 
          * @type {Number[]}
          */
-        this.mapa;
+        this.map;
     }
 
     /**
@@ -55,15 +55,15 @@ class Mapa {
      * Devuelve el nombre del atributo
      * @returns {number} Devuelve el nombre del atributo
      */
-    getNombre() {
-        return this.nombre;
+    getName() {
+        return this.name;
     }
 
     /**
      * Devuelve el mapa del atributo
      * @returns {number} Devuelve el mapa del atributo
      */
-    getMapa() {
-        return this.mapa;
+    getMap() {
+        return this.map;
     }
 }

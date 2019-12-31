@@ -4,7 +4,7 @@
  */
 class SceneSetUp extends Phaser.Scene {
     /**
-     * Constructor de la escena SceneChooseWeapon
+     * Constructor de la escena SceneSetUp
      * @constructor 
      */
     constructor() {

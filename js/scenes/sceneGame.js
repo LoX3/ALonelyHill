@@ -2,7 +2,7 @@
  * Escena principal del juego
  * @class 
  */
-class SceneStart extends Phaser.Scene {
+class SceneGame extends Phaser.Scene {
 
     /**
      * Escena principal del juego
@@ -43,7 +43,7 @@ class SceneStart extends Phaser.Scene {
         gameState = gameStates.LOADING;
 
         // Asigno un color de fondo a la cámara
-        var color = Phaser.Display.Color.GetColor32(109, 247, 177, 0);
+        var color = Phaser.Display.Color.GetColor32(0,0,0, 0);
         this.cameras.main.setBackgroundColor(color);
 
 
@@ -117,7 +117,7 @@ class SceneStart extends Phaser.Scene {
      */
     crearMapa() {
         this.map = this.make.tilemap({
-            data: new ManagerMapas().getLevel(0),
+            data: new MapManager().getWorld(),
             tileWidth: 32,
             tileHeight: 32,
         });
