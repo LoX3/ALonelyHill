@@ -40,7 +40,7 @@ class SceneGame extends Phaser.Scene {
      */
     create() {
         // Asigno un color de fondo a la cámara
-        var color = Phaser.Display.Color.GetColor32(109, 247, 177, 0);
+        var color = Phaser.Display.Color.GetColor32(0,0,0, 0);
         this.cameras.main.setBackgroundColor(color);
 
 
@@ -118,7 +118,7 @@ class SceneGame extends Phaser.Scene {
      */
     crearMapa() {
         this.map = this.make.tilemap({
-            data: new ManagerMapas().getLevel(0),
+            data: new MapManager().getWorld(),
             tileWidth: 32,
             tileHeight: 32,
         });

@@ -30,6 +30,24 @@ class SceneMenu extends Phaser.Scene {
         this.delta = 0.001;
     }
 
+    createBackgroundMap() {
+        var mapManager = new MapManager();
+        mapManager.generateBackground();
+        var mapMatrix = mapManager.getTitleBackground().getMap();
+        console.log(mapMatrix);
+        
+        this.map = this.make.tilemap({
+            data: mapMatrix,
+            tileWidth: 16,
+            tileHeight: 16,
+        });
+        // Creamos el tileset de la imagen
+        const tileset = this.map.addTilesetImage('genericRPG');
+
+        // Creo una capa, donde se ponen las plataformas
+        this.platformsLayer = this.map.createStaticLayer(0, tileset, 0, 0);
+    }
+
     /**
      * Create sellama una vez que se ha completado la
      * precarga. Si no tiene un método de precarga, crear es el primer
@@ -41,20 +59,22 @@ class SceneMenu extends Phaser.Scene {
 
         showCursor();
 
+        this.createBackgroundMap();
+
         this.txtMenuTitle = this.add.text(config.width / 2, 30, 'A Lonely Hill', {
-            align: "center",
-            fontFamily: '"PixelCowboy"',
-            fontSize: (76),
-            color: "#000"
-        })
+                align: "center",
+                fontFamily: '"PixelCowboy"',
+                fontSize: (76),
+                color: "#000"
+            })
             .setOrigin(0.5, 0);
-        
-        this.txtStart = this.add.text(config.width / 2, (config.height/5) * 4.5, 'START!', {
-            align: "center",
-            fontFamily: '"iPixelU"',
-            fontSize: (36),
-            color: "#000"
-        })
+
+        this.txtStart = this.add.text(config.width / 2, (config.height / 5) * 4.5, 'START!', {
+                align: "center",
+                fontFamily: '"iPixelU"',
+                fontSize: (36),
+                color: "#000"
+            })
             .setInteractive()
             .setOrigin(0.5, 1);
 
@@ -64,7 +84,7 @@ class SceneMenu extends Phaser.Scene {
         });
 
         //Set background color (temporal)
-        var color = Phaser.Display.Color.GetColor32(109, 247, 177, 0);
+        var color = Phaser.Display.Color.GetColor32(0,0,0, 0);
         this.cameras.main.setBackgroundColor(color);
 
 
@@ -76,29 +96,26 @@ class SceneMenu extends Phaser.Scene {
      */
     update() {
         // console.log(this.r);
-        
-        if (this.r >= 0.1){
+
+        if (this.r >= 0.1) {
             this.arrieved = true;
-        }
-        else if (this.r <= -0.1) {
+        } else if (this.r <= -0.1) {
             this.arrieved = false;
         }
-        
+
 
         if (this.r >= 0.01) {
-            this.delta -= Phaser.Math.Linear(0.1,2,1) / 100000;
-        }
-        else if (this.r <= -0.01) {
-            this.delta += Phaser.Math.Linear(0.1,2,1) / 100000;
-        }
-        else {
-            
+            this.delta -= Phaser.Math.Linear(0.1, 2, 1) / 100000;
+        } else if (this.r <= -0.01) {
+            this.delta += Phaser.Math.Linear(0.1, 2, 1) / 100000;
+        } else {
+
         }
 
         if (this.arrieved) {
-            this.r -= Phaser.Math.Linear(0.1,1,2) * this.delta;
-        }else {
-            this.r += Phaser.Math.Linear(0.1,1,2) * this.delta;
+            this.r -= Phaser.Math.Linear(0.1, 1, 2) * this.delta;
+        } else {
+            this.r += Phaser.Math.Linear(0.1, 1, 2) * this.delta;
         }
         this.finalRotation = this.r * 5;
         this.txtMenuTitle.setRotation(this.finalRotation);
