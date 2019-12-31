@@ -4,7 +4,7 @@
 
 /** 
  * Variable que guarda todos los ajustes del las escenas de Phaser
- * @type {JSON}
+ * @enum {JSON}
  * @name config 
  * @property {Phaser} type - Tipo de renderizado para el navegador
  * @property {number} width - Anchura máxima de las esenas
@@ -21,8 +21,9 @@
  * @property {bool} render.pixelArt - No se puede reescalar las escenas de phaser
  * @property {Phaser.Scene[]} scene - Declaramos todas las escenas que utlizamos
  * @property {Phaser.Scene} scene.ScenePreload - {@link ScenePreload} Escena para cargar todos los assets
+ * @property {Phaser.Scene} scene.SceneGameUI - {@link SceneGameUI} Escena para la interfaz del usuario
+ * @property {Phaser.Scene} scene.SceneSetUp - {@link SceneSetUp} Escena para el menu principal del juego
  * @property {Phaser.Scene} scene.SceneStart - {@link SceneStart} Escena para empezar el juego
- * @property {Phaser.Scene} scene.SceneChooseWeapon - {@link SceneChooseWeapon} Escena para cambiar el arma del jugador
  */
 const config = {
     type: Phaser.AUTO,
@@ -43,8 +44,9 @@ const config = {
     },
     scene: [
         ScenePreload,
+        SceneGameUI,
+        SceneSetUp,
         SceneStart,
-        SceneChooseWeapon,
     ],
 };
 
@@ -54,6 +56,12 @@ const config = {
  * @name game 
  */
 var game = new Phaser.Game(config);
+
+/**
+ * Define el estado del juego
+ * @type {Number}
+ * @name gameState
+ */
 var gameState;
 
 /**

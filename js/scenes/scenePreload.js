@@ -107,8 +107,6 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        gameState = gameStates.PRELOAD;
-
         this.scene.launch(sceneNames.SETUP);
     }
 }

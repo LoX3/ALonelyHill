@@ -9,5 +9,6 @@
 const sceneNames = {
     PRELOAD: "scenePreload",
     SETUP: 'sceneSetUp',
-    GAME: "sceneStart"
+    GAME: "sceneStart",
+    GAMEUI: 'sceneGameUI',
 }

@@ -1,16 +1,16 @@
 /**
- * DESCRIPCION
+ * Escena para tener la interfaz del usuario
  * @class 
  */
-class NAME extends Phaser.Scene {
+class SceneGameUI extends Phaser.Scene {
     /**
-     * Constructor de la escena NAME
+     * Constructor de la escena SceneGameUI
      * @constructor 
      */
     constructor() {
         super(
             {
-                key: 'NAME',
+                key: sceneNames.GAMEUI,
             }
         );
     }
@@ -23,7 +23,10 @@ class NAME extends Phaser.Scene {
      * objetos antes de que comience la precarga.
      */
     init() {
-
+        /**
+         * Texto con la municion del jugador
+         */
+        this.gunReloaderText;
     }
 
     /**
@@ -43,7 +46,7 @@ class NAME extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-
+        this.textoMunicion();
     }
 
     /**
@@ -52,5 +55,19 @@ class NAME extends Phaser.Scene {
      */
     update() {
 
+    }
+
+    /**
+     * Creo el texto de la munición
+     */
+    textoMunicion() {
+        this.gunReloaderText = this.add.text(5, 0, 'HOLA!', {
+            align: "center",
+            fontFamily: '"iPixelU"',
+            fontSize: (32),
+            color: "#000"
+        });
+
+        this.gunReloaderText.setY(config.height - this.gunReloaderText.height);
     }
 }

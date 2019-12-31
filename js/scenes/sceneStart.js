@@ -1,5 +1,6 @@
 /**
- * @class Escena principal del juego
+ * Escena principal del juego
+ * @class 
  */
 class SceneStart extends Phaser.Scene {
 
@@ -39,6 +40,8 @@ class SceneStart extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
+        gameState = gameStates.LOADING;
+
         // Asigno un color de fondo a la cámara
         var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
         this.cameras.main.setBackgroundColor(color);
@@ -71,6 +74,8 @@ class SceneStart extends Phaser.Scene {
             canon: this.canon,
         });
 
+        this.scene.sendToBack();
+
         gameState = gameStates.PLAYING;
     }
 
@@ -81,18 +86,12 @@ class SceneStart extends Phaser.Scene {
     update() {
         // Si podemos jugar...
         if (gameState == gameStates.PLAYING) {
-            // Al pulsar la tecla ESC...
-            if (!this.chooseWeapon && this.escKey.isDown) {
-                // Abro la escena para cambiar el arma
-                this.scene.launch(sceneNames.CHOOSEWEAPON, {
-                    butt: this.butt,
-                    handle: this.handle,
-                    canon: this.canon,
-                });
-            }
-
             // Hago el update del player
             this.player.update();
+
+            if (this.escKey.isDown) {
+                this.player.weapon.reload();
+            }
         }
     }
 
@@ -121,6 +120,7 @@ class SceneStart extends Phaser.Scene {
             tileWidth: 32,
             tileHeight: 32,
         });
+
         // Creamos el tileset de la imagen
         const tileset = this.map.addTilesetImage('genericRPG');
 

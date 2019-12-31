@@ -34,6 +34,12 @@ class Weapon extends Phaser.GameObjects.Container {
         this.canonOffset = 100;
         // Hago que se pueda disparar
         this.canShoot = true;
+        // Escena con la UI del juego
+        this.sceneGameUI = scene.scene.get(sceneNames.GAMEUI);
+        // Cargador del arma
+        this.cargador = new GunReloader(5, 300);
+        // Muestro las balas en la pantalla
+        this.updateReloaderText();
 
         // Al hacer scale de las partes del arma, no quedan bien, con esto se arregla
         var handleWidth = handle.scale * handle.width;
@@ -93,6 +99,12 @@ class Weapon extends Phaser.GameObjects.Container {
         this.scene;
 
         /**
+         * Escena donde se encuentra la UI del usuario
+         * @type {Phaser.Scene}
+         */
+        this.sceneGameUI;
+
+        /**
          * Grupo donde se guardan las balas
          * @type {Phaser.GameObjects.Group}
          * @property {JSON} groupConfig Opciones del grupo
@@ -142,6 +154,12 @@ class Weapon extends Phaser.GameObjects.Container {
          * @type {Boolean} 
          */
         this.canShoot;
+
+        /**
+         * Cargador del jugador
+         * @type {GunReloader}
+         */
+        this.cargador;
     }
 
     /**
@@ -195,8 +213,11 @@ class Weapon extends Phaser.GameObjects.Container {
      * Disparo del arma hacia el puntero
      */
     shoot() {
-        if (this.canShoot && gameState != gameStates.CHOOSEWEPAPON) {
+        if (this.canShoot && this.cargador.canShoot() && gameState != gameStates.CHOOSEWEPAPON) {
             this.canShoot = false;
+            this.cargador.shoot();
+            this.updateReloaderText();
+
             var shootRotation = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
 
             var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletType, shootRotation);
@@ -204,13 +225,27 @@ class Weapon extends Phaser.GameObjects.Container {
             bala.body.setSize(7, 7);
 
             this.scene.time.delayedCall(350, () => this.canShoot = true);
-            // this.playRecoilAnim();
+        }
+        else if (!this.cargador.canShoot()) {
+            this.reload();
         }
     }
 
-    // playRecoilAnim() {
-    //     var oldX = this.x;
-    //     this.setX(this.getAt(1).x - 5);
-    //     this.scene.time.delayedCall(150, () => this.setX(oldX));
-    // }
+    reload() {
+        if (this.canShoot && !this.cargador.isFull()) {
+            this.canShoot = false;
+            this.cargador.reload();
+
+            this.scene.time.delayedCall(1000, this.allowReload, [], this);
+        }
+    }
+
+    allowReload() {
+        this.canShoot = true;
+        this.updateReloaderText();
+    }
+
+    updateReloaderText() {
+        this.sceneGameUI.gunReloaderText.setText(this.cargador.currentBullets + '/' + this.cargador.totalBullets);
+    }
 }

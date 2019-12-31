@@ -2,7 +2,7 @@
  * Escena para escoer el arma del usuario
  * @class 
  */
-class SceneChooseWeapon extends Phaser.Scene {
+class SceneSetUp extends Phaser.Scene {
     /**
      * Constructor de la escena SceneChooseWeapon
      * @constructor 
@@ -48,7 +48,7 @@ class SceneChooseWeapon extends Phaser.Scene {
      */
     create() {
         //Asignamos el estado del juego
-        gameState = gameStates.PRELOAD;
+        gameState = gameStates.MENU;
 
         showCursor();
 
@@ -57,17 +57,16 @@ class SceneChooseWeapon extends Phaser.Scene {
             fontFamily: '"iPixelU"',
             fontSize: (76),
             color: "#000"
-        }).setOrigin(0.5, 0)
-            // .setRotation(-0.07)
-            ;
+        })
+            .setOrigin(0.5, 0);
+
         this.add.text((config.width / 4) * 3, -10, 'gear', {
             align: "center",
             fontFamily: '"iPixelU"',
             fontSize: (76),
             color: "#000"
-        }).setOrigin(0.5, 0)
-            // .setRotation(-0.07)
-            ;
+        })
+            .setOrigin(0.5, 0);
 
         var txtMenuTitle = this.add.text(config.width / 2, config.height, 'GO!', {
             align: "center",
@@ -79,11 +78,15 @@ class SceneChooseWeapon extends Phaser.Scene {
             .setOrigin(0.5, 1);
 
         txtMenuTitle.on('pointerdown', function () {
+            this.scene.scene.launch(sceneNames.GAMEUI);
+
             this.scene.scene.start(sceneNames.GAME, {
                 butt: this.scene.butt,
                 handle: this.scene.handle,
                 canon: this.scene.canon,
             });
+
+            this.scene.scene.stop();
         });
 
         //Set background color (temporal)
@@ -240,22 +243,22 @@ class SceneChooseWeapon extends Phaser.Scene {
 
         this.createAnimations();
 
-        this.characterSprite = this.physics.add.sprite(config.width / 4, (config.height / 2) * 1, 'character_selector')
+        var characterSprite = this.physics.add.sprite(config.width / 4, (config.height / 2) * 1, 'character_selector')
             .setSize(16, 32)
             .setScale(3)
-            .setInteractive()
-            .play('idle_selector')
-            .on('pointerover', function () {
-                console.log('RUN!')
+            .setInteractive();
 
-                this.play('run_selector');
-            })
-            .on('pointerout', function () {
-                this.play('idle_selector');
-            })
+        characterSprite.on('pointerover', function () {
+            console.log('RUN!')
 
+            this.play('run_selector');
+        });
 
-        // console.log(this.characterSprite);
+        characterSprite.on('pointerout', function () {
+            this.play('idle_selector');
+        });
+
+        characterSprite.play('idle_selector');
     }
 
     /**
