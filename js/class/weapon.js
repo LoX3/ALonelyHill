@@ -160,6 +160,12 @@ class Weapon extends Phaser.GameObjects.Container {
          * @type {GunReloader}
          */
         this.cargador;
+
+        /**
+         * Distancia que recorre el arma con el recoil
+         * @type {Number}
+         */
+        this.recoilDistance = 10;
     }
 
     /**
@@ -205,6 +211,7 @@ class Weapon extends Phaser.GameObjects.Container {
      */
     getRotationToPointer(originX, originY) {
         let angle = Phaser.Math.Angle.Between(originX, originY, this.puntero.x + this.scene.cameras.main.scrollX, this.puntero.y + this.scene.cameras.main.scrollY);
+        // console.log(angle);
 
         return angle;
     }
@@ -224,13 +231,19 @@ class Weapon extends Phaser.GameObjects.Container {
             this.bulletGroup.add(bala);
             bala.body.setSize(7, 7);
 
-            this.scene.time.delayedCall(350, () => this.canShoot = true);
+            this.scene.time.delayedCall(150, () => this.canShoot = true);
+            this.playRecoilAnim(shootRotation);
         }
         else if (!this.cargador.canShoot()) {
+            this.scene.time.delayedCall(350, () => this.canShoot = true);
             this.reload();
         }
+
     }
 
+    /**
+     * Recargo las balas del arma
+     */
     reload() {
         if (this.canShoot && !this.cargador.isFull()) {
             this.canShoot = false;
@@ -240,12 +253,52 @@ class Weapon extends Phaser.GameObjects.Container {
         }
     }
 
+    /**
+     * Al recargar y esperar el tiempo de recarga entra aqui
+     * @event allowReload
+     */
     allowReload() {
         this.canShoot = true;
         this.updateReloaderText();
     }
 
+    /**
+     * Modifico el texto del cargador
+     */
     updateReloaderText() {
         this.sceneGameUI.gunReloaderText.setText(this.cargador.currentBullets + '/' + this.cargador.totalBullets);
+
+        this.scene.time.delayedCall(150, () => this.canShoot = true);
+        this.playRecoilAnim(shootRotation);
+    }
+
+    /**
+     * Se ejecuta la animación de disparar
+     */
+    playRecoilAnim(rotationInfo) {
+        var oldX = this.x;
+        var oldY = this.y;
+
+        var PI = Phaser.Math.PI2 / 2;
+
+        var xDisplacement = (((rotationInfo * 100) / (PI / 2)) / 100) + 1;
+        if (xDisplacement > 1) {
+            xDisplacement = (((rotationInfo * -100) / (PI / 2)) / 100) + 1;
+        } else if (xDisplacement < -1) {
+            xDisplacement = (((rotationInfo * 100) / (PI / 2)) / 100) + 1;
+        }
+
+        var yDisplacement = (((rotationInfo * -100) / (PI / 2)) / 100);
+        if (yDisplacement > 1) {
+            yDisplacement = (((-rotationInfo * -100) / (PI / 2)) / 100) + 2;
+        } else if (yDisplacement < -1) {
+            yDisplacement = (((-rotationInfo * -100) / (PI / 2)) / 100) - 2;
+        }
+
+        this.setX(this.x + (xDisplacement * -this.recoilDistance));
+        this.setY(this.y + (yDisplacement * this.recoilDistance));
+
+        this.scene.time.delayedCall(100, () => this.setX(oldX));
+        this.scene.time.delayedCall(100, () => this.setY(oldY));
     }
 }

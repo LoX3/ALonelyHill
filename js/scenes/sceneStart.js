@@ -43,8 +43,9 @@ class SceneStart extends Phaser.Scene {
         gameState = gameStates.LOADING;
 
         // Asigno un color de fondo a la cámara
-        var color = Phaser.Display.Color.GetColor32(255, 0, 0, 110);
+        var color = Phaser.Display.Color.GetColor32(109, 247, 177, 0);
         this.cameras.main.setBackgroundColor(color);
+
 
         // Creo los cursores para juegar
         this.leerTeclado();
