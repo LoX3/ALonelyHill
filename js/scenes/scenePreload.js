@@ -61,9 +61,9 @@ class ScenePreload extends Phaser.Scene {
         this.load.image('run_F_1', 'player/character/run_F_1.png');
         this.load.image('run_F_2', 'player/character/run_F_2.png');
         this.load.image('run_F_3', 'player/character/run_F_3.png');
-        
+
     }
-    
+
     /**
      * Preload se llama primero. Normalmente usaría
      * esto para cargar sus activos de juego (o los necesarios para el
@@ -75,7 +75,7 @@ class ScenePreload extends Phaser.Scene {
         gameState = gameStates.PRELOAD;
 
         this.load.path = '../../assets/';
-        
+
         this.preloadWeaponParts();
 
         this.preloadCharacterAnimations();
@@ -84,6 +84,9 @@ class ScenePreload extends Phaser.Scene {
         this.load.image('sensei', 'player/sensei.png');
         this.load.image('scope', 'player/weapon/scope50.png');
         this.load.image('arrow', 'custom/arrow.png');
+
+        // Cargi el mapa
+        this.load.image('genericRPG', 'maps/genericRPG.png');
 
         this.load.on('progress', function (value) {
             // console.log(value);
