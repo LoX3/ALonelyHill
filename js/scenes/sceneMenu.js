@@ -38,8 +38,8 @@ class SceneMenu extends Phaser.Scene {
         
         this.map = this.make.tilemap({
             data: mapMatrix,
-            tileWidth: 16,
-            tileHeight: 16,
+            tileWidth: 32,
+            tileHeight: 32,
         });
         // Creamos el tileset de la imagen
         const tileset = this.map.addTilesetImage('genericRPG');
@@ -108,8 +108,6 @@ class SceneMenu extends Phaser.Scene {
             this.delta -= Phaser.Math.Linear(0.1, 2, 1) / 100000;
         } else if (this.r <= -0.01) {
             this.delta += Phaser.Math.Linear(0.1, 2, 1) / 100000;
-        } else {
-
         }
 
         if (this.arrieved) {
@@ -117,7 +115,9 @@ class SceneMenu extends Phaser.Scene {
         } else {
             this.r += Phaser.Math.Linear(0.1, 1, 2) * this.delta;
         }
+
         this.finalRotation = this.r * 5;
+
         this.txtMenuTitle.setRotation(this.finalRotation);
     }
 

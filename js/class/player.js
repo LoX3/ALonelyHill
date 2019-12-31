@@ -90,6 +90,12 @@ class Player extends Phaser.GameObjects.Container {
          * @type {Weapon} 
          */
         this.weapon;
+        this.moveUpKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.moveDownKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.moveLeftKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.moveRightKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+        this.playerSpeed = 250;
     }
 
     /**
@@ -170,21 +176,22 @@ class Player extends Phaser.GameObjects.Container {
      * Mueve el jugador segun las teclas pulsadas
      */
     playerMovement() {
-        if (this.scene.cursors.left.isDown) {
-            this.body.setVelocityX(-100);
+        
+        if (this.moveLeftKey.isDown) {
+            this.body.setVelocityX(-this.playerSpeed);
         }
-        else if (this.scene.cursors.right.isDown) {
-            this.body.setVelocityX(100);
+        else if (this.moveRightKey.isDown) {
+            this.body.setVelocityX(this.playerSpeed);
         }
         else {
             this.body.setVelocityX(0);
         }
 
-        if (this.scene.cursors.up.isDown) {
-            this.body.setVelocityY(-100);
+        if (this.moveUpKey.isDown) {
+            this.body.setVelocityY(-this.playerSpeed);
         }
-        else if (this.scene.cursors.down.isDown) {
-            this.body.setVelocityY(100);
+        else if (this.moveDownKey.isDown) {
+            this.body.setVelocityY(this.playerSpeed);
         }
         else {
             this.body.setVelocityY(0);

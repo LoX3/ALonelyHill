@@ -46,7 +46,7 @@ class SceneGameUI extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        this.textoMunicion();
+        this.createTextLayout();
     }
 
     /**
@@ -60,14 +60,38 @@ class SceneGameUI extends Phaser.Scene {
     /**
      * Creo el texto de la munición
      */
-    textoMunicion() {
-        this.gunReloaderText = this.add.text(5, 0, 'HOLA!', {
+    createTextLayout() {
+        this.gunReloaderText = this.add.text(5, 0, '', {
             align: "center",
             fontFamily: '"iPixelU"',
             fontSize: (32),
-            color: "#000"
+            color: "#FFF"
         });
-
         this.gunReloaderText.setY(config.height - this.gunReloaderText.height);
+        
+        this.reloadAlertText = this.add.text(config.width/2, config.height/4, '', {
+            align: "center",
+            fontFamily: '"iPixelU"',
+            fontSize: (32),
+            color: "#FF0"        
+        })
+        .setOrigin(0.5);
     }
+
+    enableReloadAlert() {
+        this.gunReloaderText.setColor("#FF0");
+        this.reloadAlertText.setColor("#FF0");
+        this.reloadAlertText.setText("reload! (PRESS 'r')");
+    }
+    setReloadState() {
+        this.gunReloaderText.setColor("#141");
+        this.reloadAlertText.setColor("#141");
+        this.reloadAlertText.setText("reloading...");
+    }
+    disableReloadAlert() {
+        this.gunReloaderText.setColor("#FFF");
+        this.reloadAlertText.setText("");
+        
+    }
+    
 }

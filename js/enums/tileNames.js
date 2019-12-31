@@ -1,14 +1,20 @@
 /**
  * Nombre de las imágenes de las armas
  * @enum {String}
- * @name sceneNames 
- * @property {String} PRELOAD Escena que carga todos los assets
- * @property {String} SETUP Escena donde se escoje personaje, arma y nombre
- * @property {String} GAME Escena donde se ejecuta el juego
+ * @name tileNames 
+ * @property {String} GREEN_GRASS herba
  */
-const tileNames = {
-    GRASS: 0,
-    GRASS: 1,
-    GRASS: 2,
-    GRASS: 3
+const tiles = {
+    GREEN_GRASS: 880,
+    BROWN_EARTH: 546,
+    GRASS_TRANSITION: {
+        TOP_LEFT_CORNER: 513,
+        TOP_RIGHT_CORNER: 515,
+        TOP: 514,
+        BOTTOM_LEFT_CORNER: 577,
+        BOTTOM_RIGHT_CORNER: 579,
+        BOTTOM: 578,
+        LEFT: 545,
+        RIGHT: 547
+    }
 }
