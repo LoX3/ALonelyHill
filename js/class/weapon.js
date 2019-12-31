@@ -269,7 +269,6 @@ class Weapon extends Phaser.GameObjects.Container {
         this.sceneGameUI.gunReloaderText.setText(this.cargador.currentBullets + '/' + this.cargador.totalBullets);
 
         this.scene.time.delayedCall(150, () => this.canShoot = true);
-        this.playRecoilAnim(shootRotation);
     }
 
     /**
