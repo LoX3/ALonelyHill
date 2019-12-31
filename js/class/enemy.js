@@ -84,14 +84,14 @@ class Enemy extends Phaser.GameObjects.Container {
     }
 
     /**
-     * Borra al jugador
+     * Borra al enemigo
      */
     removePlayer() {
         this.destroy();
     }
 
     /**
-     * Muevo al jugador enemigo a sus cordenadas
+     * Muevo al enemigo enemigo a sus cordenadas
      * @param {Number} enemyX Posición horizontal
      * @param {Number} enemyY Posición vertical
      */
