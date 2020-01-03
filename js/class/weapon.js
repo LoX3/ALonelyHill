@@ -238,7 +238,6 @@ class Weapon extends Phaser.GameObjects.Container {
             this.scene.time.delayedCall(350, () => this.canShoot = true);
             this.reload();
         }
-
     }
 
     /**
@@ -273,6 +272,7 @@ class Weapon extends Phaser.GameObjects.Container {
 
     /**
      * Se ejecuta la animación de disparar
+     * @param rotationInfo Rotacion del arma
      */
     playRecoilAnim(rotationInfo) {
         var oldX = this.x;
