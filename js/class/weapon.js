@@ -240,21 +240,16 @@ class Weapon extends Phaser.GameObjects.Container {
             bala.body.setSize(7, 7);
 
             this.scene.time.delayedCall(150, () => this.canShoot = true);
-<<<<<<< HEAD
-            this.playRecoilAnim(shootRotation);
-        }
-        else if (!this.cargador.canShoot()) {
-            this.scene.time.delayedCall(350, () => this.canShoot = true);
-            this.reload();
-        }
-=======
             this.knockBack = true;
 
             if(!this.cargador.canShoot()){
                 this.sceneGameUI.enableReloadAlert();
             }
         } 
->>>>>>> ivan
+        else if (!this.cargador.canShoot()) {
+            this.scene.time.delayedCall(350, () => this.canShoot = true);
+            this.reload();
+        }
     }
 
     /**
