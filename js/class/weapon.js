@@ -165,7 +165,13 @@ class Weapon extends Phaser.GameObjects.Container {
          * Distancia que recorre el arma con el recoil
          * @type {Number}
          */
-        this.recoilDistance = 10;
+        this.recoilDistance = 5;
+        this.lerp = 2;
+        this.time = 0.05;
+        this.gotInitialPos = false;
+        this.arrievedMaximumDisplacement = false;
+        this.oldX = this.x;
+        this.oldY = this.y;
     }
 
     /**
@@ -175,8 +181,10 @@ class Weapon extends Phaser.GameObjects.Container {
     update() {
         this.shootPos.getWorldTransformMatrix(this.tempMatrix, this.tempParentMatrix);
         this.absoluteShootPos = this.tempMatrix.decomposeMatrix();
-
         this.rotateWeaponTowardsMouseAngle(this.scene.input);
+        if (this.knockBack == true) {
+            this.playRecoilAnim();
+        }
     }
 
     /**
@@ -232,72 +240,140 @@ class Weapon extends Phaser.GameObjects.Container {
             bala.body.setSize(7, 7);
 
             this.scene.time.delayedCall(150, () => this.canShoot = true);
+<<<<<<< HEAD
             this.playRecoilAnim(shootRotation);
         }
         else if (!this.cargador.canShoot()) {
             this.scene.time.delayedCall(350, () => this.canShoot = true);
             this.reload();
         }
+=======
+            this.knockBack = true;
+
+            if(!this.cargador.canShoot()){
+                this.sceneGameUI.enableReloadAlert();
+            }
+        } 
+>>>>>>> ivan
     }
 
     /**
      * Recargo las balas del arma
      */
     reload() {
+        this.sceneGameUI.setReloadState();
         if (this.canShoot && !this.cargador.isFull()) {
             this.canShoot = false;
             this.cargador.reload();
-
             this.scene.time.delayedCall(1000, this.allowReload, [], this);
         }
     }
-
+    
     /**
      * Al recargar y esperar el tiempo de recarga entra aqui
      * @event allowReload
      */
     allowReload() {
+        this.sceneGameUI.disableReloadAlert();
         this.canShoot = true;
         this.updateReloaderText();
     }
-
+    
     /**
      * Modifico el texto del cargador
      */
     updateReloaderText() {
         this.sceneGameUI.gunReloaderText.setText(this.cargador.currentBullets + '/' + this.cargador.totalBullets);
-
-        this.scene.time.delayedCall(150, () => this.canShoot = true);
+        this.scene.time.delayedCall(100, () => this.canShoot = true);
     }
 
     /**
      * Se ejecuta la animación de disparar
      * @param rotationInfo Rotacion del arma
      */
-    playRecoilAnim(rotationInfo) {
-        var oldX = this.x;
-        var oldY = this.y;
+    playRecoilAnim() {
+
+        if (!this.gotInitialPos) {
+            console.log("INITIAL: " + Phaser.Math.Linear(0, 1, this.time));
+            this.rotationInfo = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
+            this.lerp = 1.5;
+            this.time = 0.3;
+            this.gotInitialPos = true;
+            this.arrievedMaximumDisplacement = false;
+
+        }
 
         var PI = Phaser.Math.PI2 / 2;
 
-        var xDisplacement = (((rotationInfo * 100) / (PI / 2)) / 100) + 1;
+        var xDisplacement = (((this.rotationInfo * 100) / (PI / 2)) / 100) + 1;
         if (xDisplacement > 1) {
-            xDisplacement = (((rotationInfo * -100) / (PI / 2)) / 100) + 1;
+            xDisplacement = (((this.rotationInfo * -100) / (PI / 2)) / 100) + 1;
         } else if (xDisplacement < -1) {
-            xDisplacement = (((rotationInfo * 100) / (PI / 2)) / 100) + 1;
+            xDisplacement = (((this.rotationInfo * 100) / (PI / 2)) / 100) + 1;
         }
 
-        var yDisplacement = (((rotationInfo * -100) / (PI / 2)) / 100);
+        var yDisplacement = (((this.rotationInfo * -100) / (PI / 2)) / 100);
         if (yDisplacement > 1) {
-            yDisplacement = (((-rotationInfo * -100) / (PI / 2)) / 100) + 2;
+            yDisplacement = (((-this.rotationInfo * -100) / (PI / 2)) / 100) + 2;
         } else if (yDisplacement < -1) {
-            yDisplacement = (((-rotationInfo * -100) / (PI / 2)) / 100) - 2;
+            yDisplacement = (((-this.rotationInfo * -100) / (PI / 2)) / 100) - 2;
         }
 
-        this.setX(this.x + (xDisplacement * -this.recoilDistance));
-        this.setY(this.y + (yDisplacement * this.recoilDistance));
+        if (!this.arrievedMaximumDisplacement) {
 
-        this.scene.time.delayedCall(100, () => this.setX(oldX));
-        this.scene.time.delayedCall(100, () => this.setY(oldY));
+            // if (this.time >= 1) {
+            //     this.time -= 0.01;
+            // } else {
+            //     // console.log(this.time);
+
+            // }
+            this.lerp -= Phaser.Math.Linear(0, 1, this.time);
+
+            // console.log(this.lerp);
+
+            this.setX(this.x + (xDisplacement * (-this.recoilDistance * this.lerp)));
+            this.setY(this.y + (yDisplacement * (this.recoilDistance * this.lerp)));
+            // if (this.x = this.x + (xDisplacement * -this.recoilDistance) && this.y + (yDisplacement * this.recoilDistance)) {
+            if (this.lerp <= 0) {
+                // this.scene.time.delayedCall(100, () => this.setX(this.oldX));
+                // this.scene.time.delayedCall(100, () => this.setY(this.oldY));
+                // this.setX(this.oldX);
+                // this.setY(this.oldY);
+
+                this.arrievedMaximumDisplacement = true;
+                // this.lerp = 2;
+                // this.time = 0.3;            
+            }
+        } else {
+
+            // if (this.time <= 1) {
+            //     this.time += 0.01;
+            // } else {
+            //     // console.log(this.time);
+
+            // }
+            this.lerp += Phaser.Math.Linear(0, 1, this.time);
+
+
+            this.setX(this.x - (xDisplacement * (-this.recoilDistance * this.lerp)));
+            this.setY(this.y - (yDisplacement * (this.recoilDistance * this.lerp)));
+            // this.setX(this.x + (xDisplacement * (-this.recoilDistance * this.lerp)));
+            // this.setY(this.y + (yDisplacement * (this.recoilDistance * this.lerp)));
+            // if (this.x = this.x + (xDisplacement * -this.recoilDistance) && this.y + (yDisplacement * this.recoilDistance)) {
+
+            if (this.lerp >= 1.2) {
+                console.log(this.lerp);
+                // this.scene.time.delayedCall(100, () => this.setX(this.oldX));
+                // this.scene.time.delayedCall(100, () => this.setY(this.oldY));
+                this.lerp = 1.5;
+
+                this.knockBack = false;
+                this.gotInitialPos = false;
+                this.arrievedMaximumDisplacement = false;
+            }
+
+
+        }
+
     }
 }

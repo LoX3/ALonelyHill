@@ -86,7 +86,7 @@ class ScenePreload extends Phaser.Scene {
         this.load.image('arrow', 'custom/arrow.png');
 
         // Cargi el mapa
-        this.load.image('genericRPG', 'maps/genericRPG.png');
+        this.load.image('genericRPG', 'tilemap/genericRPG.png');
 
         this.load.on('progress', function (value) {
             // console.log(value);

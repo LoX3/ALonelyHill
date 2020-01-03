@@ -90,7 +90,8 @@ class SceneGame extends Phaser.Scene {
             // Hago el update del player
             this.player.update();
 
-            if (this.escKey.isDown) {
+            if (this.rKey.isDown) {
+                
                 this.player.weapon.reload();
             }
         }
@@ -116,18 +117,21 @@ class SceneGame extends Phaser.Scene {
      * Creo y pongo el mapa en escena
      */
     crearMapa() {
+        var mapManager = new MapManager();
+        mapManager.generateBackground();
+        var mapMatrix = mapManager.getTitleBackground().getMap();
+        console.log(mapMatrix);
+        
         this.map = this.make.tilemap({
-            data: new MapManager().getWorld(),
+            data: mapMatrix,
             tileWidth: 32,
             tileHeight: 32,
         });
-
         // Creamos el tileset de la imagen
         const tileset = this.map.addTilesetImage('genericRPG');
 
         // Creo una capa, donde se ponen las plataformas
         this.platformsLayer = this.map.createStaticLayer(0, tileset, 0, 0);
-
         // Tengo que poner las colisiones de esta forma, ya que necesito el json al generar el mapa... lo que no funciona
         // this.platformsLayer.setCollisionBetween(12, 130);
         // this.platformsLayer.setCollisionBetween(364, 370);
@@ -153,7 +157,7 @@ class SceneGame extends Phaser.Scene {
      */
     leerTeclado() {
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.escKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
     }
 
     /**
