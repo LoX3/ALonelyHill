@@ -56,7 +56,7 @@ class GunReloader {
     canShoot() {
         var retVal = false;
 
-        if (this.currentBullets > 0 && this.currentBullets >= this.maxCapacity) {
+        if (this.currentBullets > 0 && this.currentBullets <= this.maxCapacity) {
             retVal = true;
         }
 
