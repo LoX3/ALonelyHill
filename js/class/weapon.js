@@ -37,7 +37,7 @@ class Weapon extends Phaser.GameObjects.Container {
         // Escena con la UI del juego
         this.sceneGameUI = scene.scene.get(sceneNames.GAMEUI);
         // Cargador del arma
-        this.cargador = new GunReloader(5, 300);
+        this.cargador = new GunReloader(5, 50);
         // Muestro las balas en la pantalla
         this.updateReloaderText();
 
@@ -283,7 +283,6 @@ class Weapon extends Phaser.GameObjects.Container {
     playRecoilAnim() {
 
         if (!this.gotInitialPos) {
-            console.log("INITIAL: " + Phaser.Math.Linear(0, 1, this.time));
             this.rotationInfo = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
             this.lerp = 1.5;
             this.time = 0.3;
@@ -351,7 +350,6 @@ class Weapon extends Phaser.GameObjects.Container {
             // if (this.x = this.x + (xDisplacement * -this.recoilDistance) && this.y + (yDisplacement * this.recoilDistance)) {
 
             if (this.lerp >= 1.2) {
-                console.log(this.lerp);
                 // this.scene.time.delayedCall(100, () => this.setX(this.oldX));
                 // this.scene.time.delayedCall(100, () => this.setY(this.oldY));
                 this.lerp = 1.5;

@@ -46,6 +46,7 @@ class SceneGameUI extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
+        this.createGuiBackground();
         this.createTextLayout();
     }
 
@@ -68,14 +69,23 @@ class SceneGameUI extends Phaser.Scene {
             color: "#FFF"
         });
         this.gunReloaderText.setY(config.height - this.gunReloaderText.height);
-        
-        this.reloadAlertText = this.add.text(config.width/2, config.height/4, '', {
+
+        this.reloadAlertText = this.add.text(config.width / 2, config.height / 4, '', {
             align: "center",
             fontFamily: '"iPixelU"',
             fontSize: (32),
-            color: "#FF0"        
+            color: "#FF0"
         })
-        .setOrigin(0.5);
+            .setOrigin(0.5);
+
+        this.liveText = this.add.text(config.width, 0, '', {
+            align: "center",
+            fontFamily: '"iPixelU"',
+            fontSize: (32),
+            color: "#FFF"
+        })
+            .setOrigin(1, 0);
+        this.liveText.setY(config.height - this.liveText.height);
     }
 
     enableReloadAlert() {
@@ -83,15 +93,71 @@ class SceneGameUI extends Phaser.Scene {
         this.reloadAlertText.setColor("#FF0");
         this.reloadAlertText.setText("reload! (PRESS 'r')");
     }
+
     setReloadState() {
         this.gunReloaderText.setColor("#141");
         this.reloadAlertText.setColor("#141");
         this.reloadAlertText.setText("reloading...");
     }
+
     disableReloadAlert() {
         this.gunReloaderText.setColor("#FFF");
         this.reloadAlertText.setText("");
-        
+
     }
-    
+
+    createGuiBackground() {
+        this.createMunitionGuiBackground();
+        this.createVidaGuiBackground();
+    }
+
+    createMunitionGuiBackground() {
+        var leftBackground;
+        var fondoTransparente;
+
+        // Creo un canvas con un id, width y height
+        leftBackground = this.textures.createCanvas('leftBackground', 250, 40);
+        // Un gradiente para que no sea de solo un color
+        fondoTransparente = leftBackground.context.createLinearGradient(0, 0, 250, 40);
+
+        // Le doy color a diferentes alturas
+        fondoTransparente.addColorStop(0, 'rgba(0, 0, 0, 1)');
+        fondoTransparente.addColorStop(0.5, 'rgba(0, 0, 0, 0.5)');
+        fondoTransparente.addColorStop(0.7, 'rgba(0, 0, 0, 0)');
+        fondoTransparente.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+        leftBackground.context.fillStyle = fondoTransparente;
+        leftBackground.context.fillRect(0, 0, config.width, config.height);
+
+        // Esto se usa si utilizas WebGL, si no no veras los cambios
+        leftBackground.refresh();
+
+        // Añado el canvas como una imagen
+        this.add.image(leftBackground.width / 2, config.height - (leftBackground.height / 2), 'leftBackground');
+    }
+
+    createVidaGuiBackground() {
+        var rightBackground;
+        var fondoTransparente;
+
+        // Creo un canvas con un id, width y height
+        rightBackground = this.textures.createCanvas('rightBackground', 150, 40);
+        // Un gradiente para que no sea de solo un color
+        fondoTransparente = rightBackground.context.createLinearGradient(0, 0, 150, 40);
+
+        // Le doy color a diferentes alturas
+        fondoTransparente.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        fondoTransparente.addColorStop(0.3, 'rgba(0, 0, 0, 0)');
+        fondoTransparente.addColorStop(0.5, 'rgba(0, 0, 0, 0.5)');
+        fondoTransparente.addColorStop(1, 'rgba(0, 0, 0, 1)');
+
+        rightBackground.context.fillStyle = fondoTransparente;
+        rightBackground.context.fillRect(0, 0, config.width, config.height);
+
+        // Esto se usa si utilizas WebGL, si no no veras los cambios
+        rightBackground.refresh();
+
+        // Añado el canvas como una imagen
+        this.add.image(config.width - (rightBackground.width / 2), config.height - (rightBackground.height / 2), 'rightBackground');
+    }
 }
