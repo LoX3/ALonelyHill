@@ -1,6 +1,5 @@
 /**
- * Escena para escoer jugador y arma para el usuario
- * @class 
+ * @class Escena para escoer jugador y arma para el usuario
  */
 class SceneMenu extends Phaser.Scene {
     /**
@@ -12,6 +11,7 @@ class SceneMenu extends Phaser.Scene {
             key: sceneNames.MENU
         });
     }
+
     /**
      * Init es la primera función que se llama cuando se
      * inicia su estado. Se llama antes de precargar, crear o cualquier
@@ -82,7 +82,7 @@ class SceneMenu extends Phaser.Scene {
         var color = Phaser.Display.Color.GetColor32(0, 0, 0, 0);
         this.cameras.main.setBackgroundColor(color);
 
-        this.input.keyboard.on('keydown-' + 'SPACE', function (event) {
+        this.input.keyboard.on('keydown-' + 'SPACE', function () {
             this.scene.startGame();
         });
     }
@@ -104,7 +104,6 @@ class SceneMenu extends Phaser.Scene {
         } else if (this.r <= -0.1) {
             this.arrieved = false;
         }
-
 
         if (this.r >= 0.01) {
             this.delta -= Phaser.Math.Linear(0.1, 2, 1) / 100000;

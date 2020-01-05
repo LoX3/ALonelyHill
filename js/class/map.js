@@ -1,6 +1,6 @@
 /**
- * @author Jose Luis Tresserras
  * @class Clase para establecer los parametros de los mapas
+ * 
  * @param {Number} index 
  * @param {String} name
  * @param {Number[]} mapas

@@ -1,0 +1,6 @@
+{
+    "source": {
+        "exclude": "js/phaser.js",
+        "excludePattern": "(node_modules|docs|typings|assets|phaser)"
+    }
+}

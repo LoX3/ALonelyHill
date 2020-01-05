@@ -1,6 +1,6 @@
 /**
- * Esta clase se usa para crear el tipo de cargador que usa un arma
- * @class 
+ * @class Esta clase se usa para crear el tipo de cargador que usa un arma
+ * 
  * @param {Number} tamañoCargador
  * @param {Number} balasTotales
  */

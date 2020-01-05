@@ -1,6 +1,6 @@
 /**
- * Enemigo del jugador
- * @class
+ * @class Enemigo del jugador
+ * 
  * @param {Phaser.Scene} scene
  * @param {Number} x
  * @param {Number} y

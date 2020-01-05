@@ -1,5 +1,6 @@
 /**
  * @class Imagen del jugador
+ * 
  * @param {Phaser.Scene} scene
  * @param {Number} x
  * @param {Number} y

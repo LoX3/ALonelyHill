@@ -1,6 +1,6 @@
 /**
  * @class EnemyWeapon - Arma del Enemigo
- *
+ * 
  * @param {Phaser.Scene} scene 
  * @param {Number} x 
  * @param {Number} y 
