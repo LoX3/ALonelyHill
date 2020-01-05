@@ -70,25 +70,26 @@ class GunReloader {
         if (this.canShoot()) {
             this.currentBullets--;
         }
-        else {
-            console.log('U need to reload!');
-        }
     }
 
     /**
      * Recarga las balas del cargador
      */
     reload() {
-        var difBullets = this.currentBullets - this.maxCapacity;
+        var recarga = (this.maxCapacity - this.currentBullets);
 
-        this.totalBullets -= Math.abs(difBullets);
-
-        if (this.totalBullets - this.maxCapacity > 0) {
-            this.currentBullets = this.maxCapacity;
+        if (this.totalBullets - recarga > 0) {
+            this.currentBullets += recarga;
         }
         else {
             this.currentBullets = this.totalBullets;
         }
+
+        if (this.totalBullets - recarga < 0) {
+            recarga = this.totalBullets;
+        }
+
+        this.totalBullets -= recarga;
     }
 
     isFull() {
