@@ -107,4 +107,18 @@ class GunReloader {
 
         return retVal;
     }
+
+    /**
+     * Mira si el cargador esta vacio
+     * @returns {Boolean} Si esta vacio
+     */
+    isEmpty() {
+        var retVal = false;
+
+        if (this.totalBullets <= 0) {
+            retVal = true;
+        }
+
+        return retVal;
+    }
 }
