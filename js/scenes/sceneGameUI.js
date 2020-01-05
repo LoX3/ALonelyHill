@@ -40,6 +40,18 @@ class SceneGameUI extends Phaser.Scene {
          * @type {Phaser.GameObjects.Text}
          */
         this.reloadAlertText;
+
+        /**
+         * Icono de la bala
+         * @type {Phaser.GameObjects.Image}
+         */
+        this.bulletIcon
+
+        /**
+         * Icono de la vida
+         * @type {Phaser.GameObjects.Image}
+         */
+        this.healthIcon;
     }
 
     /**
@@ -78,32 +90,47 @@ class SceneGameUI extends Phaser.Scene {
      * Creo el texto de la munición
      */
     createTextLayout() {
+        this.bulletIcon = this.add
+            .image(0, 0, 'bulletIcon')
+            .setScale(0.7);
+        this.bulletIcon.setX(((this.bulletIcon.width * this.bulletIcon.scaleX) / 2) + 5);
+        this.bulletIcon.setY(config.height - (this.bulletIcon.height * this.bulletIcon.scaleY) + 4);
+
         // Balas del jugador
-        this.gunReloaderText = this.add.text(5, 0, '', {
-            align: "center",
-            fontFamily: '"iPixelU"',
-            fontSize: (32),
-            color: "#FFF"
-        });
+        this.gunReloaderText = this.add
+            .text(10 + (this.bulletIcon.width * this.bulletIcon.scaleX), 0, '', {
+                align: "center",
+                fontFamily: '"iPixelU"',
+                fontSize: (32),
+                color: colors.hex.white
+            });
         // Muevo la Y para que quede bien alineado a la izquierda
         this.gunReloaderText.setY(config.height - this.gunReloaderText.height);
 
         // Alerta para recargar las balas
-        this.reloadAlertText = this.add.text(config.width / 2, config.height / 4, '', {
-            align: "center",
-            fontFamily: '"iPixelU"',
-            fontSize: (32),
-            color: "#FF0"
-        })
+        this.reloadAlertText = this.add
+            .text(config.width / 2, config.height / 4, '', {
+                align: "center",
+                fontFamily: '"iPixelU"',
+                fontSize: (32),
+                color: colors.hex.yellow
+            })
             .setOrigin(0.5);
 
+        this.healthIcon = this.add
+            .image(config.width - 5, 0, 'healthIcon')
+            .setScale(0.8)
+            .setOrigin(1, 0);
+        this.healthIcon.setY(config.height - (this.healthIcon.height * this.healthIcon.scaleY) - 5);
+
         // Creo la vida del jugador
-        this.livePlayerText = this.add.text(config.width, 0, '', {
-            align: "center",
-            fontFamily: '"iPixelU"',
-            fontSize: (32),
-            color: "#FFF"
-        })
+        this.livePlayerText = this.add
+            .text(config.width - (this.healthIcon.width * this.healthIcon.scaleX) - 5, 0, '', {
+                align: "center",
+                fontFamily: '"iPixelU"',
+                fontSize: (32),
+                color: colors.hex.white
+            })
             .setOrigin(1, 0);
         // Muevo la Y para que quede bien alineado a la derecha
         this.livePlayerText.setY(config.height - this.livePlayerText.height);
@@ -113,8 +140,8 @@ class SceneGameUI extends Phaser.Scene {
      * Advertencia para el jugador que ha de recargar
      */
     enableReloadAlert() {
-        this.gunReloaderText.setColor("#FF0");
-        this.reloadAlertText.setColor("#FF0");
+        this.gunReloaderText.setColor(colors.hex.yellow);
+        this.reloadAlertText.setColor(colors.hex.yellow);
         this.reloadAlertText.setText("reload! (PRESS 'r')");
     }
 
@@ -122,8 +149,8 @@ class SceneGameUI extends Phaser.Scene {
      * Informacion para el jugador que esta recargando
      */
     setReloadState() {
-        this.gunReloaderText.setColor("#141");
-        this.reloadAlertText.setColor("#141");
+        this.gunReloaderText.setColor(colors.hex.green);
+        this.reloadAlertText.setColor(colors.hex.green);
         this.reloadAlertText.setText("reloading...");
     }
 
@@ -131,7 +158,7 @@ class SceneGameUI extends Phaser.Scene {
      * Quito las advertencias e informaciones de la recarga
      */
     disableReloadAlert() {
-        this.gunReloaderText.setColor("#FFF");
+        this.gunReloaderText.setColor(colors.hex.white);
         this.reloadAlertText.setText("");
     }
 

@@ -86,6 +86,8 @@ class ScenePreload extends Phaser.Scene {
         this.load.image('sensei', 'player/sensei.png');
         this.load.image('scope', 'player/weapon/scope50.png');
         this.load.image('arrow', 'custom/arrow.png');
+        this.load.image('healthIcon', 'player/health.png');
+        this.load.image('bulletIcon', 'player/weapon/bullet.png');
 
         // Cargi el mapa
         this.load.image('genericRPG', 'tilemap/genericRPG.png');
