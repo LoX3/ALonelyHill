@@ -182,7 +182,7 @@ class Weapon extends Phaser.GameObjects.Container {
         this.shootPos.getWorldTransformMatrix(this.tempMatrix, this.tempParentMatrix);
         this.absoluteShootPos = this.tempMatrix.decomposeMatrix();
         this.rotateWeaponTowardsMouseAngle(this.scene.input);
-        if (this.knockBack == true) {
+        if (this.knockBack) {
             this.playRecoilAnim();
         }
     }
@@ -228,7 +228,7 @@ class Weapon extends Phaser.GameObjects.Container {
      * Disparo del arma hacia el puntero
      */
     shoot() {
-        if (this.canShoot && this.cargador.canShoot() && gameState != gameStates.CHOOSEWEPAPON) {
+        if (this.canShoot && this.cargador.canShoot()) {
             this.canShoot = false;
             this.cargador.shoot();
             this.updateReloaderText();
@@ -239,13 +239,13 @@ class Weapon extends Phaser.GameObjects.Container {
             this.bulletGroup.add(bala);
             bala.body.setSize(7, 7);
 
-            this.scene.time.delayedCall(150, () => this.canShoot = true);
+            this.scene.time.delayedCall(100, () => this.canShoot = true);
             this.knockBack = true;
 
-            if(!this.cargador.canShoot()){
+            if (!this.cargador.canShoot()) {
                 this.sceneGameUI.enableReloadAlert();
             }
-        } 
+        }
     }
 
     /**
@@ -259,7 +259,7 @@ class Weapon extends Phaser.GameObjects.Container {
             this.scene.time.delayedCall(1000, this.allowReload, [], this);
         }
     }
-    
+
     /**
      * Al recargar y esperar el tiempo de recarga entra aqui
      * @event allowReload
@@ -269,13 +269,12 @@ class Weapon extends Phaser.GameObjects.Container {
         this.canShoot = true;
         this.updateReloaderText();
     }
-    
+
     /**
      * Modifico el texto del cargador
      */
     updateReloaderText() {
         this.sceneGameUI.gunReloaderText.setText(this.cargador.currentBullets + '/' + this.cargador.totalBullets);
-        this.scene.time.delayedCall(100, () => this.canShoot = true);
     }
 
     /**
@@ -361,9 +360,6 @@ class Weapon extends Phaser.GameObjects.Container {
                 this.gotInitialPos = false;
                 this.arrievedMaximumDisplacement = false;
             }
-
-
         }
-
     }
 }
