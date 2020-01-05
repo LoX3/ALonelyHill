@@ -8,6 +8,10 @@ class Cliente {
      */
     constructor() {
         this.init();
+
+        // Inicializo la variable
+        this.socket = io.connect();
+
         this.serverInfo();
         this.enemyInfo();
         this.allEnemiesInfo();
@@ -25,7 +29,7 @@ class Cliente {
          * Guarda una coneción con el servidor
          * @type {Object}
          */
-        this.socket = io.connect();
+        this.socket;
     }
 
     /**

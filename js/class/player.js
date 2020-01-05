@@ -29,12 +29,17 @@ class Player extends Phaser.GameObjects.Container {
         // Creo las variables de la clase
         this.init();
 
+        // Guardo la escena
         this.scene = scene;
-        this.name = name;
+        // Guardo los componentes del arma
         this.weaponComponents = weaponComponents;
+        // Establezco la vida del jugador
         this.vida = 100;
+        // Establezco la velocidad del jugador
         this.playerSpeed = 250;
+        // Guardo la escena de UI
         this.sceneGameUI = scene.scene.get(sceneNames.GAMEUI);
+        // Edito el texto de vida de la escena UI
         this.updateLiveText();
 
         // Le doy fisicas al container para que entre tenga colliders i se mueva
@@ -97,10 +102,22 @@ class Player extends Phaser.GameObjects.Container {
          * @type {Weapon} 
          */
         this.weapon;
-        this.moveUpKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        this.moveDownKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        this.moveLeftKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        this.moveRightKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+        /** 
+         * Variable que guarda las keys que usa el player
+         * @enum {JSON}
+         * @name keys 
+         * @property {Phaser.Input.Keyboard} W Movimiento hacia arriba
+         * @property {Phaser.Input.Keyboard} A Movimiento hacia izquierda
+         * @property {Phaser.Input.Keyboard} S Movimiento hacia abajo
+         * @property {Phaser.Input.Keyboard} D Movimiento hacia derecha
+         */
+        this.keys = {
+            W: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+            A: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+            S: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
+            D: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+        };
 
         /**
          * Vida del jugador
@@ -181,21 +198,20 @@ class Player extends Phaser.GameObjects.Container {
      * Mueve el jugador segun las teclas pulsadas
      */
     playerMovement() {
-
-        if (this.moveLeftKey.isDown) {
+        if (this.keys.A.isDown) {
             this.body.setVelocityX(-this.playerSpeed);
         }
-        else if (this.moveRightKey.isDown) {
+        else if (this.keys.D.isDown) {
             this.body.setVelocityX(this.playerSpeed);
         }
         else {
             this.body.setVelocityX(0);
         }
 
-        if (this.moveUpKey.isDown) {
+        if (this.keys.W.isDown) {
             this.body.setVelocityY(-this.playerSpeed);
         }
-        else if (this.moveDownKey.isDown) {
+        else if (this.keys.S.isDown) {
             this.body.setVelocityY(this.playerSpeed);
         }
         else {
@@ -210,6 +226,6 @@ class Player extends Phaser.GameObjects.Container {
      * Modifico el texto del cargador
      */
     updateLiveText() {
-        this.sceneGameUI.liveText.setText(this.vida);
+        this.sceneGameUI.livePlayerText.setText(this.vida);
     }
 }

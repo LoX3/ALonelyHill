@@ -25,8 +25,21 @@ class SceneGameUI extends Phaser.Scene {
     init() {
         /**
          * Texto con la municion del jugador
+         * @type {Phaser.GameObjects.Text}
          */
         this.gunReloaderText;
+
+        /**
+         * Texto con la vida del jugador
+         * @type {Phaser.GameObjects.Text}
+         */
+        this.livePlayerText;
+
+        /**
+         * Alerta para recargar
+         * @type {Phaser.GameObjects.Text}
+         */
+        this.reloadAlertText;
     }
 
     /**
@@ -46,7 +59,10 @@ class SceneGameUI extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
+        // Creo la UI de detras de el texto
         this.createGuiBackground();
+
+        // Creo el texto que usaremos
         this.createTextLayout();
     }
 
@@ -62,14 +78,17 @@ class SceneGameUI extends Phaser.Scene {
      * Creo el texto de la munición
      */
     createTextLayout() {
+        // Balas del jugador
         this.gunReloaderText = this.add.text(5, 0, '', {
             align: "center",
             fontFamily: '"iPixelU"',
             fontSize: (32),
             color: "#FFF"
         });
+        // Muevo la Y para que quede bien alineado a la izquierda
         this.gunReloaderText.setY(config.height - this.gunReloaderText.height);
 
+        // Alerta para recargar las balas
         this.reloadAlertText = this.add.text(config.width / 2, config.height / 4, '', {
             align: "center",
             fontFamily: '"iPixelU"',
@@ -78,39 +97,55 @@ class SceneGameUI extends Phaser.Scene {
         })
             .setOrigin(0.5);
 
-        this.liveText = this.add.text(config.width, 0, '', {
+        // Creo la vida del jugador
+        this.livePlayerText = this.add.text(config.width, 0, '', {
             align: "center",
             fontFamily: '"iPixelU"',
             fontSize: (32),
             color: "#FFF"
         })
             .setOrigin(1, 0);
-        this.liveText.setY(config.height - this.liveText.height);
+        // Muevo la Y para que quede bien alineado a la derecha
+        this.livePlayerText.setY(config.height - this.livePlayerText.height);
     }
 
+    /**
+     * Advertencia para el jugador que ha de recargar
+     */
     enableReloadAlert() {
         this.gunReloaderText.setColor("#FF0");
         this.reloadAlertText.setColor("#FF0");
         this.reloadAlertText.setText("reload! (PRESS 'r')");
     }
 
+    /**
+     * Informacion para el jugador que esta recargando
+     */
     setReloadState() {
         this.gunReloaderText.setColor("#141");
         this.reloadAlertText.setColor("#141");
         this.reloadAlertText.setText("reloading...");
     }
 
+    /**
+     * Quito las advertencias e informaciones de la recarga
+     */
     disableReloadAlert() {
         this.gunReloaderText.setColor("#FFF");
         this.reloadAlertText.setText("");
-
     }
 
+    /**
+     * Creo los fondos para la municion y la vida del jugador
+     */
     createGuiBackground() {
         this.createMunitionGuiBackground();
         this.createVidaGuiBackground();
     }
 
+    /**
+     * Creo el fondo para la municion
+     */
     createMunitionGuiBackground() {
         var leftBackground;
         var fondoTransparente;
@@ -136,6 +171,9 @@ class SceneGameUI extends Phaser.Scene {
         this.add.image(leftBackground.width / 2, config.height - (leftBackground.height / 2), 'leftBackground');
     }
 
+    /**
+     * Creo el fondo para la vida
+     */
     createVidaGuiBackground() {
         var rightBackground;
         var fondoTransparente;

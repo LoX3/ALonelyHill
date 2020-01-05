@@ -1,8 +1,18 @@
 /**
  * Nombre de las imágenes de las armas
- * @enum {String}
+ * @enum {Number}
  * @name tileNames 
- * @property {String} GREEN_GRASS herba
+ * @property {Number} GREEN_GRASS Suelo verde
+ * @property {Number} BROWN_EARTH Suelo marrón
+ * @property {JSON} GRASS_TRANSITION Diferentes tipos de suelo
+ * @property {Number} TOP_LEFT_CORNER Suelo arriba a la izquierda
+ * @property {Number} TOP_RIGHT_CORNER Suelo arriba a la derecha
+ * @property {Number} TOP Suelo arriba
+ * @property {Number} BOTTOM_LEFT_CORNER Suelo abajo a la izquierda
+ * @property {Number} BOTTOM_RIGHT_CORNER Suelo abajo a la derecha
+ * @property {Number} BOTTOM Suelo abajo
+ * @property {Number} LEFT Suelo izquierda
+ * @property {Number} RIGHT Suelo derecha
  */
 const tiles = {
     GREEN_GRASS: 560,
@@ -15,6 +25,6 @@ const tiles = {
         BOTTOM_RIGHT_CORNER: 579,
         BOTTOM: 578,
         LEFT: 545,
-        RIGHT: 547
+        RIGHT: 547,
     }
 }

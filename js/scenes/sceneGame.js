@@ -40,21 +40,24 @@ class SceneGame extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
+        // Cambio el estado del juego
         gameState = gameStates.LOADING;
 
         // Asigno un color de fondo a la cámara
-        var color = Phaser.Display.Color.GetColor32(0,0,0, 0);
+        var color = Phaser.Display.Color.GetColor32(0, 0, 0, 0);
         this.cameras.main.setBackgroundColor(color);
 
 
         // Creo los cursores para juegar
         this.leerTeclado();
 
+        // Creo el mapa
         this.crearMapa();
 
         // Creo el array de enemgios
         this.enemies = [];
 
+        // Creo el jugador
         this.player = new Player(
             this,
             0,
@@ -67,6 +70,7 @@ class SceneGame extends Phaser.Scene {
             }
         );
 
+        // Lo añado al servidor y lo envio a los enemigos
         cliente.registerPlayer({
             x: this.player.x,
             y: this.player.y,
@@ -75,8 +79,10 @@ class SceneGame extends Phaser.Scene {
             canon: this.canon,
         });
 
+        // Enivo la escena al fondo para que la UI esté delante
         this.scene.sendToBack();
 
+        // Pongo el estado del juego a jugar
         gameState = gameStates.PLAYING;
     }
 
@@ -90,8 +96,8 @@ class SceneGame extends Phaser.Scene {
             // Hago el update del player
             this.player.update();
 
-            if (this.rKey.isDown) {
-                
+            if (this.keys.R.isDown) {
+                // Recargo el arma
                 this.player.weapon.reload();
             }
         }
@@ -121,7 +127,7 @@ class SceneGame extends Phaser.Scene {
         mapManager.generateBackground();
         var mapMatrix = mapManager.getTitleBackground().getMap();
         console.log(mapMatrix);
-        
+
         this.map = this.make.tilemap({
             data: mapMatrix,
             tileWidth: 32,
@@ -156,8 +162,15 @@ class SceneGame extends Phaser.Scene {
      * Creo las teclas en la escena para poder jugar
      */
     leerTeclado() {
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.rKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        /**
+         * Variable que guarda las keys
+         * @enum {JSON}
+         * @name keys 
+         * @property {Phaser.Input.Keyboard} R Recarga el arma del jugador
+         */
+        this.keys = {
+            R: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R),
+        };
     }
 
     /**

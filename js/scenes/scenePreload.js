@@ -49,7 +49,9 @@ class ScenePreload extends Phaser.Scene {
         }
     }
 
-
+    /**
+     * Cargo las animaciones del jugador
+     */
     preloadCharacterAnimations() {
         //Idle
         this.load.image('idle_0', 'player/character/idle_0.png');
@@ -107,8 +109,6 @@ class ScenePreload extends Phaser.Scene {
      * método llamado en su estado.
      */
     create() {
-        gameState = gameStates.PRELOAD;
-
         this.scene.launch(sceneNames.MENU);
     }
 }

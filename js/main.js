@@ -21,8 +21,9 @@
  * @property {bool} render.pixelArt - No se puede reescalar las escenas de phaser
  * @property {Phaser.Scene[]} scene - Declaramos todas las escenas que utlizamos
  * @property {Phaser.Scene} scene.ScenePreload - {@link ScenePreload} Escena para cargar todos los assets
- * @property {Phaser.Scene} scene.SceneGameUI - {@link SceneGameUI} Escena para la interfaz del usuario
+ * @property {Phaser.Scene} scene.SceneMenu - {@link SceneMenu} Escena para escoer jugador y arma para el usuario
  * @property {Phaser.Scene} scene.SceneSetUp - {@link SceneSetUp} Escena para el menu principal del juego
+ * @property {Phaser.Scene} scene.SceneGameUI - {@link SceneGameUI} Escena para la interfaz del usuario
  * @property {Phaser.Scene} scene.SceneStart - {@link SceneStart} Escena para empezar el juego
  */
 const config = {
@@ -74,7 +75,7 @@ function randomInt(low, high) {
     return Math.floor(Math.random() * (high - low) + low);
 }
 
-var canvas;
+let canvas;
 
 window.onload = function () {
     canvas = document.getElementsByTagName('canvas')[0];

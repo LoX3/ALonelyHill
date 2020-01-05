@@ -1,5 +1,5 @@
 /**
- * Escena para escoer el arma del usuario
+ * Escena para escoer jugador y arma para el usuario
  * @class 
  */
 class SceneMenu extends Phaser.Scene {
@@ -18,10 +18,6 @@ class SceneMenu extends Phaser.Scene {
      * otra cosa. Si necesita enrutar el juego a otro estado, puede
      * hacerlo aquí, o si necesita preparar un conjunto de variables u
      * objetos antes de que comience la precarga.
-     * @property {JSON} data Variable que recibe los datos al llamar a la escena
-     * @property {String} data.butt Culata del arma
-     * @property {String} data.handle Cuerpo del arma
-     * @property {String} data.canon Cañon del arma
      */
     init() {
         this.txtMenuTitle;
@@ -99,6 +95,9 @@ class SceneMenu extends Phaser.Scene {
         this.moveTitle();
     }
 
+    /**
+     * Mueve la señal del menu
+     */
     moveTitle() {
         if (this.r >= 0.1) {
             this.arrieved = true;
@@ -124,6 +123,9 @@ class SceneMenu extends Phaser.Scene {
         this.txtMenuTitle.setRotation(this.finalRotation);
     }
 
+    /**
+     * Empieza la escena de SetUp
+     */
     startGame() {
         this.scene.start(sceneNames.SETUP);
     }

@@ -71,7 +71,18 @@ io.on('connection', function (socket) {
          */
         socket.emit('getAllEnemies', getAllEnemies());
 
-        // Crea un jugador que guarda el servidor
+        /**
+         * Crea un jugador que guarda el servidor
+         * @enum {JSON}
+         * @name socket.player
+         * @property {Number} id Id del jugador
+         * @property {Number} x Posicion horizontal del jugador
+         * @property {Number} y Posicion vertical del jugador
+         * @property {Number} butt Culata del jugador
+         * @property {Number} handle Cuerpo del jugador
+         * @property {Number} canon Cañon del jugador
+         * @property {Number} weaponRotation Rotación del arma del jugador
+         */
         socket.player = {
             id: server.lastPlayderID++,
             x: data.x,
@@ -79,6 +90,7 @@ io.on('connection', function (socket) {
             butt: data.butt,
             handle: data.handle,
             canon: data.canon,
+            weaponRotation: data.weaponRotation
         };
 
         /**

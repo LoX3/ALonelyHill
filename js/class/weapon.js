@@ -166,12 +166,31 @@ class Weapon extends Phaser.GameObjects.Container {
          * @type {Number}
          */
         this.recoilDistance = 5;
+
+        // IVAN COMENTA!!!!!
+        /**
+         * ALGO
+         * @type {Number}
+         */
         this.lerp = 2;
+
+        /**
+         * ALGO
+         * @type {Number}
+         */
         this.time = 0.05;
+
+        /**
+         * ALGO
+         * @type {Boolean}
+         */
         this.gotInitialPos = false;
+
+        /**
+         * ALGO
+         * @type {Boolean}
+         */
         this.arrievedMaximumDisplacement = false;
-        this.oldX = this.x;
-        this.oldY = this.y;
     }
 
     /**

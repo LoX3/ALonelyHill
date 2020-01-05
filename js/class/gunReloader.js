@@ -14,8 +14,10 @@ class GunReloader {
     constructor(tamañoCargador, balasTotales) {
         this.init();
 
-        // Creo el cargador y le asigno las balas
+        // Pongo el maximo de capacidad de un cargador
         this.maxCapacity = tamañoCargador;
+
+        // Cargo el arma para empezar
         this.currentBullets = this.maxCapacity;
 
         // Establezco las balas totales del jugador
@@ -51,7 +53,7 @@ class GunReloader {
 
     /**
      * Mira si le quedan balas al cargador
-     * @returns {Boolean}
+     * @returns {Boolean} Si se puede disparar
      */
     canShoot() {
         var retVal = false;
@@ -92,6 +94,10 @@ class GunReloader {
         this.totalBullets -= recarga;
     }
 
+    /**
+     * Mira si el cargador esta lleno
+     * @returns {Boolean} Si esta lleno
+     */
     isFull() {
         var retVal = false;
 

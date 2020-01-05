@@ -26,13 +26,6 @@ class SceneSetUp extends Phaser.Scene {
     init() {
         this.weaponConstructorArrows;
 
-        this.prevButt;
-        this.prevHandle;
-        this.prevCanon;
-        this.nextButt;
-        this.nextHandle;
-        this.nextCanon;
-
         this.butt = weaponParts.BUTT.ONE;
         this.handle = weaponParts.HANDLE.ONE;
         this.canon = weaponParts.CANON.ONE;
@@ -430,13 +423,16 @@ class SceneSetUp extends Phaser.Scene {
         return value[0] + '_' + strValue;
     }
 
+    /**
+     * Empieza el juego
+     */
     startGame() {
         this.scene.launch(sceneNames.GAMEUI);
 
         this.scene.start(sceneNames.GAME, {
-            butt: this.scene.butt,
-            handle: this.scene.handle,
-            canon: this.scene.canon,
+            butt: this.butt,
+            handle: this.handle,
+            canon: this.canon,
         });
 
         this.scene.stop();

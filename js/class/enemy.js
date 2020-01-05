@@ -43,6 +43,7 @@ class Enemy extends Phaser.GameObjects.Container {
      * @param {String} characterImage Key de la imagen del jugador
      */
     crearCharacter(scene, characterImage) {
+        // Creo la imagen del jugador
         this.character = new Character(scene, this.body.width / 2, this.body.height / 2, characterImage);
 
         // Añado el jugador como hijo para que copie el movimiento del padre
