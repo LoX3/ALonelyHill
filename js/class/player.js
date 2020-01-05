@@ -32,6 +32,10 @@ class Player extends Phaser.GameObjects.Container {
         this.scene = scene;
         this.name = name;
         this.weaponComponents = weaponComponents;
+        this.vida = 100;
+        this.playerSpeed = 250;
+        this.sceneGameUI = scene.scene.get(sceneNames.GAMEUI);
+        this.updateLiveText();
 
         // Le doy fisicas al container para que entre tenga colliders i se mueva
         scene.physics.world.enableBody(this);
@@ -41,9 +45,6 @@ class Player extends Phaser.GameObjects.Container {
 
         // Creo el arma
         this.crearWeapon(scene);
-
-        // Activo las variables internas
-        this.createCustomData();
 
         // Añado el container a la escena
         scene.add.existing(this);
@@ -68,6 +69,12 @@ class Player extends Phaser.GameObjects.Container {
          * @type {Phaser.Scene}
          */
         this.scene;
+
+        /**
+         * Escena donde se encuentra la UI del usuario
+         * @type {Phaser.Scene}
+         */
+        this.sceneGameUI;
 
         /**
          * Imagen del jugador en el juego
@@ -95,7 +102,17 @@ class Player extends Phaser.GameObjects.Container {
         this.moveLeftKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.moveRightKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-        this.playerSpeed = 250;
+        /**
+         * Vida del jugador
+         * @type {Number}
+         */
+        this.playerSpeed;
+
+        /**
+         * Velocidad del jugador
+         * @type {Number}
+         */
+        this.playerSpeed;
     }
 
     /**
@@ -161,22 +178,10 @@ class Player extends Phaser.GameObjects.Container {
     }
 
     /**
-     * Activo los datos en el objeto y le doy propiedades
-     */
-    createCustomData() {
-        this.setDataEnabled(true);
-
-        this.setData({
-            vida: 100,
-            velocidad: 100,
-        });
-    }
-
-    /**
      * Mueve el jugador segun las teclas pulsadas
      */
     playerMovement() {
-        
+
         if (this.moveLeftKey.isDown) {
             this.body.setVelocityX(-this.playerSpeed);
         }
@@ -199,5 +204,12 @@ class Player extends Phaser.GameObjects.Container {
 
         // Muevo el jugador segun su fuerza
         cliente.movePlayer(this.x, this.y, this.body.velocity.x, this.body.velocity.y);
+    }
+
+    /**
+     * Modifico el texto del cargador
+     */
+    updateLiveText() {
+        this.sceneGameUI.liveText.setText(this.vida);
     }
 }
