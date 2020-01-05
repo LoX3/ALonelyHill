@@ -5,7 +5,7 @@
  * @property {String} GREEN_GRASS herba
  */
 const tiles = {
-    GREEN_GRASS: 880,
+    GREEN_GRASS: 560,
     BROWN_EARTH: 546,
     GRASS_TRANSITION: {
         TOP_LEFT_CORNER: 513,
