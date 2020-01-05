@@ -78,15 +78,7 @@ class SceneSetUp extends Phaser.Scene {
             .setOrigin(0.5, 1);
 
         txtMenuTitle.on('pointerdown', function () {
-            this.scene.scene.launch(sceneNames.GAMEUI);
-
-            this.scene.scene.start(sceneNames.GAME, {
-                butt: this.scene.butt,
-                handle: this.scene.handle,
-                canon: this.scene.canon,
-            });
-
-            this.scene.scene.stop();
+            this.scene.startGame();
         });
 
         //Set background color (temporal)
@@ -96,6 +88,10 @@ class SceneSetUp extends Phaser.Scene {
         this.setUpWeaponConstructor();
 
         this.setUpCharacterSelector();
+
+        this.input.keyboard.on('keydown-' + 'SPACE', function (event) {
+            this.scene.startGame();
+        });
     }
 
     /**
@@ -432,5 +428,17 @@ class SceneSetUp extends Phaser.Scene {
 
         strValue = (parseInt(value[1]) + 1).toString();
         return value[0] + '_' + strValue;
+    }
+
+    startGame() {
+        this.scene.launch(sceneNames.GAMEUI);
+
+        this.scene.start(sceneNames.GAME, {
+            butt: this.scene.butt,
+            handle: this.scene.handle,
+            canon: this.scene.canon,
+        });
+
+        this.scene.stop();
     }
 }

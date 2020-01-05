@@ -35,7 +35,7 @@ class SceneMenu extends Phaser.Scene {
         mapManager.generateBackground();
         var mapMatrix = mapManager.getTitleBackground().getMap();
         console.log(mapMatrix);
-        
+
         this.map = this.make.tilemap({
             data: mapMatrix,
             tileWidth: 32,
@@ -62,32 +62,33 @@ class SceneMenu extends Phaser.Scene {
         this.createBackgroundMap();
 
         this.txtMenuTitle = this.add.text(config.width / 2, 30, 'A Lonely Hill', {
-                align: "center",
-                fontFamily: '"PixelCowboy"',
-                fontSize: (76),
-                color: "#000"
-            })
+            align: "center",
+            fontFamily: '"PixelCowboy"',
+            fontSize: (76),
+            color: "#000"
+        })
             .setOrigin(0.5, 0);
 
         this.txtStart = this.add.text(config.width / 2, (config.height / 5) * 4.5, 'START!', {
-                align: "center",
-                fontFamily: '"iPixelU"',
-                fontSize: (36),
-                color: "#000"
-            })
+            align: "center",
+            fontFamily: '"iPixelU"',
+            fontSize: (36),
+            color: "#000"
+        })
             .setInteractive()
             .setOrigin(0.5, 1);
 
         this.txtStart.on('pointerdown', function () {
-            console.log('PLAY!');
-            this.scene.scene.start(sceneNames.SETUP);
+            this.scene.startGame();
         });
 
         //Set background color (temporal)
-        var color = Phaser.Display.Color.GetColor32(0,0,0, 0);
+        var color = Phaser.Display.Color.GetColor32(0, 0, 0, 0);
         this.cameras.main.setBackgroundColor(color);
 
-
+        this.input.keyboard.on('keydown-' + 'SPACE', function (event) {
+            this.scene.startGame();
+        });
     }
 
     /**
@@ -95,8 +96,10 @@ class SceneMenu extends Phaser.Scene {
      * archivos para poder jugar
      */
     update() {
-        // console.log(this.r);
+        this.moveTitle();
+    }
 
+    moveTitle() {
         if (this.r >= 0.1) {
             this.arrieved = true;
         } else if (this.r <= -0.1) {
@@ -121,4 +124,7 @@ class SceneMenu extends Phaser.Scene {
         this.txtMenuTitle.setRotation(this.finalRotation);
     }
 
+    startGame() {
+        this.scene.start(sceneNames.SETUP);
+    }
 }
