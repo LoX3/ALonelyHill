@@ -182,7 +182,7 @@ class Weapon extends Phaser.GameObjects.Container {
         this.shootPos.getWorldTransformMatrix(this.tempMatrix, this.tempParentMatrix);
         this.absoluteShootPos = this.tempMatrix.decomposeMatrix();
         this.rotateWeaponTowardsMouseAngle(this.scene.input);
-        if (this.knockBack == true) {
+        if (this.knockBack) {
             this.playRecoilAnim();
         }
     }
