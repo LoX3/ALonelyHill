@@ -142,6 +142,9 @@ class Player extends Phaser.GameObjects.Container {
 
         // Muevo al jugador
         this.playerMovement();
+
+        // Muevo el jugador segun su fuerza
+        cliente.movePlayer(this.x, this.y, this.weapon.rotation);
     }
 
     /**
@@ -217,9 +220,6 @@ class Player extends Phaser.GameObjects.Container {
         else {
             this.body.setVelocityY(0);
         }
-
-        // Muevo el jugador segun su fuerza
-        cliente.movePlayer(this.x, this.y, this.body.velocity.x, this.body.velocity.y);
     }
 
     /**

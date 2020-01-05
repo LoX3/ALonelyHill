@@ -96,8 +96,10 @@ class Enemy extends Phaser.GameObjects.Container {
      * @param {Number} enemyX Posición horizontal
      * @param {Number} enemyY Posición vertical
      */
-    movePlayerToPosition(enemyX, enemyY) {
+    movePlayerToPositionAndRotation(enemyX, enemyY, weaponRotation) {
         this.x = enemyX;
         this.y = enemyY;
+
+        this.weapon.rotate(weaponRotation);
     }
 }

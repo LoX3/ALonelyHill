@@ -62,4 +62,14 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
          */
         this.bulletType;
     }
+
+    rotate(weaponRotation) {
+        if (Math.abs(weaponRotation) > 1.5) {
+            this.setScale(1, -1);
+        } else {
+            this.setScale(1, 1);
+        }
+
+        this.setRotation(weaponRotation);
+    }
 }

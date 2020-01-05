@@ -106,15 +106,17 @@ io.on('connection', function (socket) {
         socket.on('movePlayer', function (data) {
             socket.player.x = data.x;
             socket.player.y = data.y;
+            socket.player.weaponRotation = data.weaponRotation;
 
             /**
              * Muevo al jugador segun su posición
              * @event movePlayerToPosition 
              */
-            io.emit('movePlayerToPosition', {
+            io.emit('movePlayerToPositionAndRotation', {
                 id: socket.player.id,
                 x: data.x,
-                y: data.y
+                y: data.y,
+                weaponRotation: data.weaponRotation,
             });
         });
 

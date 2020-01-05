@@ -81,9 +81,9 @@ class Cliente {
              * Muevo el enemigos en el cliente
              * @event moveEnemyWithForce 
              */
-            cliente.socket.on('movePlayerToPosition', function (data) {
+            cliente.socket.on('movePlayerToPositionAndRotation', function (data) {
                 if (game.scene.getScene(sceneNames.GAME).enemies[data.id]) {
-                    game.scene.getScene(sceneNames.GAME).enemies[data.id].movePlayerToPosition(data.x, data.y);
+                    game.scene.getScene(sceneNames.GAME).enemies[data.id].movePlayerToPositionAndRotation(data.x, data.y, data.weaponRotation);
                 }
             });
 
@@ -106,12 +106,11 @@ class Cliente {
      * @param {Number} forceX Fuerza del movimiento horizontal del jugador
      * @param {Number} forceY Fuerza del movimiento vertical del jugador
      */
-    movePlayer(x, y, forceX, forceY) {
+    movePlayer(x, y, weaponRotation) {
         this.socket.emit('movePlayer', {
             x: x,
             y: y,
-            forceX: forceX,
-            forceY: forceY
+            weaponRotation: weaponRotation,
         });
     }
 
