@@ -188,10 +188,15 @@ class SceneSetUp extends Phaser.Scene {
     }
 
     setUpCharacterSelector() {
+
+        this.createAnimations();
+
         var characterSprite = this.physics.add.sprite(config.width / 4, (config.height / 2) * 1, 'character_selector')
             .setSize(16, 32)
             .setScale(3)
             .setInteractive();
+
+        characterSprite.play('idle_front');
 
         characterSprite.on('pointerover', function () {
             this.play('run_front');
@@ -201,7 +206,144 @@ class SceneSetUp extends Phaser.Scene {
             this.play('idle_front');
         });
 
-        characterSprite.play('idle_front');
+    }
+
+    /**
+     * Creo las animaciones del player
+     */
+    createAnimations() {
+        //#region Idle animation
+        // Idle front
+        this.anims.create({
+            key: 'idle_front',
+            frames: [
+                {
+                    key: 'idle_front_0'
+                },
+                {
+                    key: 'idle_front_1'
+                },
+                {
+                    key: 'idle_front_2'
+                },
+                {
+                    key: 'idle_front_3'
+                }
+            ],
+            frameRate: 2,
+            repeat: -1,
+        });
+
+        // Idle back
+        this.anims.create({
+            key: 'idle_back',
+            frames: [
+                {
+                    key: 'idle_back_0'
+                },
+                {
+                    key: 'idle_back_1'
+                },
+                {
+                    key: 'idle_back_2'
+                },
+                {
+                    key: 'idle_back_3'
+                }
+            ],
+            frameRate: 2,
+            repeat: -1,
+        });
+
+        // Idle side
+        this.anims.create({
+            key: 'idle_side',
+            frames: [
+                {
+                    key: 'idle_side_0'
+                },
+                {
+                    key: 'idle_side_1'
+                },
+                {
+                    key: 'idle_side_2'
+                },
+                {
+                    key: 'idle_side_3'
+                }
+            ],
+            frameRate: 2,
+            repeat: -1,
+        });
+
+        //#endregion
+
+        //#region Run animations
+
+        // Run front
+        this.anims.create({
+            key: 'run_front',
+            frames: [
+                {
+                    key: 'run_front_0'
+                },
+                {
+                    key: 'run_front_1'
+                },
+                {
+                    key: 'run_front_2'
+                },
+                {
+                    key: 'run_front_3'
+                }
+            ],
+            frameRate: 6,
+            repeat: -1,
+        });
+
+        // Run back
+        this.anims.create({
+            key: 'run_back',
+            frames: [
+                {
+                    key: 'run_back_0'
+                },
+                {
+                    key: 'run_back_1'
+                },
+                {
+                    key: 'run_back_2'
+                },
+                {
+                    key: 'run_back_3'
+                }
+            ],
+            frameRate: 6,
+            repeat: -1,
+        });
+
+        // Run side
+        this.anims.create({
+            key: 'run_side',
+            frames: [
+                {
+                    key: 'run_side_0'
+                },
+                {
+                    key: 'run_side_1'
+                },
+                {
+                    key: 'run_side_2'
+                },
+                {
+                    key: 'run_side_3'
+                }
+            ],
+            frameRate: 6,
+            repeat: -1,
+        });
+
+        //#endregion
     }
 
     /**
