@@ -109,13 +109,7 @@ class SceneGame extends Phaser.Scene {
      * @param {Number} x Posición horizontal del enemigo
      * @param {Number} y Posición vertical del enemigo
      */
-    addNewEnemy(id, x, y) {
-        var weaponComponents = {
-            butt: weaponParts.BUTT.ONE,
-            handle: weaponParts.HANDLE.ONE,
-            canon: weaponParts.CANON.ONE,
-        }
-
+    addNewEnemy(id, x, y, weaponComponents) {
         this.enemies[id] = new Enemy(this, x, y, 'sensei', weaponComponents);
         if (this.enemies[id]) {
             this.physics.add.overlap(this.player.weapon.bulletGroup, this.enemies[id], this.enemies[id].takeDamage, null, this.enemies[id]);

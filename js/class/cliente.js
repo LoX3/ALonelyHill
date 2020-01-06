@@ -61,7 +61,11 @@ class Cliente {
     enemyInfo() {
         this.socket.on('newEnemy', function (data) {
             if (gameState == gameStates.LOADING || gameState == gameStates.PLAYING) {
-                game.scene.getScene(sceneNames.GAME).addNewEnemy(data.id, data.x, data.y);
+                game.scene.getScene(sceneNames.GAME).addNewEnemy(data.id, data.x, data.y, {
+                    butt: data.butt,
+                    handle: data.handle,
+                    canon: data.canon,
+                });
             }
         })
     }
@@ -76,7 +80,11 @@ class Cliente {
          */
         this.socket.on('getAllEnemies', function (data) {
             for (var i = 0; i < data.length; i++) {
-                game.scene.getScene(sceneNames.GAME).addNewEnemy(data[i].id, data[i].x, data[i].y);
+                game.scene.getScene(sceneNames.GAME).addNewEnemy(data[i].id, data[i].x, data[i].y, {
+                    butt: data[i].butt,
+                    handle: data[i].handle,
+                    canon: data[i].canon,
+                });
             }
 
             /**
