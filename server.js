@@ -42,7 +42,7 @@ server.listen(process.env.PORT || 8080, function () {
     console.log('CADA VEZ QUE EDITES ESTE FICHERO, HAS DE VOLVER A HACER: NPM START!!!!');
     console.log();
 
-    console.log('Listening on ' + server.address().port);
+    console.log('Listening on http://localhost:' + server.address().port + '/');
 });
 
 // Doc Emit https://socket.io/docs/emit-cheatsheet/
@@ -62,6 +62,15 @@ io.on('connection', function (socket) {
 
     /**
      * Crea y administra al jugador en el servidor
+     * @property {JSON} data Datos sobre el jugador
+     * @property {Number} data.x Posición horizontal del jugador
+     * @property {Number} data.y Posición vertical del jugador
+     * @property {String} data.animation Animacion del jugador
+     * @property {String} data.side Direccion del jugador
+     * @property {String} data.butt Culata del arma del jugador
+     * @property {String} data.handle Cuerpo del arma del jugador
+     * @property {String} data.canon Cañon del arma del jugador
+     * @property {String} data.weaponRotation Rotacion del arma
      * @event newServerPlayer 
      */
     socket.on('newServerPlayer', function (data) {
@@ -87,6 +96,8 @@ io.on('connection', function (socket) {
             id: server.lastPlayderID++,
             x: data.x,
             y: data.y,
+            animation: data.animation,
+            side: data.side,
             butt: data.butt,
             handle: data.handle,
             canon: data.canon,
@@ -101,6 +112,10 @@ io.on('connection', function (socket) {
 
         /**
          * Al mover el jugador, actualizo su posición en el servidor
+         * @property {JSON} data Datos sobre el jugador
+         * @property {Number} data.x Posicion horizontal del jugador
+         * @property {Number} data.y Posicion vertical del jugador
+         * @property {Number} data.weaponRotation Rotación del arma del jugador
          * @event movePlayer 
          */
         socket.on('movePlayer', function (data) {
@@ -122,6 +137,11 @@ io.on('connection', function (socket) {
 
         /**
          * Recibo la bala para enviarla a los enemigos
+         * @property {JSON} data Datos de la bala
+         * @property {Number} data.x Posicion horizontal de la bala
+         * @property {Number} data.y Posicion vertical de la bala
+         * @property {String} data.bulletType Tipo de bala que se dispara
+         * @property {Number} data.rotation Rotación de la bala
          * @event shootBullet
          */
         socket.on('shootBullet', function (data) {
@@ -135,6 +155,23 @@ io.on('connection', function (socket) {
                 y: data.y,
                 bulletType: data.bulletType,
                 rotation: data.rotation,
+            });
+        });
+
+        /**
+         * Recibo la animacion del jugador
+         * @property {JSON} data Datos de la bala
+         * @property {String} data.animation Animación del jugador
+         * @property {Boolean} data.side Direccion del jugador
+         * @event changeAnimation
+         */
+        socket.on('changeAnimation', function (data) {
+            socket.player.animation = data.animation;
+
+            io.emit('changePlayerAnimation', {
+                id: socket.player.id,
+                side: data.side,
+                animation: data.animation,
             });
         })
 

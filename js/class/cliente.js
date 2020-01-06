@@ -76,6 +76,7 @@ class Cliente {
     allEnemiesInfo() {
         /**
          * Al cargar todos los enemigos creo los enemigos y las llamadas a los cambios enemigos
+         * @property {socket.player[]} data
          * @event getAllEnemies 
          */
         this.socket.on('getAllEnemies', function (data) {
@@ -89,6 +90,11 @@ class Cliente {
 
             /**
              * Muevo el enemigos en el cliente
+             * @property {JSON} data Datos del jugador
+             * @property {Number} data.id Id del jugador
+             * @property {Number} data.x Posicion horizontal del jugador
+             * @property {Number} data.y Posicion vertical del jugador
+             * @property {Number} data.weaponRotation Rotación del arma
              * @event moveEnemyWithForce 
              */
             cliente.socket.on('movePlayerToPositionAndRotation', function (data) {
@@ -98,7 +104,38 @@ class Cliente {
             });
 
             /**
+             * Creo la bala en el cliente
+             * @property {JSON} data Datos de la bala
+             * @property {Number} data.id Id del jugador
+             * @property {Number} data.x Posicion horizontal de la bala
+             * @property {Number} data.y Posicion vertical de la bala
+             * @property {String} data.bulletType Tipo de bala que se dispara
+             * @property {Number} data.rotation Rotación de la bala
+             * @event createBullet
+             */
+            cliente.socket.on('createBullet', function (data) {
+                if (game.scene.getScene(sceneNames.GAME).enemies[data.id]) {
+                    game.scene.getScene(sceneNames.GAME).enemies[data.id].weapon.createBullet(data);
+                }
+            });
+
+            /**
+             * Cambio la animacion del enemigo
+             * @property {JSON} data Datos de la bala
+             * @property {Number} data.id Id del jugador
+             * @property {String} data.animation Animación del jugador
+             * @property {Boolean} data.side Direccion del jugador
+             * @event changePlayerAnimation
+             */
+            cliente.socket.on('changePlayerAnimation', function (data) {
+                if (game.scene.getScene(sceneNames.GAME).enemies[data.id]) {
+                    game.scene.getScene(sceneNames.GAME).enemies[data.id].character.playCustomAnimation(data.animation, data.side);
+                }
+            });
+
+            /**
              * Al desconectarse el jugador lo elimino del cliente...
+             * @property {Number} id Id del jugador
              * @event removeEnemy 
              */
             cliente.socket.on('removeEnemy', function (id) {
@@ -106,12 +143,6 @@ class Cliente {
                     game.scene.getScene(sceneNames.GAME).enemies[id].removePlayer();
                 }
             });
-
-            cliente.socket.on('createBullet', function (data) {
-                if (game.scene.getScene(sceneNames.GAME).enemies[data.id]) {
-                    game.scene.getScene(sceneNames.GAME).enemies[data.id].weapon.createBullet(data);
-                }
-            })
         });
     }
 
@@ -130,6 +161,13 @@ class Cliente {
         });
     }
 
+    /**
+     * Envia al servidor el disparo de una bala
+     * @param {Number} x Posición horizontal del jugador
+     * @param {Number} y Posición vertical del jugador
+     * @param {String} bulletType Imagen para cargar el color de la bala
+     * @param {Number} rotation Rotación de la bala
+     */
     shootBullet(x, y, bulletType, rotation) {
         this.socket.emit('shootBullet', {
             x: x,
@@ -137,6 +175,16 @@ class Cliente {
             bulletType: bulletType,
             rotation: rotation,
         });
+    }
+
+    /**
+     * Avisa al servidor del cambio de animacion
+     * @property {JSON} data Datos de la bala
+     * @property {String} data.animation Animación del jugador
+     * @property {Boolean} data.side Direccion del jugador
+     */
+    changeAnimation(data) {
+        this.socket.emit('changeAnimation', data);
     }
 }
 

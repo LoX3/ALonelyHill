@@ -74,6 +74,8 @@ class SceneGame extends Phaser.Scene {
         cliente.registerPlayer({
             x: this.player.x,
             y: this.player.y,
+            animation: this.player.character.anims.getCurrentKey(),
+            side: this.player.playerSide,
             butt: this.butt,
             handle: this.handle,
             canon: this.canon,

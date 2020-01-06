@@ -16,47 +16,102 @@ class Character extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, '');
 
+        // Le doy una escala para que sea mas grande
         this.setScale(2);
 
+        // Pongo una animacion por defecto
         this.playIdleDown();
 
+        // Añado el player para que haga las animaciones
         scene.add.existing(this);
     }
 
+    /**
+     * Doy una animacion y una direccion al jugador
+     * @param {String} animation Animacion del jugador
+     * @param {Boolean} side Direccion del jugador
+     */
+    playCustomAnimation(animation, side) {
+        this.play(animation, true);
+
+        switch (animation) {
+            case 'run_side':
+            case 'idle_side':
+                if (side) {
+                    this.setScale(Math.abs(this.scaleX), this.scaleY);
+                }
+                else {
+                    this.setScale(-Math.abs(this.scaleX), this.scaleY);
+                }
+                break;
+            case 'run_back':
+            case 'idle_back':
+                this.parentContainer.sendToBack(this.parentContainer.weapon);
+                break;
+
+            default:
+                this.parentContainer.sendToBack(this);
+                break;
+        }
+    }
+
+    /**
+     * Animacion de correr hacia la izquierda
+     */
     playRunLeft() {
-        this.anims.play('run_side', true);
+        this.play('run_side', true);
         this.setScale(-Math.abs(this.scaleX), this.scaleY);
     }
 
+    /**
+     * Animacion de correr hacia la derecha
+     */
     playRunRight() {
-        this.anims.play('run_side', true);
+        this.play('run_side', true);
         this.setScale(Math.abs(this.scaleX), this.scaleY);
     }
 
+    /**
+     * Animacion de correr hacia la arriba
+     */
     playRunUp() {
-        this.anims.play('run_back', true);
+        this.play('run_back', true);
     }
 
+    /**
+     * Animacion de correr hacia la abajo
+     */
     playRunDown() {
-        this.anims.play('run_front', true);
+        this.play('run_front', true);
     }
 
-
+    /**
+     * Animacion Idle hacia la izquierda
+     */
     playIdleLeft() {
-        this.anims.play('idle_side', true);
+        this.play('idle_side', true);
         this.setScale(-Math.abs(this.scaleX), this.scaleY);
     }
 
+    /**
+     * Animacion Idle hacia la derecha
+     */
     playIdleRight() {
-        this.anims.play('idle_side', true);
+        this.play('idle_side', true);
         this.setScale(Math.abs(this.scaleX), this.scaleY);
     }
 
+    /**
+     * Animacion Idle hacia la arriba
+     */
     playIdleUp() {
-        this.anims.play('idle_back', true);
+        this.play('idle_back', true);
     }
 
+    /**
+     * Animacion Idle hacia la abajo
+     */
     playIdleDown() {
-        this.anims.play('idle_front', true);
+        this.play('idle_front', true);
     }
 }

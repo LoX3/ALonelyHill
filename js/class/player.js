@@ -211,6 +211,8 @@ class Player extends Phaser.GameObjects.Container {
      * Mueve el jugador segun las teclas pulsadas
      */
     playerMovement() {
+        let lastAnimKey = this.character.anims.getCurrentKey();
+        let lastSide = this.playerSide;
         if (this.keys.A.isDown) {
             this.body.setVelocityX(-this.playerSpeed);
             if (this.keys.W.isUp && this.keys.S.isUp) {
@@ -264,6 +266,13 @@ class Player extends Phaser.GameObjects.Container {
                     }
                     break;
             }
+        }
+
+        if (lastAnimKey != this.character.anims.getCurrentKey() || lastSide != this.playerSide) {
+            cliente.changeAnimation({
+                side: this.playerSide,
+                animation: this.character.anims.getCurrentKey()
+            });
         }
     }
 
