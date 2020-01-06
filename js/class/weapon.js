@@ -266,6 +266,9 @@ class Weapon extends Phaser.GameObjects.Container {
                 this.sceneGameUI.enableReloadAlert();
             }
         }
+        else if (!this.cargador.canShoot()) {
+            this.sceneGameUI.makeAnimCantShoot();
+        }
     }
 
     /**

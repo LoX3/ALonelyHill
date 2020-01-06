@@ -98,14 +98,15 @@ class SceneGameUI extends Phaser.Scene {
 
         // Balas del jugador
         this.gunReloaderText = this.add
-            .text(10 + (this.bulletIcon.width * this.bulletIcon.scaleX), 0, '', {
+            .text(10 + (this.bulletIcon.width * this.bulletIcon.scaleX), config.height, '', {
                 align: "center",
                 fontFamily: '"iPixelU"',
                 fontSize: (32),
                 color: colors.hex.white
-            });
+            })
+            .setOrigin(0, 1);
         // Muevo la Y para que quede bien alineado a la izquierda
-        this.gunReloaderText.setY(config.height - this.gunReloaderText.height);
+        // this.gunReloaderText.setY();
 
         // Alerta para recargar las balas
         this.reloadAlertText = this.add
@@ -125,15 +126,15 @@ class SceneGameUI extends Phaser.Scene {
 
         // Creo la vida del jugador
         this.livePlayerText = this.add
-            .text(config.width - (this.healthIcon.width * this.healthIcon.scaleX) - 5, 0, '', {
+            .text(config.width - (this.healthIcon.width * this.healthIcon.scaleX) - 5, 0, '100', {
                 align: "center",
                 fontFamily: '"iPixelU"',
                 fontSize: (32),
                 color: colors.hex.white
             })
-            .setOrigin(1, 0);
+            .setOrigin(1, 1);
         // Muevo la Y para que quede bien alineado a la derecha
-        this.livePlayerText.setY(config.height - this.livePlayerText.height);
+        this.livePlayerText.setY(config.height);
     }
 
     /**
@@ -142,7 +143,10 @@ class SceneGameUI extends Phaser.Scene {
     enableReloadAlert() {
         this.gunReloaderText.setColor(colors.hex.yellow);
         this.reloadAlertText.setColor(colors.hex.yellow);
+        this.bulletIcon.setTint(colors.number.yellow);
         this.reloadAlertText.setText("reload! (PRESS 'r')");
+
+        this.makeAnimCantShoot();
     }
 
     /**
@@ -151,6 +155,7 @@ class SceneGameUI extends Phaser.Scene {
     setReloadState() {
         this.gunReloaderText.setColor(colors.hex.green);
         this.reloadAlertText.setColor(colors.hex.green);
+        this.bulletIcon.setTint(colors.number.green);
         this.reloadAlertText.setText("reloading...");
     }
 
@@ -159,6 +164,7 @@ class SceneGameUI extends Phaser.Scene {
      */
     disableReloadAlert() {
         this.gunReloaderText.setColor(colors.hex.white);
+        this.bulletIcon.setTint(colors.number.white);
         this.reloadAlertText.setText("");
     }
 
@@ -224,5 +230,88 @@ class SceneGameUI extends Phaser.Scene {
 
         // Añado el canvas como una imagen
         this.add.image(config.width - (rightBackground.width / 2), config.height - (rightBackground.height / 2), 'rightBackground');
+    }
+
+    /**
+     * Modifico el texto del cargador
+     * @param {Number} vida Vida actual del jugador 
+     */
+    updateLiveText(vida) {
+        // Cambio el texto con la vida
+        this.livePlayerText.setText(vida);
+
+        // Cambio el color del corazon de la UI
+        if (vida <= 50 && vida > 25) {
+            this.healthIcon.setTint(colors.number.orange);
+        }
+        else if (vida <= 25) {
+            this.healthIcon.setTint(colors.number.red);
+        }
+
+        this.makeAnimChangeLive();
+    }
+
+    makeAnimChangeLive() {
+        // Hago una animacio para escalar la vida
+        this.tweens.add(
+            {
+                targets: this.livePlayerText,
+                scaleX: this.livePlayerText.scaleX + 0.3,
+                scaleY: this.livePlayerText.scaleY + 0.3,
+                ease: 'Linear',
+                duration: 100,
+                // loop: 0,
+                yoyo: true,
+                onUpdate: () => {
+                    if (this.livePlayerText.scaleX > 1.3) {
+                        this.livePlayerText.scaleX = 1.3;
+                    }
+                    if (this.livePlayerText.scaleY > 1.3) {
+                        this.livePlayerText.scaleY = 1.3;
+                    }
+                },
+                onComplete: () => this.tweens.add({
+                    targets: this.livePlayerText,
+                    scaleX: 1,
+                    scaleY: 1,
+                    ease: 'Linear',
+                    duration: 100,
+                }),
+            }
+        );
+    }
+
+    /**
+     * Hace crecer las balas 
+     */
+    makeAnimCantShoot() {
+        // Hago una animacio para escalar la vida
+        this.tweens.add(
+            {
+                targets: this.gunReloaderText,
+                scaleX: this.gunReloaderText.scaleX + 0.3,
+                scaleY: this.gunReloaderText.scaleY + 0.3,
+                ease: 'Linear',
+                duration: 100,
+                // loop: 0,
+                yoyo: true,
+                onUpdate: () => {
+                    if (this.gunReloaderText.scaleX > 1.3) {
+                        this.gunReloaderText.scaleX = 1.3;
+                    }
+
+                    if (this.gunReloaderText.scaleY > 1.3) {
+                        this.gunReloaderText.scaleY = 1.3;
+                    }
+                },
+                onComplete: () => this.tweens.add({
+                    targets: this.gunReloaderText,
+                    scaleX: 1,
+                    scaleY: 1,
+                    ease: 'Linear',
+                    duration: 100,
+                }),
+            }
+        );
     }
 }

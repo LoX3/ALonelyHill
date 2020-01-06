@@ -228,7 +228,7 @@ class Player extends Phaser.GameObjects.Container {
      * Modifico el texto del cargador
      */
     updateLiveText() {
-        this.sceneGameUI.livePlayerText.setText(this.vida);
+        this.sceneGameUI.updateLiveText(this.vida);
     }
 
     /**
@@ -252,13 +252,5 @@ class Player extends Phaser.GameObjects.Container {
 
         // Actualizo el texto
         this.updateLiveText();
-
-        // Cambio el color del corazon de la UI
-        if (this.vida <= 50 && this.vida > 25) {
-            this.sceneGameUI.healthIcon.setTint(colors.number.orange);
-        }
-        else if (this.vida <= 25) {
-            this.sceneGameUI.healthIcon.setTint(colors.number.red);
-        }
     }
 }
