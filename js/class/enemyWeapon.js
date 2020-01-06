@@ -27,10 +27,15 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
         // Creo las variables de la clase
         this.init();
 
+        // Guardo la escena en la que estamos
+        this.scene = scene;
         // Pongo valor al tipo de bala
         this.bulletType = bulletType;
-        // Offset para que la bala salga del cañon
-        this.canonOffset = 100;
+        // Creo el grupo de balas
+        this.bulletGroup = scene.add.group({
+            classType: Bullet,
+            runChildUpdate: true,
+        });
 
         // Al hacer scale de las partes del arma, no quedan bien, con esto se arregla
         var handleWidth = handle.scale * handle.width;
@@ -57,9 +62,44 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
      */
     init() {
         /**
+         * Escena donde se ejecuta el juego
+         * @type {Phaser.Scene}
+         */
+        this.scene;
+
+        /**
          * Tipo de bala que se dispara
          * @type {String} 
          */
         this.bulletType;
+
+        /**
+         * Grupo donde se guardan las balas
+         * @type {Phaser.GameObjects.Group}
+         * @property {JSON} groupConfig Opciones del grupo
+         * @property {Bullet} groupConfig.classType Define el tipo de clase en el grupo {@link Phaser.GameObjects.Group#classType}.
+         * @property {Boolean} groupConfig.runChildUpdate Hace que se ejecuten los updates de los elementos dentro del grupo {@link Phaser.GameObjects.Group#runChildUpdate}.
+         */
+        this.bulletGroup;
+    }
+
+    /**
+     * Aplica rotacion al arma
+     * @param {Number} weaponRotation Rotacion del arma
+     */
+    rotate(weaponRotation) {
+        if (Math.abs(weaponRotation) > 1.5) {
+            this.setScale(1, -1);
+        } else {
+            this.setScale(1, 1);
+        }
+
+        this.setRotation(weaponRotation);
+    }
+
+    createBullet(data) {
+        var bala = new Bullet(this.scene, data.x, data.y, data.bulletType, data.rotation);
+        bala.body.setSize(7, 7);
+        this.bulletGroup.add(bala);
     }
 }

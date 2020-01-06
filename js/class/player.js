@@ -29,18 +29,20 @@ class Player extends Phaser.GameObjects.Container {
         // Creo las variables de la clase
         this.init();
 
+        this.name = 'player';
+
         // Guardo la escena
         this.scene = scene;
         // Guardo los componentes del arma
         this.weaponComponents = weaponComponents;
-        // Establezco la vida del jugador
-        this.vida = 100;
         // Establezco la velocidad del jugador
         this.playerSpeed = 250;
         // Guardo la escena de UI
         this.sceneGameUI = scene.scene.get(sceneNames.GAMEUI);
-        // Edito el texto de vida de la escena UI
-        this.updateLiveText();
+        // Doy vida al player para que inicie como numero
+        this.vida = 0;
+        // Doy vida al jugador
+        this.manageLive(100);
 
         // Le doy fisicas al container para que entre tenga colliders i se mueva
         scene.physics.world.enableBody(this);
@@ -126,10 +128,10 @@ class Player extends Phaser.GameObjects.Container {
         this.playerSpeed;
 
         /**
-         * Velocidad del jugador
+         * Vida del jugador
          * @type {Number}
          */
-        this.playerSpeed;
+        this.vida;
     }
 
     /**
@@ -142,6 +144,9 @@ class Player extends Phaser.GameObjects.Container {
 
         // Muevo al jugador
         this.playerMovement();
+
+        // Muevo el jugador segun su fuerza
+        cliente.movePlayer(this.x, this.y, this.weapon.rotation);
     }
 
     /**
@@ -217,15 +222,35 @@ class Player extends Phaser.GameObjects.Container {
         else {
             this.body.setVelocityY(0);
         }
-
-        // Muevo el jugador segun su fuerza
-        cliente.movePlayer(this.x, this.y, this.body.velocity.x, this.body.velocity.y);
     }
 
     /**
      * Modifico el texto del cargador
      */
     updateLiveText() {
-        this.sceneGameUI.livePlayerText.setText(this.vida);
+        this.sceneGameUI.updateLiveText(this.vida);
+    }
+
+    /**
+     * Al ser golpeado por una bala
+     * @param {Bullet} bullet Bala que golpea
+     */
+    takeDamage(bullet) {
+        // Destruyo la bala
+        bullet.destroy();
+
+        this.manageLive(-10);
+    }
+
+    /**
+     * Cambia la vida del jugador y actualiza el texto de la UI
+     * @param {Number} vida Vida que se le añade o reduce al enemigo
+     */
+    manageLive(vida) {
+        // Cambio la vida
+        this.vida += vida;
+
+        // Actualizo el texto
+        this.updateLiveText();
     }
 }

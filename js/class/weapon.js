@@ -257,6 +257,7 @@ class Weapon extends Phaser.GameObjects.Container {
             var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletType, shootRotation);
             this.bulletGroup.add(bala);
             bala.body.setSize(7, 7);
+            cliente.shootBullet(bala.x, bala.y, bala.texture.key, shootRotation);
 
             this.scene.time.delayedCall(100, () => this.canShoot = true);
             this.knockBack = true;
@@ -264,6 +265,9 @@ class Weapon extends Phaser.GameObjects.Container {
             if (!this.cargador.canShoot()) {
                 this.sceneGameUI.enableReloadAlert();
             }
+        }
+        else if (!this.cargador.canShoot()) {
+            this.sceneGameUI.makeAnimCantShoot();
         }
     }
 

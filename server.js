@@ -106,17 +106,37 @@ io.on('connection', function (socket) {
         socket.on('movePlayer', function (data) {
             socket.player.x = data.x;
             socket.player.y = data.y;
+            socket.player.weaponRotation = data.weaponRotation;
 
             /**
              * Muevo al jugador segun su posición
              * @event movePlayerToPosition 
              */
-            io.emit('movePlayerToPosition', {
+            io.emit('movePlayerToPositionAndRotation', {
                 id: socket.player.id,
                 x: data.x,
-                y: data.y
+                y: data.y,
+                weaponRotation: data.weaponRotation,
             });
         });
+
+        /**
+         * Recibo la bala para enviarla a los enemigos
+         * @event shootBullet
+         */
+        socket.on('shootBullet', function (data) {
+            /**
+             * Envio la bala a los enemigos
+             * @event createBullet 
+             */
+            io.emit('createBullet', {
+                id: socket.player.id,
+                x: data.x,
+                y: data.y,
+                bulletType: data.bulletType,
+                rotation: data.rotation,
+            });
+        })
 
         /**
          * Al desconectarse el jugador...

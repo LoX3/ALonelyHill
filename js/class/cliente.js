@@ -60,7 +60,13 @@ class Cliente {
      */
     enemyInfo() {
         this.socket.on('newEnemy', function (data) {
-            game.scene.getScene(sceneNames.GAME).addNewEnemy(data.id, data.x, data.y);
+            if (gameState == gameStates.LOADING || gameState == gameStates.PLAYING) {
+                game.scene.getScene(sceneNames.GAME).addNewEnemy(data.id, data.x, data.y, {
+                    butt: data.butt,
+                    handle: data.handle,
+                    canon: data.canon,
+                });
+            }
         })
     }
 
@@ -74,16 +80,20 @@ class Cliente {
          */
         this.socket.on('getAllEnemies', function (data) {
             for (var i = 0; i < data.length; i++) {
-                game.scene.getScene(sceneNames.GAME).addNewEnemy(data[i].id, data[i].x, data[i].y);
+                game.scene.getScene(sceneNames.GAME).addNewEnemy(data[i].id, data[i].x, data[i].y, {
+                    butt: data[i].butt,
+                    handle: data[i].handle,
+                    canon: data[i].canon,
+                });
             }
 
             /**
              * Muevo el enemigos en el cliente
              * @event moveEnemyWithForce 
              */
-            cliente.socket.on('movePlayerToPosition', function (data) {
+            cliente.socket.on('movePlayerToPositionAndRotation', function (data) {
                 if (game.scene.getScene(sceneNames.GAME).enemies[data.id]) {
-                    game.scene.getScene(sceneNames.GAME).enemies[data.id].movePlayerToPosition(data.x, data.y);
+                    game.scene.getScene(sceneNames.GAME).enemies[data.id].movePlayerToPositionAndRotation(data.x, data.y, data.weaponRotation);
                 }
             });
 
@@ -96,6 +106,12 @@ class Cliente {
                     game.scene.getScene(sceneNames.GAME).enemies[id].removePlayer();
                 }
             });
+
+            cliente.socket.on('createBullet', function (data) {
+                if (game.scene.getScene(sceneNames.GAME).enemies[data.id]) {
+                    game.scene.getScene(sceneNames.GAME).enemies[data.id].weapon.createBullet(data);
+                }
+            })
         });
     }
 
@@ -106,17 +122,21 @@ class Cliente {
      * @param {Number} forceX Fuerza del movimiento horizontal del jugador
      * @param {Number} forceY Fuerza del movimiento vertical del jugador
      */
-    movePlayer(x, y, forceX, forceY) {
+    movePlayer(x, y, weaponRotation) {
         this.socket.emit('movePlayer', {
             x: x,
             y: y,
-            forceX: forceX,
-            forceY: forceY
+            weaponRotation: weaponRotation,
         });
     }
 
-    changeWeapon(weaponComponents) {
-        this.socket.emit('changeWeapon', weaponComponents);
+    shootBullet(x, y, bulletType, rotation) {
+        this.socket.emit('shootBullet', {
+            x: x,
+            y: y,
+            bulletType: bulletType,
+            rotation: rotation,
+        });
     }
 }
 

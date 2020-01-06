@@ -54,15 +54,15 @@ class ScenePreload extends Phaser.Scene {
      */
     preloadCharacterAnimations() {
         //Idle
-        this.load.image('idle_0', 'player/character/idle_0.png');
-        this.load.image('idle_1', 'player/character/idle_1.png');
-        this.load.image('idle_2', 'player/character/idle_2.png');
-        this.load.image('idle_3', 'player/character/idle_3.png');
+        this.load.image('idle_0', 'player/character/idle/idle_0.png');
+        this.load.image('idle_1', 'player/character/idle/idle_1.png');
+        this.load.image('idle_2', 'player/character/idle/idle_2.png');
+        this.load.image('idle_3', 'player/character/idle/idle_3.png');
         //Running
-        this.load.image('run_F_0', 'player/character/run_F_0.png');
-        this.load.image('run_F_1', 'player/character/run_F_1.png');
-        this.load.image('run_F_2', 'player/character/run_F_2.png');
-        this.load.image('run_F_3', 'player/character/run_F_3.png');
+        this.load.image('run_F_0', 'player/character/run/run_F_0.png');
+        this.load.image('run_F_1', 'player/character/run/run_F_1.png');
+        this.load.image('run_F_2', 'player/character/run/run_F_2.png');
+        this.load.image('run_F_3', 'player/character/run/run_F_3.png');
 
     }
 
@@ -86,6 +86,8 @@ class ScenePreload extends Phaser.Scene {
         this.load.image('sensei', 'player/sensei.png');
         this.load.image('scope', 'player/weapon/scope50.png');
         this.load.image('arrow', 'custom/arrow.png');
+        this.load.image('healthIcon', 'player/health.png');
+        this.load.image('bulletIcon', 'player/weapon/bullet.png');
 
         // Cargi el mapa
         this.load.image('genericRPG', 'tilemap/genericRPG.png');
