@@ -37,6 +37,8 @@ class Bullet extends Phaser.GameObjects.Sprite {
 
         // Añado la bala en al escena
         scene.add.existing(this);
+
+        this.create();
     }
 
     /**
@@ -54,18 +56,23 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.scene;
     }
 
+    create() {
+        // Se ha de cambiar
+        this.scene.time.delayedCall(10000, () => this.destroy());
+    }
+
     /**
      * Update se llama una vez finalizado la carga de los archivos para poder jugar
      */
     update() {
         // Si se sale de la pantalla, se destruye el objeto
-        if (
-            this.x > this.scene.cameras.main.scrollX + config.width + this.width ||
-            this.x < this.scene.cameras.main.scrollX - this.width ||
-            this.y > this.scene.cameras.main.scrollY + config.height + this.height ||
-            this.y < this.scene.cameras.main.scrollY - this.height
-        ) {
-            this.destroy();
-        }
+        // if (
+        //     this.x > this.scene.cameras.main.scrollX + config.width + this.width ||
+        //     this.x < this.scene.cameras.main.scrollX - this.width ||
+        //     this.y > this.scene.cameras.main.scrollY + config.height + this.height ||
+        //     this.y < this.scene.cameras.main.scrollY - this.height
+        // ) {
+        //     this.destroy();
+        // }
     }
 }
