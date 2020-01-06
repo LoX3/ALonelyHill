@@ -54,7 +54,8 @@ class MapManager {
      */
     generateWorld() {
         // Creo el vector
-        var worldStructure = this.generateMatrix(500, 200);
+        // var worldStructure = this.generateMatrix(500, 200);
+        var worldStructure = this.generateMatrix(50, 50);
 
         // Lleno el vector con imagenes
         for (let i = 0; i < worldStructure.length; i++) {
@@ -75,31 +76,117 @@ class MapManager {
     }
 
     /**
-     * Genera el fondo con los tiles
+     * Esta función planta 
+     * @param {Number[]} matrixToPopulate La matriz que se va a popular con semillas
+     * @param {tileNames} tile Tipo de semilla que se quiere plantar 
+     * @param {Number} seedBirthChance La probabilidad que hay de que nazca una semilla (en %)
+     * @returns {Number[]} El mapa procesado 
      */
-    generateBackground() {
-        // Creo la matriz del mapa
-        var worldStructure = this.generateMatrix(500, 200);
+    plantSeeds(matrixToPlant, tile, seedBirthChance) {
+        // Lleno el vector con tiles
+        for (let height = 0; height < matrixToPlant.length; height++) {
 
-        // Lleno el vector con imagenes
-        for (let i = 0; i < worldStructure.length; i++) {
-            for (let j = 0; j < worldStructure[i].length; j++) {
-                var seed = randomInt(0, 101);
-                if (seed > 75) {
-                    if (i > 0 && j > 0 && j < worldStructure[i].length - 1 && i < worldStructure.length - 1) {
-                        if (worldStructure[i][j - 1] = tiles.BROWN_EARTH) {
-                            worldStructure[i][j] = tiles.BROWN_EARTH;
-                        } else if (worldStructure[i - 1][j] = tiles.BROWN_EARTH) {
-                            worldStructure[i][j] = tiles.BROWN_EARTH;
-                        }
+            for (let width = 0; width < matrixToPlant[height].length; width++) {
+
+                if (height > 0 && width > 0 && height < matrixToPlant.length - 1 && width < matrixToPlant[height].length - 1) {
+                    var seed = randomInt(0, 101);
+                    
+                    if (seed <= seedBirthChance) {
+                        matrixToPlant[height][width] = tile;
                     } else {
-                        worldStructure[i][j] = tiles.BROWN_EARTH;
+                        matrixToPlant[height][width] = tileNames.GREEN_GRASS;
                     }
                 } else {
-                    worldStructure[i][j] = tiles.GREEN_GRASS;
+                    matrixToPlant[height][width] = tileNames.GREEN_GRASS;
                 }
             }
+            
         }
+
+        return matrixToPlant;
+    }
+
+    /**
+     * Esta funcion se encarga de popular todas las semillas plantadas 
+     * teniendo como referencia las semillas de las celdas vecinas. 
+     * @param {*} matrixToPopulate Matriz a popular
+     * @param {*} repetitions Numero de veces que se procesará el mapa usando el algoritmo
+     * @param {*} deathLimit Cantidad de celdas vecinas necesarias para que la semilla sobreviva
+     */
+    populateSeeds(matrix, tileToPopulate, birthLimit, repetitions) {
+        var matches = 0;
+        var round = 0;
+        var matrixToPopulate = matrix;
+        var survived = false;
+        var neighbourTiles = [];
+
+        for (let r = 0; r < repetitions; r++) {
+            // Lleno el vector con tiles
+            for (let height = 1; height < matrixToPopulate.length - 1; height++) {
+                for (let width = 1; width < matrixToPopulate[height].length - 1; width++) {
+
+                    neighbourTiles = [];
+                    matches = 0;
+                    round = 0;
+                    survived = false;
+
+
+                    neighbourTiles.push(matrix[height - 1][width - 1]);
+                    neighbourTiles.push(matrix[height - 1][width]);
+                    neighbourTiles.push(matrix[height - 1][width + 1]);
+                    neighbourTiles.push(matrix[height][width - 1]);
+                    neighbourTiles.push(matrix[height][width + 1]);
+                    neighbourTiles.push(matrix[height + 1][width - 1]);
+                    neighbourTiles.push(matrix[height + 1][width]);
+                    neighbourTiles.push(matrix[height + 1][width + 1]);
+
+                    while (round < neighbourTiles.length) {
+                        // console.log("Comparing(" + round + ") " + neighbourTiles[round] + "  (" + height + "," + width + ") to " + tileToPopulate);
+
+                        if (neighbourTiles[round] == tileToPopulate) {
+                            matches++;
+                        }
+
+                        if (matches >= birthLimit) {
+                            survived = true;
+                        }
+
+                        round++;
+                    }
+
+                    if (survived) {
+                        matrixToPopulate[height][width] = tileToPopulate;
+                    }else {
+                        matrixToPopulate[height][width] = tileNames.GREEN_GRASS;
+                    }
+
+                }
+
+            }
+            matrix = matrixToPopulate;
+        }
+
+        return matrixToPopulate;
+    }
+
+    decorateMap(worldStructure, tileBounds) {
+        return worldStructure;
+    }
+
+    /**
+     * Esta funcion se encarga de generar un mapa dadas unas medidas de altitud y amplitud
+     * @param {Number} width 
+     * @param {Number} height 
+     */
+    generate(width, height) {
+        // Creo la matriz del mapa
+        var worldStructure = this.generateMatrix(width, height);
+
+        worldStructure = this.plantSeeds(worldStructure, tileNames.BROWN_EARTH, 15);
+
+        worldStructure = this.populateSeeds(worldStructure, tileNames.BROWN_EARTH, 3, 5);
+
+        worldStructure = this.decorateMap(worldStructure, tileNames.GRASS_TRANSITION);
 
         // Creo el mapa con los tiles
         var newMap = new Map(
@@ -127,4 +214,5 @@ class MapManager {
     getTitleBackground() {
         return this.titleBackground;
     }
+
 }

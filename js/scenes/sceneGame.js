@@ -52,7 +52,7 @@ class SceneGame extends Phaser.Scene {
         this.leerTeclado();
 
         // Creo el mapa
-        this.crearMapa();
+        this.createBackgroundMap();
 
         // Creo el array de enemgios
         this.enemies = [];
@@ -122,11 +122,10 @@ class SceneGame extends Phaser.Scene {
     /**
      * Creo y pongo el mapa en escena
      */
-    crearMapa() {
+    createBackgroundMap() {
         var mapManager = new MapManager();
-        mapManager.generateBackground();
+        mapManager.generate(30,30);
         var mapMatrix = mapManager.getTitleBackground().getMap();
-        console.log(mapMatrix);
 
         this.map = this.make.tilemap({
             data: mapMatrix,
@@ -138,16 +137,6 @@ class SceneGame extends Phaser.Scene {
 
         // Creo una capa, donde se ponen las plataformas
         this.platformsLayer = this.map.createStaticLayer(0, tileset, 0, 0);
-        // Tengo que poner las colisiones de esta forma, ya que necesito el json al generar el mapa... lo que no funciona
-        // this.platformsLayer.setCollisionBetween(12, 130);
-        // this.platformsLayer.setCollisionBetween(364, 370);
-
-        // this.setTopCollisionTiles(369);
-        // this.setTopCollisionTiles(365);
-        // this.setTopCollisionTiles(367);
-        // this.setTopCollisionTiles(26);
-        // this.setTopCollisionTiles(28);
-        // this.setTopCollisionTiles(30);
 
         // Muestra los colliders del mapa
         // const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -171,25 +160,5 @@ class SceneGame extends Phaser.Scene {
         this.keys = {
             R: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R),
         };
-    }
-
-    /**
-     * Magia Pura
-     * Con el indice del tilemap, le doy colisiones solo por arriba, eso hace que el caballero no se caiga
-     * @param {Tile} tileIndex Indice del tilemap
-     */
-    setTopCollisionTiles(tileIndex) {
-        var x, y, tile;
-
-        for (x = 0; x < this.map.width; x++) {
-            for (y = 1; y < this.map.height; y++) {
-                tile = this.map.getTileAt(x, y);
-                if (tile !== null) {
-                    if (tile.index == tileIndex) {
-                        tile.setCollision(false, false, true, false);
-                    }
-                }
-            }
-        }
     }
 }

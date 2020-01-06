@@ -26,11 +26,14 @@ class SceneMenu extends Phaser.Scene {
         this.delta = 0.001;
     }
 
+    /**
+     * Crea el mapa para mostrar en la escena de título
+     */
     createBackgroundMap() {
+        
         var mapManager = new MapManager();
-        mapManager.generateBackground();
+        mapManager.generate(26,13);
         var mapMatrix = mapManager.getTitleBackground().getMap();
-        console.log(mapMatrix);
 
         this.map = this.make.tilemap({
             data: mapMatrix,

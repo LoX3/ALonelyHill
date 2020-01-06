@@ -14,7 +14,7 @@
  * @property {Number} LEFT Suelo izquierda
  * @property {Number} RIGHT Suelo derecha
  */
-const tiles = {
+const tileNames = {
     GREEN_GRASS: 560,
     BROWN_EARTH: 546,
     GRASS_TRANSITION: {
@@ -26,5 +26,6 @@ const tiles = {
         BOTTOM: 578,
         LEFT: 545,
         RIGHT: 547,
-    }
+    },
+    GRAY_ROCK: 192
 }
