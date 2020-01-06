@@ -117,6 +117,10 @@ class SceneGame extends Phaser.Scene {
         }
 
         this.enemies[id] = new Enemy(this, x, y, 'sensei', weaponComponents);
+        if (this.enemies[id]) {
+            this.physics.add.overlap(this.player.weapon.bulletGroup, this.enemies[id], this.enemies[id].takeDamage, null, this.enemies[id]);
+            this.physics.add.overlap(this.enemies[id].weapon.bulletGroup, this.player, this.player.takeDamage, null, this.player);
+        }
     }
 
     /**

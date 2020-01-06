@@ -29,6 +29,8 @@ class Player extends Phaser.GameObjects.Container {
         // Creo las variables de la clase
         this.init();
 
+        this.name = 'player';
+
         // Guardo la escena
         this.scene = scene;
         // Guardo los componentes del arma
@@ -226,6 +228,17 @@ class Player extends Phaser.GameObjects.Container {
      * Modifico el texto del cargador
      */
     updateLiveText() {
+        this.sceneGameUI.livePlayerText.setText(this.vida);
+    }
+
+    /**
+     * Al ser golpeado por una bala
+     * @param {Bullet} bullet Bala que golpea
+     */
+    takeDamage(bullet) {
+        bullet.destroy();
+
+        this.vida -= 10;
         this.sceneGameUI.livePlayerText.setText(this.vida);
     }
 }

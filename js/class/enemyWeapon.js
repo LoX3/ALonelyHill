@@ -31,6 +31,11 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
         this.scene = scene;
         // Pongo valor al tipo de bala
         this.bulletType = bulletType;
+        // Creo el grupo de balas
+        this.bulletGroup = scene.add.group({
+            classType: Bullet,
+            runChildUpdate: true,
+        });
 
         // Al hacer scale de las partes del arma, no quedan bien, con esto se arregla
         var handleWidth = handle.scale * handle.width;
@@ -67,6 +72,15 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
          * @type {String} 
          */
         this.bulletType;
+
+        /**
+         * Grupo donde se guardan las balas
+         * @type {Phaser.GameObjects.Group}
+         * @property {JSON} groupConfig Opciones del grupo
+         * @property {Bullet} groupConfig.classType Define el tipo de clase en el grupo {@link Phaser.GameObjects.Group#classType}.
+         * @property {Boolean} groupConfig.runChildUpdate Hace que se ejecuten los updates de los elementos dentro del grupo {@link Phaser.GameObjects.Group#runChildUpdate}.
+         */
+        this.bulletGroup;
     }
 
     /**
@@ -86,5 +100,6 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
     createBullet(data) {
         var bala = new Bullet(this.scene, data.x, data.y, data.bulletType, data.rotation);
         bala.body.setSize(7, 7);
+        this.bulletGroup.add(bala);
     }
 }

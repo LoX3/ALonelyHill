@@ -28,6 +28,8 @@ class Enemy extends Phaser.GameObjects.Container {
 
         scene.physics.world.enableBody(this);
 
+        this.name = 'enemy';
+
         // Creo al enemigo
         this.crearCharacter(scene, characterImage);
 
@@ -101,5 +103,13 @@ class Enemy extends Phaser.GameObjects.Container {
         this.y = enemyY;
 
         this.weapon.rotate(weaponRotation);
+    }
+
+    /**
+     * Al dar una bala con un enemigo
+     * @param {Bullet} bullet Bala que se ha disparado y ha dado a un enemigo
+     */
+    takeDamage(bullet) {
+        bullet.destroy();
     }
 }

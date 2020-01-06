@@ -60,7 +60,9 @@ class Cliente {
      */
     enemyInfo() {
         this.socket.on('newEnemy', function (data) {
-            game.scene.getScene(sceneNames.GAME).addNewEnemy(data.id, data.x, data.y);
+            if (gameState == gameStates.LOADING || gameState == gameStates.PLAYING) {
+                game.scene.getScene(sceneNames.GAME).addNewEnemy(data.id, data.x, data.y);
+            }
         })
     }
 
