@@ -191,16 +191,16 @@ class SceneSetUp extends Phaser.Scene {
         this.anims.create({
             key: 'idle_selector',
             frames: [{
-                key: 'idle_0'
+                key: 'idle_front_0'
             },
             {
-                key: 'idle_1'
+                key: 'idle_front_1'
             },
             {
-                key: 'idle_2'
+                key: 'idle_front_2'
             },
             {
-                key: 'idle_3'
+                key: 'idle_front_3'
             }
             ],
             frameRate: 2,
@@ -210,16 +210,16 @@ class SceneSetUp extends Phaser.Scene {
         this.anims.create({
             key: 'run_selector',
             frames: [{
-                key: 'run_F_0'
+                key: 'run_front_0'
             },
             {
-                key: 'run_F_1'
+                key: 'run_front_1'
             },
             {
-                key: 'run_F_2'
+                key: 'run_front_2'
             },
             {
-                key: 'run_F_3'
+                key: 'run_front_3'
             }
             ],
             frameRate: 6,
@@ -238,8 +238,6 @@ class SceneSetUp extends Phaser.Scene {
             .setInteractive();
 
         characterSprite.on('pointerover', function () {
-            console.log('RUN!')
-
             this.play('run_selector');
         });
 
