@@ -187,65 +187,21 @@ class SceneSetUp extends Phaser.Scene {
         this.setUpPartChangerArrows();
     }
 
-    createAnimations() {
-        this.anims.create({
-            key: 'idle_selector',
-            frames: [{
-                key: 'idle_front_0'
-            },
-            {
-                key: 'idle_front_1'
-            },
-            {
-                key: 'idle_front_2'
-            },
-            {
-                key: 'idle_front_3'
-            }
-            ],
-            frameRate: 2,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'run_selector',
-            frames: [{
-                key: 'run_front_0'
-            },
-            {
-                key: 'run_front_1'
-            },
-            {
-                key: 'run_front_2'
-            },
-            {
-                key: 'run_front_3'
-            }
-            ],
-            frameRate: 6,
-            repeat: -1
-        });
-
-    }
-
     setUpCharacterSelector() {
-
-        this.createAnimations();
-
         var characterSprite = this.physics.add.sprite(config.width / 4, (config.height / 2) * 1, 'character_selector')
             .setSize(16, 32)
             .setScale(3)
             .setInteractive();
 
         characterSprite.on('pointerover', function () {
-            this.play('run_selector');
+            this.play('run_front');
         });
 
         characterSprite.on('pointerout', function () {
-            this.play('idle_selector');
+            this.play('idle_front');
         });
 
-        characterSprite.play('idle_selector');
+        characterSprite.play('idle_front');
     }
 
     /**

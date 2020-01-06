@@ -52,25 +52,50 @@ class ScenePreload extends Phaser.Scene {
     /**
      * Cargo las animaciones del jugador
      */
-    preloadCharacterAnimations() {
-        //#region idle
-        //Idle front
+    preloadCharacter() {
+        //#region Idle player preload
+        // Idle front
         this.load.image('idle_front_0', 'player/character/idle/front/idle_F_0.png');
         this.load.image('idle_front_1', 'player/character/idle/front/idle_F_1.png');
         this.load.image('idle_front_2', 'player/character/idle/front/idle_F_2.png');
         this.load.image('idle_front_3', 'player/character/idle/front/idle_F_3.png');
 
-        // Idle
-        
+        // Idle back
+        this.load.image('idle_back_0', 'player/character/idle/back/idle_B_0.png');
+        this.load.image('idle_back_1', 'player/character/idle/back/idle_B_1.png');
+        this.load.image('idle_back_2', 'player/character/idle/back/idle_B_2.png');
+        this.load.image('idle_back_3', 'player/character/idle/back/idle_B_3.png');
+
+        // Idle side
+        this.load.image('idle_side_0', 'player/character/idle/side/idle_S_0.png');
+        this.load.image('idle_side_1', 'player/character/idle/side/idle_S_1.png');
+        this.load.image('idle_side_2', 'player/character/idle/side/idle_S_2.png');
+        this.load.image('idle_side_3', 'player/character/idle/side/idle_S_3.png');
 
         //#endregion
 
-        //Running
+        //#region Run player preload
+        // Run front
         this.load.image('run_front_0', 'player/character/run/front/run_F_0.png');
         this.load.image('run_front_1', 'player/character/run/front/run_F_1.png');
         this.load.image('run_front_2', 'player/character/run/front/run_F_2.png');
         this.load.image('run_front_3', 'player/character/run/front/run_F_3.png');
 
+        // Run back
+        this.load.image('run_back_0', 'player/character/run/back/run_B_0.png');
+        this.load.image('run_back_1', 'player/character/run/back/run_B_1.png');
+        this.load.image('run_back_2', 'player/character/run/back/run_B_2.png');
+        this.load.image('run_back_3', 'player/character/run/back/run_B_3.png');
+
+        // Run side
+        this.load.image('run_side_0', 'player/character/run/side/run_S_0.png');
+        this.load.image('run_side_1', 'player/character/run/side/run_S_1.png');
+        this.load.image('run_side_2', 'player/character/run/side/run_S_2.png');
+        this.load.image('run_side_3', 'player/character/run/side/run_S_3.png');
+
+        //#endregion
+
+        this.createAnimations();
     }
 
     /**
@@ -87,7 +112,7 @@ class ScenePreload extends Phaser.Scene {
 
         this.preloadWeaponParts();
 
-        this.preloadCharacterAnimations();
+        this.preloadCharacter();
 
         this.load.image('bullet', 'player/weapon/bullet/1.png');
         this.load.image('sensei', 'player/sensei.png');
@@ -119,5 +144,140 @@ class ScenePreload extends Phaser.Scene {
      */
     create() {
         this.scene.launch(sceneNames.MENU);
+    }
+
+    createAnimations() {
+        //#region Idle animation
+        // Idle front
+        this.anims.create({
+            key: 'idle_front',
+            frames: [
+                {
+                    key: 'idle_front_0'
+                },
+                {
+                    key: 'idle_front_1'
+                },
+                {
+                    key: 'idle_front_2'
+                },
+                {
+                    key: 'idle_front_3'
+                }
+            ],
+            frameRate: 2,
+            repeat: -1,
+        });
+
+        // Idle back
+        this.anims.create({
+            key: 'idle_back',
+            frames: [
+                {
+                    key: 'idle_back_0'
+                },
+                {
+                    key: 'idle_back_1'
+                },
+                {
+                    key: 'idle_back_2'
+                },
+                {
+                    key: 'idle_back_3'
+                }
+            ],
+            frameRate: 2,
+            repeat: -1,
+        });
+
+        // Idle side
+        this.anims.create({
+            key: 'idle_side',
+            frames: [
+                {
+                    key: 'idle_side_0'
+                },
+                {
+                    key: 'idle_side_1'
+                },
+                {
+                    key: 'idle_side_2'
+                },
+                {
+                    key: 'idle_side_3'
+                }
+            ],
+            frameRate: 2,
+            repeat: -1,
+        });
+
+        //#endregion
+
+        //#region Run animations
+
+        // Run front
+        this.anims.create({
+            key: 'run_front',
+            frames: [
+                {
+                    key: 'run_front_0'
+                },
+                {
+                    key: 'run_front_1'
+                },
+                {
+                    key: 'run_front_2'
+                },
+                {
+                    key: 'run_front_3'
+                }
+            ],
+            frameRate: 6,
+            repeat: -1,
+        });
+
+        // Run back
+        this.anims.create({
+            key: 'run_back',
+            frames: [
+                {
+                    key: 'run_back_0'
+                },
+                {
+                    key: 'run_back_1'
+                },
+                {
+                    key: 'run_back_2'
+                },
+                {
+                    key: 'run_back_3'
+                }
+            ],
+            frameRate: 6,
+            repeat: -1,
+        });
+
+        // Run side
+        this.anims.create({
+            key: 'run_side',
+            frames: [
+                {
+                    key: 'run_side_0'
+                },
+                {
+                    key: 'run_side_1'
+                },
+                {
+                    key: 'run_side_2'
+                },
+                {
+                    key: 'run_side_3'
+                }
+            ],
+            frameRate: 6,
+            repeat: -1,
+        });
+
+        //#endregion
     }
 }
