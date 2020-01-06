@@ -96,6 +96,12 @@ class Cliente {
                     game.scene.getScene(sceneNames.GAME).enemies[id].removePlayer();
                 }
             });
+
+            cliente.socket.on('createBullet', function (data) {
+                if (game.scene.getScene(sceneNames.GAME).enemies[data.id]) {
+                    game.scene.getScene(sceneNames.GAME).enemies[data.id].weapon.createBullet(data);
+                }
+            })
         });
     }
 
@@ -114,8 +120,13 @@ class Cliente {
         });
     }
 
-    changeWeapon(weaponComponents) {
-        this.socket.emit('changeWeapon', weaponComponents);
+    shootBullet(x, y, bulletType, rotation) {
+        this.socket.emit('shootBullet', {
+            x: x,
+            y: y,
+            bulletType: bulletType,
+            rotation: rotation,
+        });
     }
 }
 

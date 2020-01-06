@@ -121,6 +121,24 @@ io.on('connection', function (socket) {
         });
 
         /**
+         * Recibo la bala para enviarla a los enemigos
+         * @event shootBullet
+         */
+        socket.on('shootBullet', function (data) {
+            /**
+             * Envio la bala a los enemigos
+             * @event createBullet 
+             */
+            io.emit('createBullet', {
+                id: socket.player.id,
+                x: data.x,
+                y: data.y,
+                bulletType: data.bulletType,
+                rotation: data.rotation,
+            });
+        })
+
+        /**
          * Al desconectarse el jugador...
          * @event disconnect 
          */

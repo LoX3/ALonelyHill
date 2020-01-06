@@ -27,10 +27,10 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
         // Creo las variables de la clase
         this.init();
 
+        // Guardo la escena en la que estamos
+        this.scene = scene;
         // Pongo valor al tipo de bala
         this.bulletType = bulletType;
-        // Offset para que la bala salga del cañon
-        this.canonOffset = 100;
 
         // Al hacer scale de las partes del arma, no quedan bien, con esto se arregla
         var handleWidth = handle.scale * handle.width;
@@ -57,12 +57,22 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
      */
     init() {
         /**
+         * Escena donde se ejecuta el juego
+         * @type {Phaser.Scene}
+         */
+        this.scene;
+
+        /**
          * Tipo de bala que se dispara
          * @type {String} 
          */
         this.bulletType;
     }
 
+    /**
+     * Aplica rotacion al arma
+     * @param {Number} weaponRotation Rotacion del arma
+     */
     rotate(weaponRotation) {
         if (Math.abs(weaponRotation) > 1.5) {
             this.setScale(1, -1);
@@ -71,5 +81,10 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
         }
 
         this.setRotation(weaponRotation);
+    }
+
+    createBullet(data) {
+        var bala = new Bullet(this.scene, data.x, data.y, data.bulletType, data.rotation);
+        bala.body.setSize(7, 7);
     }
 }
