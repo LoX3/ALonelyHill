@@ -18,10 +18,6 @@ class SceneSetUp extends Phaser.Scene {
      * otra cosa. Si necesita enrutar el juego a otro estado, puede
      * hacerlo aquí, o si necesita preparar un conjunto de variables u
      * objetos antes de que comience la precarga.
-     * @property {JSON} data Variable que recibe los datos al llamar a la escena
-     * @property {String} data.butt Culata del arma
-     * @property {String} data.handle Cuerpo del arma
-     * @property {String} data.canon Cañon del arma
      */
     init() {
         this.weaponConstructorArrows;
@@ -108,6 +104,9 @@ class SceneSetUp extends Phaser.Scene {
         this.canonPart.setOrigin(0, 0.5);
     }
 
+    /**
+     * Container que contiene el arma del jugador
+     */
     setUpWeaponContainer() {
         var graphics = this.add.graphics({
             lineStyle: {
@@ -124,6 +123,9 @@ class SceneSetUp extends Phaser.Scene {
 
     }
 
+    /**
+     * Pongo flechas para cambiar el arma
+     */
     setUpPartChangerArrows() {
 
         // Creo las flechas Y las añado aun grupo
@@ -162,6 +164,9 @@ class SceneSetUp extends Phaser.Scene {
         })
     }
 
+    /**
+     * Muestro las armas en su sitio
+     */
     setUpWeaponConstructor() {
         // Cuerpo del arma
         this.handlePart = this.add
@@ -187,6 +192,9 @@ class SceneSetUp extends Phaser.Scene {
         this.setUpPartChangerArrows();
     }
 
+    /**
+     * Creo el jugador para escojer
+     */
     setUpCharacterSelector() {
         var characterSprite = this.physics.add.sprite(config.width / 4, (config.height / 2) * 1, 'character_selector')
             .setSize(16, 32)
@@ -347,7 +355,6 @@ class SceneSetUp extends Phaser.Scene {
         };
     }
 
-
     /**
      * Consigo el valor del enum anterior
      * @param {String} value Valor del enum
@@ -384,7 +391,7 @@ class SceneSetUp extends Phaser.Scene {
     startGame() {
         this.scene.launch(sceneNames.GAMEUI);
 
-        this.scene.start(sceneNames.GAME, {
+        this.scene.launch(sceneNames.GAME, {
             butt: this.butt,
             handle: this.handle,
             canon: this.canon,
