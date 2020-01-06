@@ -37,6 +37,8 @@ class Player extends Phaser.GameObjects.Container {
         this.weaponComponents = weaponComponents;
         // Establezco la velocidad del jugador
         this.playerSpeed = 250;
+        // True right - false left
+        this.playerSide = false;
         // Guardo la escena de UI
         this.sceneGameUI = scene.scene.get(sceneNames.GAMEUI);
         // Doy vida al player para que inicie como numero
@@ -122,6 +124,12 @@ class Player extends Phaser.GameObjects.Container {
         };
 
         /**
+         * Posicion a la que mira el jugador
+         * @type {Boolean}
+         */
+        this.playerSide;
+
+        /**
          * Vida del jugador
          * @type {Number}
          */
@@ -155,7 +163,7 @@ class Player extends Phaser.GameObjects.Container {
      * @param {String} characterImage String con el id del asset para cargar
      */
     crearCharacter(scene, characterImage) {
-        this.character = new Character(scene, this.body.width / 2, this.body.height / 2, characterImage);
+        this.character = new Character(scene, this.body.width / 2, this.body.height / 2);
 
         // Añado el jugador como hijo para que copie el movimiento del padre
         this.addAt(this.character, 0);
@@ -188,7 +196,7 @@ class Player extends Phaser.GameObjects.Container {
         this.weapon = new Weapon(
             scene,
             this.body.width / 2,
-            this.body.height / 2,
+            this.body.height / 2 + 15,
             butt,
             handle,
             canon,
@@ -205,9 +213,17 @@ class Player extends Phaser.GameObjects.Container {
     playerMovement() {
         if (this.keys.A.isDown) {
             this.body.setVelocityX(-this.playerSpeed);
+            if (this.keys.W.isUp && this.keys.S.isUp) {
+                this.character.playRunLeft();
+                this.playerSide = false;
+            }
         }
         else if (this.keys.D.isDown) {
             this.body.setVelocityX(this.playerSpeed);
+            if (this.keys.W.isUp && this.keys.S.isUp) {
+                this.character.playRunRight();
+                this.playerSide = true;
+            }
         }
         else {
             this.body.setVelocityX(0);
@@ -215,12 +231,39 @@ class Player extends Phaser.GameObjects.Container {
 
         if (this.keys.W.isDown) {
             this.body.setVelocityY(-this.playerSpeed);
+            this.character.playRunUp();
+            this.sendToBack(this.weapon);
         }
         else if (this.keys.S.isDown) {
             this.body.setVelocityY(this.playerSpeed);
+            this.character.playRunDown();
+            this.sendToBack(this.character);
         }
         else {
             this.body.setVelocityY(0);
+        }
+
+        if (this.body.velocity.x == 0 && this.body.velocity.y == 0) {
+            switch (this.character.anims.getCurrentKey()) {
+                case 'run_back':
+                    this.character.playIdleUp();
+                    this.sendToBack(this.weapon);
+                    break;
+                case 'run_front':
+                    this.character.playIdleDown();
+                    this.sendToBack(this.character);
+                    break;
+                case 'run_side':
+                    if (this.playerSide != null) {
+                        if (this.playerSide) {
+                            this.character.playIdleRight();
+                        }
+                        else {
+                            this.character.playIdleLeft();
+                        }
+                    }
+                    break;
+            }
         }
     }
 

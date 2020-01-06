@@ -122,7 +122,7 @@ class SceneGame extends Phaser.Scene {
      */
     createBackgroundMap() {
         var mapManager = new MapManager();
-        mapManager.generate(30,30);
+        mapManager.generate(30, 30);
         var mapMatrix = mapManager.getTitleBackground().getMap();
 
         this.map = this.make.tilemap({

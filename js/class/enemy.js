@@ -46,7 +46,7 @@ class Enemy extends Phaser.GameObjects.Container {
      */
     crearCharacter(scene, characterImage) {
         // Creo la imagen del jugador
-        this.character = new Character(scene, this.body.width / 2, this.body.height / 2, characterImage);
+        this.character = new Character(scene, this.body.width / 2, this.body.height / 2);
 
         // Añado el jugador como hijo para que copie el movimiento del padre
         this.addAt(this.character, 0);
@@ -75,7 +75,7 @@ class Enemy extends Phaser.GameObjects.Container {
         this.weapon = new EnemyWeapon(
             scene,
             this.body.width / 2,
-            this.body.height / 2,
+            this.body.height / 2 + 15,
             butt,
             handle,
             canon,

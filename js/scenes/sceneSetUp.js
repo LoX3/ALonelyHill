@@ -201,14 +201,14 @@ class SceneSetUp extends Phaser.Scene {
             .setScale(3)
             .setInteractive();
 
-        characterSprite.play('idle_front');
+        characterSprite.play('idle_front', true);
 
         characterSprite.on('pointerover', function () {
-            this.play('run_front');
+            this.play('run_front', true);
         });
 
         characterSprite.on('pointerout', function () {
-            this.play('idle_front');
+            this.play('idle_front', true);
         });
 
     }
