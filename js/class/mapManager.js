@@ -85,9 +85,9 @@ class MapManager {
     plantSeeds(matrixToPlant, tile, seedBirthChance) {
         // Lleno el vector con tiles
         for (let height = 0; height < matrixToPlant.length; height++) {
-
+            
             for (let width = 0; width < matrixToPlant[height].length; width++) {
-
+                
                 if (height > 0 && width > 0 && height < matrixToPlant.length - 1 && width < matrixToPlant[height].length - 1) {
                     var seed = randomInt(0, 101);
                     
@@ -102,16 +102,17 @@ class MapManager {
             }
             
         }
-
+        
         return matrixToPlant;
     }
-
+    
     /**
      * Esta funcion se encarga de popular todas las semillas plantadas 
      * teniendo como referencia las semillas de las celdas vecinas. 
      * @param {*} matrixToPopulate Matriz a popular
      * @param {*} repetitions Numero de veces que se procesará el mapa usando el algoritmo
      * @param {*} deathLimit Cantidad de celdas vecinas necesarias para que la semilla sobreviva
+     * @returns {Number[]} El mapa procesado 
      */
     populateSeeds(matrix, tileToPopulate, birthLimit, repetitions) {
         var matches = 0;
