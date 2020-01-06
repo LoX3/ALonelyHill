@@ -30,9 +30,8 @@ class SceneMenu extends Phaser.Scene {
      * Crea el mapa para mostrar en la escena de título
      */
     createBackgroundMap() {
-        
         var mapManager = new MapManager();
-        mapManager.generate(26,13);
+        mapManager.generate(26, 13);
         var mapMatrix = mapManager.getTitleBackground().getMap();
 
         this.map = this.make.tilemap({
@@ -129,6 +128,7 @@ class SceneMenu extends Phaser.Scene {
      * Empieza la escena de SetUp
      */
     startGame() {
-        this.scene.start(sceneNames.SETUP);
+        this.scene.launch(sceneNames.SETUP);
+        this.scene.stop();
     }
 }
