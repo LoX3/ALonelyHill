@@ -210,7 +210,7 @@ class MapManager {
 
         worldStructure = this.populateSeeds(worldStructure, tileNames.BROWN_EARTH, 3, 5);
 
-        worldStructure = this.decorateMap(worldStructure, tileNames.GRASS_TRANSITION, tileNames.BROWN_EARTH);
+        // worldStructure = this.decorateMap(worldStructure, tileNames.GRASS_TRANSITION, tileNames.BROWN_EARTH);
 
         // Creo el mapa con los tiles
         var newMap = new Map(
