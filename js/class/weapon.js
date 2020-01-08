@@ -275,7 +275,7 @@ class Weapon extends Phaser.GameObjects.Container {
      * Recargo las balas del arma
      */
     reload() {
-        if (this.canShoot && !this.cargador.isEmpty()) {
+        if (this.canShoot && !this.cargador.isFull()) {
             this.canShoot = false;
             this.cargador.reload();
             this.scene.time.delayedCall(1000, this.allowReload, [], this);
