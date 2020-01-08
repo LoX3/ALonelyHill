@@ -17,7 +17,7 @@
 const tileNames = {
     GREEN_GRASS: 560,
     BROWN_EARTH: 546,
-    GRASS_TRANSITION: {
+    GRASS_EARTH_TRANSITION: {
         TOP_LEFT_CORNER: 513,
         TOP_RIGHT_CORNER: 515,
         TOP: 514,
