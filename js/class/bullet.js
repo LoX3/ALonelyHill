@@ -26,6 +26,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
 
         this.setScale(0.5);
 
+        // Aplico el daño a la bala
         this.damage = bulletDamage;
 
         // Guardo la escena

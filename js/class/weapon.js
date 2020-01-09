@@ -82,6 +82,13 @@ class Weapon extends Phaser.GameObjects.Container {
         // Creo las variables para conseguir posiciones absolutas
         this.tempMatrix = new Phaser.GameObjects.Components.TransformMatrix();
         this.tempParentMatrix = new Phaser.GameObjects.Components.TransformMatrix();
+
+        //#region Aqui se crean los estats del arma
+
+        // Aplico daño a la bala
+        this.bulletDamage = 10;
+
+        //#endregion
     }
 
     /**
@@ -191,6 +198,12 @@ class Weapon extends Phaser.GameObjects.Container {
          * @type {Boolean}
          */
         this.arrievedMaximumDisplacement = false;
+
+        /**
+         * Daño que inflinje el jugador al enemigo
+         * @type {Number}
+         */
+        this.bulletDamage;
     }
 
     /**
@@ -254,7 +267,7 @@ class Weapon extends Phaser.GameObjects.Container {
 
             var shootRotation = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
 
-            var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, 20, this.bulletType, shootRotation);
+            var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletDamage, this.bulletType, shootRotation);
             this.bulletGroup.add(bala);
             bala.body.setSize(7, 7);
             cliente.shootBullet(bala.x, bala.y, bala.texture.key, shootRotation);

@@ -51,6 +51,14 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
         this.addAt(butt, 0);
         this.addAt(handle, 1);
         this.addAt(canon, 2);
+
+
+        //#region Aqui se crean los estats del arma
+
+        // Aplico el daño del jugador
+        this.bulletDamage = 10;
+
+        //#endregion
     }
 
     /**
@@ -81,6 +89,12 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
          * @property {Boolean} groupConfig.runChildUpdate Hace que se ejecuten los updates de los elementos dentro del grupo {@link Phaser.GameObjects.Group#runChildUpdate}.
          */
         this.bulletGroup;
+
+        /**
+         * Daño que inflinje el jugador al enemigo
+         * @type {Number}
+         */
+        this.bulletDamage;
     }
 
     /**
@@ -98,7 +112,7 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
     }
 
     createBullet(data) {
-        var bala = new Bullet(this.scene, data.x, data.y, 20, data.bulletType, data.rotation);
+        var bala = new Bullet(this.scene, data.x, data.y, this.bulletDamage, data.bulletType, data.rotation);
         bala.body.setSize(7, 7);
         this.bulletGroup.add(bala);
     }
