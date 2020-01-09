@@ -4,6 +4,7 @@
  * @param {Phaser.Scene} scene 
  * @param {Number} x 
  * @param {Number} y 
+ * @param {Number} y 
  * @param {String} bulletType 
  * @param {Number} bulletRotation 
  */
@@ -14,15 +15,18 @@ class Bullet extends Phaser.GameObjects.Sprite {
      * @param {Phaser.Scene} scene Escena donde se pone la bala
      * @param {Number} x Posicion horizontal del sprite
      * @param {Number} y Posicion vertical del sprite
+     * @param {Number} bulletDamage Daño de la bala al enemigo
      * @param {String} bulletType Tipo de bala que se dispara
      * @param {Number} bulletRotation Rotación de  la bala
      */
-    constructor(scene, x, y, bulletType, bulletRotation) {
+    constructor(scene, x, y, bulletDamage, bulletType, bulletRotation) {
         // Se crea el sprite con la escena, la posición i la imagen
         super(scene, x, y, bulletType);
         this.init();
 
         this.setScale(0.5);
+
+        this.damage = bulletDamage;
 
         // Guardo la escena
         this.scene = scene;
@@ -56,6 +60,12 @@ class Bullet extends Phaser.GameObjects.Sprite {
          * @type {Phaser.Scene}
          */
         this.scene;
+
+        /**
+         * Daño que inflinje el jugador al enemigo
+         * @type {Number}
+         */
+        this.damage;
     }
 
     create() {

@@ -254,7 +254,7 @@ class Weapon extends Phaser.GameObjects.Container {
 
             var shootRotation = this.getRotationToPointer(this.absoluteShootPos.translateX, this.absoluteShootPos.translateY);
 
-            var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, this.bulletType, shootRotation);
+            var bala = new Bullet(this.scene, this.absoluteShootPos.translateX, this.absoluteShootPos.translateY, 20, this.bulletType, shootRotation);
             this.bulletGroup.add(bala);
             bala.body.setSize(7, 7);
             cliente.shootBullet(bala.x, bala.y, bala.texture.key, shootRotation);

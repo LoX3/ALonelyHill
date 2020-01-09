@@ -98,7 +98,7 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
     }
 
     createBullet(data) {
-        var bala = new Bullet(this.scene, data.x, data.y, data.bulletType, data.rotation);
+        var bala = new Bullet(this.scene, data.x, data.y, 20, data.bulletType, data.rotation);
         bala.body.setSize(7, 7);
         this.bulletGroup.add(bala);
     }

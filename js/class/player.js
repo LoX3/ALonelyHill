@@ -289,9 +289,9 @@ class Player extends Phaser.GameObjects.Container {
      */
     takeDamage(bullet) {
         // Destruyo la bala
-        bullet.destroy();
+        this.manageLive(-bullet.damage);
 
-        this.manageLive(-10);
+        bullet.destroy();
     }
 
     /**
