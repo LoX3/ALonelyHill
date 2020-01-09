@@ -52,13 +52,17 @@ class ScenePreload extends Phaser.Scene {
     /**
      * Cargo las animaciones del jugador
      */
-    preloadCharacter() {
-        //#region Idle player preload
-        // Idle front
-        this.load.image('idle_front_0', 'player/character/idle/front/idle_F_0.png');
-        this.load.image('idle_front_1', 'player/character/idle/front/idle_F_1.png');
-        this.load.image('idle_front_2', 'player/character/idle/front/idle_F_2.png');
-        this.load.image('idle_front_3', 'player/character/idle/front/idle_F_3.png');
+    preloadCharacterAnimations() {
+        //Idle
+        this.load.image('idle_0', 'player/character/idle/idle_F_0.png');
+        this.load.image('idle_1', 'player/character/idle/idle_F_1.png');
+        this.load.image('idle_2', 'player/character/idle/idle_F_2.png');
+        this.load.image('idle_3', 'player/character/idle/idle_F_3.png');
+        //Running
+        this.load.image('run_F_0', 'player/character/run/run_F_0.png');
+        this.load.image('run_F_1', 'player/character/run/run_F_1.png');
+        this.load.image('run_F_2', 'player/character/run/run_F_2.png');
+        this.load.image('run_F_3', 'player/character/run/run_F_3.png');
 
         // Idle back
         this.load.image('idle_back_0', 'player/character/idle/back/idle_B_0.png');
