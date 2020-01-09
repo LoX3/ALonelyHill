@@ -70,8 +70,6 @@ class SceneGame extends Phaser.Scene {
             }
         );
 
-        console.log(this.player.character.width);
-
         // Lo añado al servidor y lo envio a los enemigos
         cliente.registerPlayer({
             x: this.player.x,
