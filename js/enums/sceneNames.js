@@ -14,4 +14,5 @@ const sceneNames = {
     SETUP: 'sceneSetUp',
     GAME: "sceneStart",
     GAMEUI: 'sceneGameUI',
+    GAMEOVER: 'sceneGameOver',
 }

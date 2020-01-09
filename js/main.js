@@ -25,6 +25,7 @@
  * @property {Phaser.Scene} scene.SceneSetUp - {@link SceneSetUp} Escena para el menu principal del juego
  * @property {Phaser.Scene} scene.SceneGameUI - {@link SceneGameUI} Escena para la interfaz del usuario
  * @property {Phaser.Scene} scene.SceneStart - {@link SceneStart} Escena para empezar el juego
+ * @property {Phaser.Scene} scene.SceneGameOver - {@link SceneGameOver} Escena que salta al perder la partida
  */
 const config = {
     type: Phaser.AUTO,
@@ -53,6 +54,7 @@ const config = {
         SceneSetUp,
         SceneGameUI,
         SceneGame,
+        SceneGameOver,
     ],
 };
 

@@ -58,25 +58,25 @@ class Enemy extends Phaser.GameObjects.Container {
         var butt = scene.add
             .image(0, 0, weaponComponents.butt)
             .setOrigin(1, 0.5)
-            .setScale(0.7);
+            .setScale(0.35);
 
         // Cuerpo del arma
         var handle = scene.add
             .image(0, 0, weaponComponents.handle)
             .setOrigin(0.5)
-            .setScale(0.7);
+            .setScale(0.35);
 
         // Cañón del arma
         var canon = scene.add
             .image(0, 0, weaponComponents.canon)
             .setOrigin(0, 0.5)
-            .setScale(0.7);
+            .setScale(0.35);
 
         // Creo el arma y la guardo en una variable publica para poder declararla luego
         this.weapon = new EnemyWeapon(
             scene,
             this.body.width / 2,
-            this.body.height / 2 + 15,
+            this.body.height / 2,
             butt,
             handle,
             canon,

@@ -260,7 +260,7 @@ class Weapon extends Phaser.GameObjects.Container {
      * Disparo del arma hacia el puntero
      */
     shoot() {
-        if (this.canShoot && this.cargador.canShoot()) {
+        if (this.canShoot && this.cargador.canShoot() && this.parentContainer.vida > 0) {
             this.canShoot = false;
             this.cargador.shoot();
             this.updateReloaderText();

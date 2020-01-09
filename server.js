@@ -173,7 +173,7 @@ io.on('connection', function (socket) {
                 side: data.side,
                 animation: data.animation,
             });
-        })
+        });
 
         /**
          * Al desconectarse el jugador...

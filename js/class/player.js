@@ -147,14 +147,16 @@ class Player extends Phaser.GameObjects.Container {
      * archivos para poder jugar
      */
     update() {
-        // Hago el update del hijo
-        this.weapon.update();
+        if (this.vida > 0) {
+            // Hago el update del hijo
+            this.weapon.update();
 
-        // Muevo al jugador
-        this.playerMovement();
+            // Muevo al jugador
+            this.playerMovement();
 
-        // Muevo el jugador segun su fuerza
-        cliente.movePlayer(this.x, this.y, this.weapon.rotation);
+            // Muevo el jugador segun su fuerza
+            cliente.movePlayer(this.x, this.y, this.weapon.rotation);
+        }
     }
 
     /**
@@ -304,5 +306,18 @@ class Player extends Phaser.GameObjects.Container {
 
         // Actualizo el texto
         this.updateLiveText();
+
+        if (this.vida <= 0) {
+            this.disabePlayer();
+        }
+    }
+
+    /**
+     * Implementa la muerte del jugador
+     */
+    disabePlayer() {
+        this.body.setEnable(false);
+        cliente.socket.disconnect();
+        this.scene.scene.launch(sceneNames.GAMEOVER);
     }
 }
