@@ -22,6 +22,8 @@ class Bullet extends Phaser.GameObjects.Sprite {
         super(scene, x, y, bulletType);
         this.init();
 
+        this.setScale(0.5);
+
         // Guardo la escena
         this.scene = scene;
 

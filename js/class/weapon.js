@@ -65,7 +65,7 @@ class Weapon extends Phaser.GameObjects.Container {
 
         // Creo un objeto vacio para que la bala salga y lo pongo como hijo
         var shootPosX = canonWidth + (handleWidth / 2);
-        this.shootPos = scene.physics.add.image(0, 0);
+        this.shootPos = scene.physics.add.image(handle.x, handle.y);
         this.shootPos.setSize(1, 1);
         this.addAt(this.shootPos, 3);
 

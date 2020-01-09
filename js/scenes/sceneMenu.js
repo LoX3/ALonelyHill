@@ -63,7 +63,7 @@ class SceneMenu extends Phaser.Scene {
             align: "center",
             fontFamily: '"PixelCowboy"',
             fontSize: (76),
-            color: "#000"
+            color: colors.hex.black,
         })
             .setOrigin(0.5, 0);
 
@@ -71,7 +71,7 @@ class SceneMenu extends Phaser.Scene {
             align: "center",
             fontFamily: '"iPixelU"',
             fontSize: (36),
-            color: "#000"
+            color: colors.hex.black,
         })
             .setInteractive()
             .setOrigin(0.5, 1);

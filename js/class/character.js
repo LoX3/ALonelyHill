@@ -16,9 +16,6 @@ class Character extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, '');
 
-        // Le doy una escala para que sea mas grande
-        this.setScale(2);
-
         // Pongo una animacion por defecto
         this.playIdleDown();
 
