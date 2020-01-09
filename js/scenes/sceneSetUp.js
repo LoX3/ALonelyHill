@@ -196,7 +196,7 @@ class SceneSetUp extends Phaser.Scene {
      * Creo el jugador para escojer
      */
     setUpCharacterSelector() {
-        var characterSprite = this.physics.add.sprite(config.width / 4, (config.height / 2) * 1, 'character_selector')
+        var characterSprite = this.physics.add.sprite(config.width / 4, (config.height / 2) * 1)
             .setSize(16, 32)
             .setScale(3)
             .setInteractive();
