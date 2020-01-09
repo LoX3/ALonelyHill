@@ -114,7 +114,7 @@ class ScenePreload extends Phaser.Scene {
 
         this.preloadWeaponParts();
 
-        this.preloadCharacter();
+        this.preloadCharacterAnimations();
 
         this.load.image('bullet', 'player/weapon/bullet/1.png');
         this.load.image('sensei', 'player/sensei.png');
