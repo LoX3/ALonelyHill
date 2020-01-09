@@ -170,7 +170,30 @@ class MapManager {
         return matrixToPopulate;
     }
 
-    decorateMap(worldStructure, tileBounds) {
+    decorateMap(worldStructure, terrainBounds, terrainTile) {
+        for (let height = 1; height < matrixToPopulate.length - 1; height++) {
+            for (let width = 1; width < matrixToPopulate[height].length - 1; width++) {
+
+                neighbourTiles = [];
+                matches = 0;
+                round = 0;
+                survived = false;
+
+
+                neighbourTiles.push(matrix[height - 1][width - 1]);
+                neighbourTiles.push(matrix[height - 1][width]);
+                neighbourTiles.push(matrix[height - 1][width + 1]);
+                neighbourTiles.push(matrix[height][width - 1]);
+                neighbourTiles.push(matrix[height][width + 1]);
+                neighbourTiles.push(matrix[height + 1][width - 1]);
+                neighbourTiles.push(matrix[height + 1][width]);
+                neighbourTiles.push(matrix[height + 1][width + 1]);
+
+                
+
+            }
+
+        }
         return worldStructure;
     }
 
@@ -187,7 +210,7 @@ class MapManager {
 
         worldStructure = this.populateSeeds(worldStructure, tileNames.BROWN_EARTH, 3, 5);
 
-        worldStructure = this.decorateMap(worldStructure, tileNames.GRASS_TRANSITION);
+        // worldStructure = this.decorateMap(worldStructure, tileNames.GRASS_TRANSITION, tileNames.BROWN_EARTH);
 
         // Creo el mapa con los tiles
         var newMap = new Map(
