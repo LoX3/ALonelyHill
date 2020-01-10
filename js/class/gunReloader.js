@@ -121,4 +121,18 @@ class GunReloader {
 
         return retVal;
     }
+
+    /**
+     * Miro si se debe recargar
+     * @returns {Boolean} Si se puede recargar
+     */
+    shouldReload() {
+        var retVal = false;
+
+        if (!this.isFull() && this.totalBullets) {
+            retVal = true;
+        }
+
+        return retVal;
+    }
 }

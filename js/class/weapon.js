@@ -86,7 +86,22 @@ class Weapon extends Phaser.GameObjects.Container {
         //#region Aqui se crean los estats del arma
 
         // Aplico daño a la bala
-        this.bulletDamage = 10;
+        this.bulletDamage = {
+            damage: 10,
+            criticChange: 0,
+            criticDamage: 0,
+        };
+        this.bulletDamage.criticChange = 10;
+        this.bulletDamage.criticDamage = this.bulletDamage.damage;
+
+        // FireRate del arma
+        this.fireRate = 100;
+
+        // Tiempo de recarga del arma
+        this.reloadTime = 1000;
+
+        // Precision del arma
+        this.precision = 10;
 
         //#endregion
     }
@@ -200,8 +215,12 @@ class Weapon extends Phaser.GameObjects.Container {
         this.arrievedMaximumDisplacement = false;
 
         /**
-         * Daño que inflinje el jugador al enemigo
-         * @type {Number}
+         * Daño de la bala
+         * @enum {Number}
+         * @name bulletDamage
+         * @property {Number} bulletDamage.damage Daño de la bala
+         * @property {Number} bulletDamage.criticChange Probabilidad de critico del arma
+         * @property {Number} bulletDamage.criticDamage Daño del daño critico
          */
         this.bulletDamage;
     }
@@ -272,7 +291,7 @@ class Weapon extends Phaser.GameObjects.Container {
             bala.body.setSize(7, 7);
             cliente.shootBullet(bala.x, bala.y, bala.texture.key, shootRotation);
 
-            this.scene.time.delayedCall(100, () => this.canShoot = true);
+            this.scene.time.delayedCall(this.fireRate, () => this.canShoot = true);
             this.knockBack = true;
 
             if (!this.cargador.canShoot()) {
@@ -288,10 +307,10 @@ class Weapon extends Phaser.GameObjects.Container {
      * Recargo las balas del arma
      */
     reload() {
-        if (this.canShoot && !this.cargador.isFull()) {
+        if (this.canShoot && this.cargador.shouldReload()) {
             this.canShoot = false;
             this.cargador.reload();
-            this.scene.time.delayedCall(1000, this.allowReload, [], this);
+            this.scene.time.delayedCall(this.reloadTime, this.allowReload, [], this);
             this.sceneGameUI.setReloadState();
         }
     }

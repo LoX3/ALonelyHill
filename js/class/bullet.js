@@ -15,7 +15,10 @@ class Bullet extends Phaser.GameObjects.Sprite {
      * @param {Phaser.Scene} scene Escena donde se pone la bala
      * @param {Number} x Posicion horizontal del sprite
      * @param {Number} y Posicion vertical del sprite
-     * @param {Number} bulletDamage Daño de la bala al enemigo
+     * @property {JSON} bulletDamage Daño de la bala al enemigo
+     * @property {Number} bulletDamage.damage Daño de la bala
+     * @property {Number} bulletDamage.criticChange Probabilidad de critico del arma
+     * @property {Number} bulletDamage.criticDamage Daño del daño critico
      * @param {String} bulletType Tipo de bala que se dispara
      * @param {Number} bulletRotation Rotación de  la bala
      */
@@ -63,8 +66,10 @@ class Bullet extends Phaser.GameObjects.Sprite {
         this.scene;
 
         /**
-         * Daño que inflinje el jugador al enemigo
-         * @type {Number}
+         * @property {JSON} bulletDamage Daño de la bala al enemigo
+         * @property {Number} bulletDamage.damage Daño de la bala
+         * @property {Number} bulletDamage.criticChange Probabilidad de critico del arma
+         * @property {Number} bulletDamage.criticDamage Daño del daño critico
          */
         this.damage;
     }

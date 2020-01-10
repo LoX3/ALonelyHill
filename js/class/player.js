@@ -291,7 +291,12 @@ class Player extends Phaser.GameObjects.Container {
      */
     takeDamage(bullet) {
         // Destruyo la bala
-        this.manageLive(-bullet.damage);
+        var damage = bullet.damage.damage;
+        if (Math.floor(Math.random() * 99) <= bullet.damage.criticChange) {
+            damage += bullet.damage.criticDamage
+        }
+
+        this.manageLive(-damage);
 
         bullet.destroy();
     }

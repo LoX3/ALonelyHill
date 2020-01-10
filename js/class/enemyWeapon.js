@@ -55,8 +55,23 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
 
         //#region Aqui se crean los estats del arma
 
-        // Aplico el daño del jugador
-        this.bulletDamage = 10;
+        // Aplico daño a la bala
+        this.bulletDamage = {
+            damage: 10,
+            criticChange: 0,
+            criticDamage: 0,
+        };
+        this.bulletDamage.criticChange = 10;
+        this.bulletDamage.criticDamage = this.bulletDamage.damage;
+
+        // FireRate del arma
+        this.fireRate = 100;
+
+        // Tiempo de recarga del arma
+        this.reloadTime = 1000;
+
+        // Precision del arma
+        this.precision = 10;
 
         //#endregion
     }
@@ -91,8 +106,12 @@ class EnemyWeapon extends Phaser.GameObjects.Container {
         this.bulletGroup;
 
         /**
-         * Daño que inflinje el jugador al enemigo
-         * @type {Number}
+         * Daño de la bala
+         * @enum {Number}
+         * @name bulletDamage
+         * @property {Number} bulletDamage.damage Daño de la bala
+         * @property {Number} bulletDamage.criticChange Probabilidad de critico del arma
+         * @property {Number} bulletDamage.criticDamage Daño del daño critico
          */
         this.bulletDamage;
     }
