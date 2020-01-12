@@ -85,23 +85,37 @@ class Weapon extends Phaser.GameObjects.Container {
 
         //#region Aqui se crean los estats del arma
 
+        console.log(butt.data.values.bulletDamage.damage);
+
+        var weaponStats = {
+            bulletDamage: {
+                damage: (butt.data.values.bulletDamage.damage + handle.data.values.bulletDamage.damage + canon.data.values.bulletDamage.damage) / 3,
+                criticChange: (butt.data.values.bulletDamage.criticChange + handle.data.values.bulletDamage.criticChange + canon.data.values.bulletDamage.criticChange) / 3,
+                criticDamage: (butt.data.values.bulletDamage.criticDamage + handle.data.values.bulletDamage.criticDamage + canon.data.values.bulletDamage.criticDamage) / 3,
+            },
+            fireRate: (butt.data.values.fireRate + handle.data.values.fireRate + canon.data.values.fireRate) / 3,
+            reloadTime: (butt.data.values.reloadTime + handle.data.values.reloadTime + canon.data.values.reloadTime) / 3,
+            precision: (butt.data.values.precision + handle.data.values.precision + canon.data.values.precision) / 3,
+        }
+
         // Aplico daño a la bala
         this.bulletDamage = {
-            damage: 10,
+            damage: 0,
             criticChange: 0,
             criticDamage: 0,
         };
-        this.bulletDamage.criticChange = 10;
-        this.bulletDamage.criticDamage = this.bulletDamage.damage;
+        this.bulletDamage.damage = 10 * weaponStats.bulletDamage.damage;
+        this.bulletDamage.criticChange = 10 * weaponStats.bulletDamage.criticChange;
+        this.bulletDamage.criticDamage = this.bulletDamage.damage * weaponStats.bulletDamage.criticDamage;
 
         // FireRate del arma
-        this.fireRate = 100;
+        this.fireRate = 100 * weaponStats.fireRate;
 
         // Tiempo de recarga del arma
-        this.reloadTime = 1000;
+        this.reloadTime = 1000 * weaponStats.reloadTime;
 
         // Precision del arma
-        this.precision = 10;
+        this.precision = 10 * weaponStats.precision;
 
         //#endregion
     }
@@ -223,6 +237,24 @@ class Weapon extends Phaser.GameObjects.Container {
          * @property {Number} bulletDamage.criticDamage Daño del daño critico
          */
         this.bulletDamage;
+
+        /**
+         * Velocidad de disparo
+         * @type {Number}
+         */
+        this.fireRate;
+
+        /**
+         * Tiempo de recarga
+         * @type {Number}
+         */
+        this.reloadTime;
+
+        /**
+         * Precisión del arma
+         * @type {Number}
+         */
+        this.precision;
     }
 
     /**

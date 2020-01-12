@@ -180,19 +180,67 @@ class Player extends Phaser.GameObjects.Container {
         var butt = scene.add
             .image(0, 0, this.weaponComponents.butt)
             .setOrigin(1, 0.5)
-            .setScale(0.35);
+            .setScale(0.35)
+            .setDataEnabled();
 
         // Cuerpo del arma
         var handle = scene.add
             .image(0, 0, this.weaponComponents.handle)
             .setOrigin(0.5)
-            .setScale(0.35);
+            .setScale(0.35)
+            .setDataEnabled();
 
         // Cañón del arma
         var canon = scene.add
             .image(0, 0, this.weaponComponents.canon)
             .setOrigin(0, 0.5)
-            .setScale(0.35);
+            .setScale(0.35)
+            .setDataEnabled();
+
+        var butt_id = this.weaponComponents.butt.split('_')[1];
+
+        butt.setData({
+            bulletDamage: {
+                damage: 1,
+                criticChange: 1,
+                criticDamage: 1,
+            },
+            fireRate: 1,
+            reloadTime: 1,
+            precision: 1,
+        });
+
+        handle.setData({
+            bulletDamage: {
+                damage: 1,
+                criticChange: 1,
+                criticDamage: 1,
+            },
+            fireRate: 1,
+            reloadTime: 1,
+            precision: 1,
+        });
+
+        canon.setData({
+            bulletDamage: {
+                damage: 1,
+                criticChange: 1,
+                criticDamage: 1,
+            },
+            fireRate: 1,
+            reloadTime: 1,
+            precision: 1,
+        });
+
+        if (butt_id > 0 && butt_id <= 5) {
+            console.log('Entre 0 y 5');
+        }
+        else if (butt_id > 5 && butt_id <= 10) {
+            console.log('Entre 5 y 10');
+        }
+        else if (butt_id > 10 && butt_id <= 15) {
+            console.log('Entre 10 y 15');
+        }
 
         // Creo el arma y la guardo en una variable publica para poder declararla luego
         this.weapon = new Weapon(
