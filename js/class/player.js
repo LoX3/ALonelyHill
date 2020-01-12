@@ -197,48 +197,49 @@ class Player extends Phaser.GameObjects.Container {
             .setScale(0.35)
             .setDataEnabled();
 
-        var butt_id = this.weaponComponents.butt.split('_')[1];
+        this.setDataInitialized(butt);
+        this.setDataInitialized(handle);
+        this.setDataInitialized(canon);
 
-        butt.setData({
-            bulletDamage: {
-                damage: 1,
-                criticChange: 1,
-                criticDamage: 1,
-            },
-            fireRate: 1,
-            reloadTime: 1,
-            precision: 1,
-        });
-
-        handle.setData({
-            bulletDamage: {
-                damage: 1,
-                criticChange: 1,
-                criticDamage: 1,
-            },
-            fireRate: 1,
-            reloadTime: 1,
-            precision: 1,
-        });
-
-        canon.setData({
-            bulletDamage: {
-                damage: 1,
-                criticChange: 1,
-                criticDamage: 1,
-            },
-            fireRate: 1,
-            reloadTime: 1,
-            precision: 1,
-        });
-
-        if (butt_id > 0 && butt_id <= 5) {
-            console.log('Entre 0 y 5');
+        var parts_id = {
+            butt: this.weaponComponents.butt.split('_')[1],
+            handle: this.weaponComponents.handle.split('_')[1],
+            canon: this.weaponComponents.canon.split('_')[1],
         }
-        else if (butt_id > 5 && butt_id <= 10) {
+
+        // Butt
+        if (parts_id.butt > 0 && parts_id.butt <= 5) {
+            console.log('Entre 0 y 5');
+            butt.data.values.bulletDamage.damage = 2;
+        }
+        else if (parts_id.butt > 5 && parts_id.butt <= 10) {
             console.log('Entre 5 y 10');
         }
-        else if (butt_id > 10 && butt_id <= 15) {
+        else if (parts_id.butt > 10 && parts_id.butt <= 15) {
+            console.log('Entre 10 y 15');
+        }
+
+        // Handle
+        if (parts_id.handle > 0 && parts_id.handle <= 5) {
+            console.log('Entre 0 y 5');
+            handle.data.values.bulletDamage.damage = 2;
+        }
+        else if (parts_id.handle > 5 && parts_id.handle <= 10) {
+            console.log('Entre 5 y 10');
+        }
+        else if (parts_id.handle > 10 && parts_id.handle <= 15) {
+            console.log('Entre 10 y 15');
+        }
+
+        // Canon
+        if (parts_id.canon > 0 && parts_id.canon <= 5) {
+            console.log('Entre 0 y 5');
+            canon.data.values.bulletDamage.damage = 2;
+        }
+        else if (parts_id.canon > 5 && parts_id.canon <= 10) {
+            console.log('Entre 5 y 10');
+        }
+        else if (parts_id.canon > 10 && parts_id.canon <= 15) {
             console.log('Entre 10 y 15');
         }
 
@@ -255,6 +256,23 @@ class Player extends Phaser.GameObjects.Container {
 
         // Añado el arma como hijo para que copie el movimiento del padre
         this.addAt(this.weapon, 1);
+    }
+
+    /**
+     * Restablece a normal el valor de una parte del arma
+     * @param {Phaser.GameObjects.Image} part Parte de un arma
+     */
+    setDataInitialized(part) {
+        part.setData({
+            bulletDamage: {
+                damage: 1,
+                criticChange: 1,
+                criticDamage: 1,
+            },
+            fireRate: 1,
+            reloadTime: 1,
+            precision: 1,
+        });
     }
 
     /**

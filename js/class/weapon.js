@@ -84,9 +84,6 @@ class Weapon extends Phaser.GameObjects.Container {
         this.tempParentMatrix = new Phaser.GameObjects.Components.TransformMatrix();
 
         //#region Aqui se crean los estats del arma
-
-        console.log(butt.data.values.bulletDamage.damage);
-
         var weaponStats = {
             bulletDamage: {
                 damage: (butt.data.values.bulletDamage.damage + handle.data.values.bulletDamage.damage + canon.data.values.bulletDamage.damage) / 3,
@@ -116,6 +113,7 @@ class Weapon extends Phaser.GameObjects.Container {
 
         // Precision del arma
         this.precision = 10 * weaponStats.precision;
+        
 
         //#endregion
     }
