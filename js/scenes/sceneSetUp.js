@@ -12,6 +12,7 @@ class SceneSetUp extends Phaser.Scene {
             key: sceneNames.SETUP,
         });
     }
+    
     /**
      * Init es la primera función que se llama cuando se
      * inicia su estado. Se llama antes de precargar, crear o cualquier

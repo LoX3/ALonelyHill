@@ -32,6 +32,8 @@ class SceneGame extends Phaser.Scene {
         this.butt = (data.butt == null) ? weaponParts.BUTT.ONE : data.butt;
         this.handle = (data.handle == null) ? weaponParts.HANDLE.ONE : data.handle;
         this.canon = (data.canon == null) ? weaponParts.CANON.ONE : data.canon;
+
+        this.input.setDefaultCursor('none');
     }
 
     /**

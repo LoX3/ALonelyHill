@@ -16,6 +16,17 @@ class SceneGameOver extends Phaser.Scene {
     }
 
     /**
+     * Init es la primera función que se llama cuando se
+     * inicia su estado. Se llama antes de precargar, crear o cualquier
+     * otra cosa. Si necesita enrutar el juego a otro estado, puede
+     * hacerlo aquí, o si necesita preparar un conjunto de variables u
+     * objetos antes de que comience la precarga.
+     */
+    init() {
+        this.input.setDefaultCursor('pointer');
+    }
+
+    /**
      * Create sellama una vez que se ha completado la
      * precarga. Si no tiene un método de precarga, crear es el primer
      * método llamado en su estado.
