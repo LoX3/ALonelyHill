@@ -8,18 +8,19 @@
 /**
  * @typedef { require('express') } app
  */
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
 /**
  * @typedef { require('http').Server(app) } server
  */
-var server = require('http').Server(app);
+const server = require('http').createServer(app);
 
 /**
  * @typedef { require('socket.io') } io
  */
-var io = require('socket.io').listen(server);
+const { Server } = require('socket.io');
+const io = new Server(server);
 
 /**
  * Load folders
@@ -195,8 +196,8 @@ io.on('connection', function (socket) {
 function getAllEnemies() {
     var players = [];
 
-    Object.keys(io.sockets.connected).forEach(function (socketID) {
-        var player = io.sockets.connected[socketID].player;
+    io.sockets.sockets.forEach(function (socket) {
+        var player = socket.player;
         if (player) {
             players.push(player);
         };
