@@ -31,9 +31,9 @@
   "requires": true,
   "lockfileVersion": 1,
   "dependencies": {
-    "express": "^4.18.2",
+    "express": "^4.21.1",
     "jsdoc": "^4.0.0",
     "phaser": "^3.55.2",
-    "socket.io": "^4.5.4"
+    "socket.io": "^4.8.0"
   }
 }
